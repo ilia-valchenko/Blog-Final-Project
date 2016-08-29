@@ -1,0 +1,81 @@
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using DAL.Interfacies.Repository;
+using DAL.Interfacies.Helper;
+using DAL.Interfacies.DTO;
+using DAL.Interfacies.Repository.ModelRepository;
+using BLL.Interfacies.Entities;
+using BLL.Interfacies.Services;
+using BLL.Mappers;
+
+namespace BLL.Services
+{
+    public class UserService : IUserService
+    {
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IRoleRepository roleRepository)
+        {
+            this.unitOfWork = unitOfWork;
+            this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
+        }
+
+        public void Create(UserEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            userRepository.Create(entity.ToDalUser());
+            unitOfWork.Commit();
+        }
+
+        public void Update(UserEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            userRepository.Update(entity.ToDalUser());
+            unitOfWork.Commit();
+        }
+
+        public void Delete(UserEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            userRepository.Delete(entity.ToDalUser());
+            unitOfWork.Commit();
+        }
+
+        public IEnumerable<UserEntity> GetAll() => userRepository.GetAll().Select(u => u.ToBllUser());
+
+        public UserEntity GetById(int id)
+        {
+            if (id < 0)
+                throw new ArgumentOutOfRangeException(nameof(id));
+
+            return userRepository.GetById(id)?.ToBllUser();
+        }
+
+        public UserEntity GetOneByPredicate(Expression<Func<UserEntity, bool>> predicates)
+        {
+            var visitor = new PredicateExpressionVisitor<UserEntity, DalUser>(Expression.Parameter(typeof(DalUser), predicates.Parameters[0].Name));
+            var exp2 = Expression.Lambda<Func<DalUser, bool>>(visitor.Visit(predicates.Body), visitor.NewParameterExp);
+            return userRepository.GetOneByPredicate(exp2).ToBllUser();
+        }
+
+        public IEnumerable<UserEntity> GetAllByPredicate(Expression<Func<UserEntity, bool>> predicates)
+        {
+            var visitor = new PredicateExpressionVisitor<UserEntity, DalUser>(Expression.Parameter(typeof(DalUser), predicates.Parameters[0].Name));
+            var exp2 = Expression.Lambda<Func<DalUser, bool>>(visitor.Visit(predicates.Body), visitor.NewParameterExp);
+            return userRepository.GetAllByPredicate(exp2).Select(user => user.ToBllUser()).ToList();
+        }
+
+        public UserEntity GetUserEntityByNickname(string nickname) => userRepository.GetByNickname(nickname)?.ToBllUser();
+
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IUserRepository userRepository;
+        private readonly IRoleRepository roleRepository;
+    }
+}
