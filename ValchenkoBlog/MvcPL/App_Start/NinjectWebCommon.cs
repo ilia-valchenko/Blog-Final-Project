@@ -1,18 +1,17 @@
-﻿using System;
-using System.Web;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using MvcPL;
-using MvcPL.Infrastructure;
-using Ninject;
-using Ninject.Web.Common;
-using WebActivatorEx;
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(MvcPL.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(MvcPL.App_Start.NinjectWebCommon), "Stop")]
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
-[assembly: ApplicationShutdownMethod(typeof(NinjectWebCommon), "Stop")]
-
-namespace MvcPL
+namespace MvcPL.App_Start
 {
-    public static class NinjectWebCommon
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+    using Ninject;
+    using Ninject.Web.Common;
+    using Infrastructure;
+
+    public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
@@ -43,17 +42,17 @@ namespace MvcPL
             var kernel = new StandardKernel();
             kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
             kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-            RegisterRepositorys(kernel);
+            RegisterServices(kernel);
             return kernel;
         }
 
         /// <summary>
-        /// Load your modules or register your Repositorys here!
+        /// Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        private static void RegisterRepositorys(IKernel kernel)
+        private static void RegisterServices(IKernel kernel)
         {
-            System.Web.Mvc.DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+            DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }

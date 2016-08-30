@@ -1,39 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BLL.Interfacies.Entities;
 using MvcPL.Models;
-using BLL.Interfacies.Entities;
 
 namespace MvcPL.Infrastructure.Mappers
 {
     public static class MvcUserMapper
     {
-        public static UserViewModel ToMvcUser(this UserEntity bllUser)
+        public static UserViewModel ToMvcUser(this UserEntity userEntity)
         {
-            if (bllUser == null)
-                return null;
-
-            return new UserViewModel
+            return new UserViewModel()
             {
-                Id = bllUser.Id,
-                Nickname = bllUser.Nickname
-                // ?password
-                // ?avatar
+                Id = userEntity.Id,
+                Nickname = userEntity.Nickname,
+                Password = userEntity.Password
             };
         }
 
-        public static UserEntity ToBllUser(this UserViewModel mvcUser)
+        public static UserEntity ToBllUser(this UserViewModel userViewModel)
         {
-            if (mvcUser == null)
-                return null;
-
-            return new UserEntity 
+            return new UserEntity()
             {
-                Id = mvcUser.Id,
-                Nickname = mvcUser.Nickname
-                // ?password
-                // ?avatar
+                Id = userViewModel.Id,
+                Nickname = userViewModel.Nickname,
+                Password = userViewModel.Password
             };
         }
     }

@@ -39,6 +39,9 @@ namespace DependencyResolver
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IUserRepository>().To<UserRepository>();
 
+            // Role Service
+            kernel.Bind<IRoleRepository>().To<RoleRepository>();
+
             // Add more
         }
     }
