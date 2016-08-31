@@ -1,5 +1,5 @@
 ﻿using BLL.Interfacies.Entities;
-using MvcPL.Models;
+using MvcPL.Models.User;
 
 namespace MvcPL.Infrastructure.Mappers
 {
@@ -11,7 +11,7 @@ namespace MvcPL.Infrastructure.Mappers
             {
                 Id = userEntity.Id,
                 Nickname = userEntity.Nickname,
-                Password = userEntity.Password
+                //Password = userEntity.Password
             };
         }
 
@@ -21,7 +21,8 @@ namespace MvcPL.Infrastructure.Mappers
             {
                 Id = userViewModel.Id,
                 Nickname = userViewModel.Nickname,
-                Password = userViewModel.Password
+                //Password = userViewModel.Password
+                Password = "Hardcode_Qwerty_123"
             };
         }
     }

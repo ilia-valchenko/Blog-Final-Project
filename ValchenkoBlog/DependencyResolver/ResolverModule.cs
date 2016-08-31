@@ -42,6 +42,15 @@ namespace DependencyResolver
             // Role Service
             kernel.Bind<IRoleRepository>().To<RoleRepository>();
 
+            kernel.Bind<IPostService>().To<PostService>();
+            kernel.Bind<IPostRepository>().To<PostRepository>();
+
+            // Comment service
+            kernel.Bind<ICommentRepository>().To<CommentRepository>();
+
+            // Like service
+            kernel.Bind<ILikeRepository>().To<LikeRepository>();
+
             // Add more
         }
     }

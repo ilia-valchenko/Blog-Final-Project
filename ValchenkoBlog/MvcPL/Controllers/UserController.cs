@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
-using MvcPL.Models;
+using MvcPL.Models.User;
 
 namespace MvcPL.Controllers
 {

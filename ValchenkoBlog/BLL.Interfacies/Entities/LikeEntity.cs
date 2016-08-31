@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public int PostId;
-        public int UserId;
+        public int PostId { get; set; }
+        public int UserId { get; set; }
     }
 }

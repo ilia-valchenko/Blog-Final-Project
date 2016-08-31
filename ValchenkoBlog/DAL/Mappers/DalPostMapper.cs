@@ -17,7 +17,7 @@ namespace DAL.Mappers
                 Description = ormPost.Description,
                 PublishDate = ormPost.PublishDate,
                 //UserId = ormPost.UserId
-                UserId = ormPost.User.UserId
+                //UserId = ormPost.User.UserId
             };
         }
 

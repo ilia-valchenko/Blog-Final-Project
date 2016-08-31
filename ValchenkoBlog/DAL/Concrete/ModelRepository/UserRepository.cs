@@ -83,9 +83,9 @@ namespace DAL.Concrete.ModelRepository
         //var ormUser = unitOfWork.Context.Set<User>().FirstOrDefault(user => user.Nickname == nickname);
         //return ormUser?.ToDalUser();
 
-        public void AddRoleToUser(int userId, string roleName)
+        public void AddRoleToUser(string nickname, string roleName)
         {
-            var user = context.Set<User>().FirstOrDefault(u => u.UserId == userId);
+            var user = context.Set<User>().FirstOrDefault(u => u.Nickname == nickname);
 
             if (user != null)
             {

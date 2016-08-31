@@ -17,16 +17,16 @@ namespace ORM.Models
         [Key]
         public int PostId { get; set; }
 
-        [Required(ErrorMessage = "Title is a required field.")]
+        /*[Required(ErrorMessage = "Title is a required field.")]
         [MinLength(1, ErrorMessage = "Length of a title can't be empty.")]
-        [MaxLength(300, ErrorMessage = "Length of a title must be less than 300 characters.")]
+        [MaxLength(300, ErrorMessage = "Length of a title must be less than 300 characters.")]*/
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Description is a required field.")]
-        [DataType(DataType.MultilineText)]
+        /*[Required(ErrorMessage = "Description is a required field.")]
+        [DataType(DataType.MultilineText)]*/
         public string Description { get; set; }
 
-        [Required]
+        /*[Required]*/
         public DateTime PublishDate { get; set; }
 
         //public int UserId { get; set; }

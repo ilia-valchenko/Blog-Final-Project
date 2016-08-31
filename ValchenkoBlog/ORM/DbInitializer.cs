@@ -4,7 +4,7 @@ using System.Web.Helpers;
 
 namespace ORM
 {
-    public class DbInitializer : DropCreateDatabaseAlways<BlogDbContext> //CreateDatabaseIfNotExists<BlogDbContext>
+    public class DbInitializer : CreateDatabaseIfNotExists<BlogDbContext>
     {
         protected override void Seed(BlogDbContext context)
         {

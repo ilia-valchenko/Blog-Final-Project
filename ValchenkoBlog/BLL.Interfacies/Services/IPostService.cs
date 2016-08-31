@@ -10,5 +10,7 @@ namespace BLL.Interfacies.Services
         // Is it necessary?
         void AddComment(CommentEntity commentEntity);
         void RemoveComment(CommentEntity commentEntity);
+        // 
+        IEnumerable<PostEntity> GetPostsByTagName(string tagName);
     }
 }

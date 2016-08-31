@@ -1,0 +1,21 @@
+﻿@model IEnumerable<MvcPL.Models.Post.PostViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@foreach (var item in Model)
+{
+    <article>
+        <h3>Title: @item.Title</h3>
+        <p><bold>Description: </bold>@item.Description</p>
+        <p><small>Posted by: </small>@item.AuthorNickname</p>
+        <p><small>Date: </small>@item.PublishDate</p>
+    </article>
+
+    <!--
+    @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
+    @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        -->
+}

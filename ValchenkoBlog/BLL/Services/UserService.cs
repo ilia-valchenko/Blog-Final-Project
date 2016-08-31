@@ -74,6 +74,18 @@ namespace BLL.Services
 
         public UserEntity GetUserEntityByNickname(string nickname) => userRepository.GetByNickname(nickname)?.ToBllUser();
 
+        public void AddRoleToUser(string nickname, string roleName)
+        {
+            if (nickname != null && nickname != String.Empty)
+                throw new ArgumentException(nameof(nickname));
+
+            if (roleName != null && roleName != String.Empty)
+                throw new ArgumentException(nameof(roleName));
+
+            userRepository.AddRoleToUser(nickname, roleName);
+            unitOfWork.Commit();
+        }
+
         private readonly IUnitOfWork unitOfWork;
         private readonly IUserRepository userRepository;
         private readonly IRoleRepository roleRepository;
