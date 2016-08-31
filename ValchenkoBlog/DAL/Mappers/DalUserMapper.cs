@@ -26,7 +26,6 @@ namespace DAL.Mappers
 
             return new User
             {
-                // without UserId
                 Nickname = dalUser.Nickname,
                 Password = dalUser.Password,
                 Avatar = dalUser.Avatar

@@ -18,24 +18,10 @@ namespace MvcPL.Infrastructure.Mappers
                 //Id = mvcPost.Id,
                 Title = mvcPost.Title,
                 Description = mvcPost.Description,
-                PublishDate = DateTime.Now
-                // UserId
+                PublishDate = DateTime.Now,
+                UserId = mvcPost.UserId
             };
         }
-
-        /*public static PostEntity ToBllPost(this PostViewModel mvcPost)
-        {
-            // if null
-
-            return new PostEntity
-            {
-                Id = mvcPost.Id,
-                Title = mvcPost.Title,
-                Description = mvcPost.Description,
-                PublishDate = Convert.ToDateTime(mvcPost.PublishDate),
-                // UserId
-            };
-        }*/
 
         public static PostViewModel ToMvcPost(this PostEntity bllPost)
         {
@@ -45,7 +31,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate.ToShortTimeString(),
-                AuthorNickname = "Hardcode-Author-Name"
+                // etc. in controller
             };
         }
     }

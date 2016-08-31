@@ -13,9 +13,7 @@ namespace DAL.Mappers
             return new DalLike
             {
                 Id = ormLike.LikeId,
-                //PostId = ormLike.PostId,
                 PostId = ormLike.Post.PostId,
-                //UserId = ormLike.UserId
                 UserId = ormLike.User.UserId
             };
         }
@@ -25,12 +23,7 @@ namespace DAL.Mappers
             if (dalLike == null)
                 return null;
 
-            return new Like
-            {
-                // without LikeId
-                //PostId = dalLike.PostId,
-                //UserId = dalLike.UserId
-            };
+            return new Like();
         }
     }
 }

@@ -57,7 +57,6 @@
     <Compile Include="Concrete\ModelRepository\UserRepository.cs" />
     <Compile Include="Concrete\UnitOfWork.cs" />
     <Compile Include="Mappers\DalCommentMapper.cs" />
-    <Compile Include="Mappers\DalEntityMappers.cs" />
     <Compile Include="Mappers\DalLikeMapper.cs" />
     <Compile Include="Mappers\DalPostMapper.cs" />
     <Compile Include="Mappers\DalRoleMapper.cs" />

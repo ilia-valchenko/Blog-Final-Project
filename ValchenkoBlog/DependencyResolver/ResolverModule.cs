@@ -51,6 +51,9 @@ namespace DependencyResolver
             // Like service
             kernel.Bind<ILikeRepository>().To<LikeRepository>();
 
+            kernel.Bind<ITagService>().To<TagService>();
+            kernel.Bind<ITagRepository>().To<TagRepository>();
+
             // Add more
         }
     }

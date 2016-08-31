@@ -30,6 +30,10 @@
                 </div>
             </div>
 
+            @Html.DropDownList("tags", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
+            @Html.ValidationMessageFor(m => m.SelectedTag)
+              
+
             <div class="form-group">
                 <div class="col-sm-5 col-sm-offset-3">
                     <input type="submit" value="Save" class="btn btn-primary" />

@@ -28,9 +28,6 @@ namespace DAL.Concrete.ModelRepository
             var user = entity.ToOrmUser();
             user.Roles.Add(role);
             context.Set<User>().Add(user);
-
-            //unitOfWork.Context.Set<User>().Add(user);
-            //unitOfWork.Commit();
         }
 
         public void Delete(DalUser entity)
@@ -38,9 +35,6 @@ namespace DAL.Concrete.ModelRepository
             var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
             if (user != default(User))
                 context.Set<User>().Remove(user);
-
-            //unitOfWork.Context.Set<User>().Remove(user);
-            //unitOfWork.Commit();
         }
 
         public void Update(DalUser entity)
@@ -80,9 +74,6 @@ namespace DAL.Concrete.ModelRepository
 
         public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser();
 
-        //var ormUser = unitOfWork.Context.Set<User>().FirstOrDefault(user => user.Nickname == nickname);
-        //return ormUser?.ToDalUser();
-
         public void AddRoleToUser(string nickname, string roleName)
         {
             var user = context.Set<User>().FirstOrDefault(u => u.Nickname == nickname);
@@ -96,8 +87,6 @@ namespace DAL.Concrete.ModelRepository
             }
         }
 
-
-        //private readonly IUnitOfWork unitOfWork;
-        private DbContext context;
+        private readonly DbContext context;
     }
 }

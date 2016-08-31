@@ -29,7 +29,6 @@ namespace ORM.Models
         /*[Required]*/
         public DateTime PublishDate { get; set; }
 
-        //public int UserId { get; set; }
         public virtual User User { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }

@@ -7,7 +7,6 @@ namespace DAL.Interfacies.Repository.ModelRepository
     {
         IEnumerable<DalPost> GetDalPostsByUserId(int userId);
         IEnumerable<DalPost> GetDalPostsByTagName(string tagName);
-        //void RemoveLike(DalLike like);
-        //void AddLike(DalLike like);
+        void AddTagsToPost(int postId, string[] tags);
     }
 }

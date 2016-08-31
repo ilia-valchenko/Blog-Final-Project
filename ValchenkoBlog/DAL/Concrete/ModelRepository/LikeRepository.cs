@@ -70,9 +70,10 @@ namespace DAL.Concrete.ModelRepository
 
         //Fix it
         //public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<Like>().Where(l => l.UserId == userId).ToList().Select(l => l.ToDalLike());
-        public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes.ToList().Select(l => l.ToDalLike());
+        public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes.Select(like => like.ToDalLike());
 
+        public IEnumerable<DalLike> GetDalLikesByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Likes.Select(like => like.ToDalLike());
 
-        private DbContext context;
+        private readonly DbContext context;
     }
 }

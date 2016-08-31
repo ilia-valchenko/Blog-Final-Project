@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace MvcPL.Models.Post
 {
@@ -11,7 +12,10 @@ namespace MvcPL.Models.Post
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
+        [Display(Name = "Tags")]
+        public string SelectedTag { get; set; }
+        public SelectList TagList { get; set; }
 
-        // Tags
+        public int UserId { get; set; }
     }
 }

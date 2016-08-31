@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace BLL.Interfacies.Services
 {
-    interface ITagService : IService<TagEntity>
+    public interface ITagService : IService<TagEntity>
     {
         TagEntity GetTagByName(string name);
+        IEnumerable<TagEntity> GetTagsOfPost(int postId); 
     }
 }

@@ -9,13 +9,20 @@
     <article>
         <h3>Title: @item.Title</h3>
         <p><bold>Description: </bold>@item.Description</p>
-        <p><small>Posted by: </small>@item.AuthorNickname</p>
+        <p><small>Posted by: @item.Author.Nickname (Id: @item.Author.Id)</small></p>
+        <p><small>Number of likes: @item.NumberOfLikes</small></p>
+        <p><small>Number of comments: @item.NumberOfComments</small></p>
         <p><small>Date: </small>@item.PublishDate</p>
-    </article>
-
-    <!--
-    @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-    @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
-    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        -->
+        <div>
+            Tags:
+            @foreach (var tag in item.Tags)
+            {
+                <p>#@tag</p>
+            }  
+        </div>
+    </article>      
 }
+
+<p>
+    @Html.ActionLink("Add new post", "Create")
+</p>

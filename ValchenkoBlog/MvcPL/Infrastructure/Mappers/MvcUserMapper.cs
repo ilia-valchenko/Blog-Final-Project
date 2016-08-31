@@ -10,8 +10,8 @@ namespace MvcPL.Infrastructure.Mappers
             return new UserViewModel()
             {
                 Id = userEntity.Id,
-                Nickname = userEntity.Nickname,
-                //Password = userEntity.Password
+                Nickname = userEntity.Nickname
+                // Avatar
             };
         }
 

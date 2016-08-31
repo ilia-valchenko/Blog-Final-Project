@@ -24,7 +24,6 @@ namespace DAL.Mappers
 
             return new Tag
             {
-                // without TagId
                 Name = dalTag.Name
             };
         }

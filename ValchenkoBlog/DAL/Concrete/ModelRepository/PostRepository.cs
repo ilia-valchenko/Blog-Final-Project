@@ -47,8 +47,7 @@ namespace DAL.Concrete.ModelRepository
                 return;
 
             var post = entity.ToOrmPost();
-            context.Set<Post>().Add(post);
-            //unitOfWork.Commit();
+            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);
         }
 
         public void Delete(DalPost entity)
@@ -60,8 +59,6 @@ namespace DAL.Concrete.ModelRepository
 
             if(post != default(Post))
                 context.Set<Post>().Remove(post);
-
-            //unitOfWork.Commit();
         }
 
         public void Update(DalPost entity)
@@ -97,15 +94,31 @@ namespace DAL.Concrete.ModelRepository
         }
 
         // Fix it
-        //public IEnumerable<DalPost> GetDalPostsByUserId(int userId) => context.Set<Post>().Where(p => p.UserId == userId).ToList().Select(p => p.ToDalPost());
         public IEnumerable<DalPost> GetDalPostsByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Posts.ToList().Select(p => p.ToDalPost());
 
 
         // Is it normal?
         public IEnumerable<DalPost> GetDalPostsByTagName(string tagName) => context.Set<Tag>().FirstOrDefault(t => t.Name == tagName)?.Posts.Select(p => p.ToDalPost());
 
-        //private UnitOfWork unitOfWork;
-        private DbContext context;
+        public void AddTagsToPost(int postId, string[] tags)
+        {
+            var post = context.Set<Post>().FirstOrDefault(p => p.PostId == postId);
+
+            if (post != null)
+            {
+                if(tags != null)
+                {
+                    foreach(var tagName in tags)
+                    {
+                        var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == tagName);
+                        if (tag != null)
+                            post.Tags.Add(tag);
+                    }
+                }
+            }
+        }
+
+        private readonly DbContext context;
     }
 }
 

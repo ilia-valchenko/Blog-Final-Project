@@ -15,7 +15,6 @@ namespace DAL.Concrete.ModelRepository
     {
         public RoleRepository(DbContext context)
         {
-            //unitOfWork = uow;
             this.context = context;
         }
 
@@ -26,7 +25,6 @@ namespace DAL.Concrete.ModelRepository
 
             var role = entity.ToOrmRole();
             context.Set<Role>().Add(role);
-            //unitOfWork.Commit();
         }
 
         public void Delete(DalRole entity)
@@ -35,7 +33,6 @@ namespace DAL.Concrete.ModelRepository
 
             if(role != default(Role))
                 context.Set<Role>().Remove(role);
-            //unitOfWork.Commit();
         }
 
         public void Update(DalRole entity)
@@ -54,9 +51,6 @@ namespace DAL.Concrete.ModelRepository
 
             role.Name = entity.Name;
             context.Entry(role).State = EntityState.Modified;
-
-            //unitOfWork.Context.Set<Role>().AddOrUpdate(entity.ToOrmRole());
-            //unitOfWork.Commit();
         }
 
         public DalRole GetById(int key) => context.Set<Role>().FirstOrDefault(r => r.RoleId == key)?.ToDalRole();
@@ -77,20 +71,6 @@ namespace DAL.Concrete.ModelRepository
 
         public IEnumerable<DalRole> GetRolesOfUser(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Roles.Select(r => r.ToDalRole()).ToList();
 
-        /*public void AddUserToRole(int userId, string roleName)
-        {
-            var user = context.Set<User>().FirstOrDefault(u => u.UserId == userId);
-
-            if(user != null)
-            {
-                var role = context.Set<Role>().FirstOrDefault(r => r.Name == roleName);
-
-                if (role != null)
-                    role.Users.Add(user);
-            }
-        }*/
-
-        //private readonly UnitOfWork unitOfWork;
-        private DbContext context;
+        private readonly DbContext context;
     }
 }

@@ -24,7 +24,6 @@ namespace DAL.Mappers
 
             return new Role
             {
-                // without RoleId
                 Name = dalRole.Name
             };
         }

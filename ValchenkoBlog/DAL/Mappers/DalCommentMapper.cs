@@ -15,9 +15,7 @@ namespace DAL.Mappers
                 Id = ormComment.CommentId,
                 Text = ormComment.Text,
                 PublishDate = ormComment.PublishDate,
-                //PostId = ormComment.PostId,
                 PostId = ormComment.Post.PostId,
-                //UserId = ormComment.UserId
                 UserId = ormComment.User.UserId
             };
         }
@@ -29,11 +27,8 @@ namespace DAL.Mappers
 
             return new Comment
             {
-                // without CommentId
                 Text = dalComment.Text,
                 PublishDate = dalComment.PublishDate,
-                //PostId = dalComment.PostId,
-                //UserId = dalComment.UserId
             };
         }
     }

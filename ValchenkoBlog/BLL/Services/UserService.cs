@@ -14,11 +14,19 @@ namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IRoleRepository roleRepository)
+        public UserService(IUnitOfWork unitOfWork, 
+                           IUserRepository userRepository, 
+                           IRoleRepository roleRepository
+                           /*IPostRepository postRepository, 
+                           ICommentRepository commentRepository,
+                           ILikeRepository likeRepository*/)
         {
             this.unitOfWork = unitOfWork;
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
+            /*this.postRepository = postRepository;
+            this.commentRepository = commentRepository;
+            this.likeRepository = likeRepository;*/
         }
 
         public void Create(UserEntity entity)
@@ -86,8 +94,19 @@ namespace BLL.Services
             unitOfWork.Commit();
         }
 
+        public IEnumerable<RoleEntity> GetRolesOfUser(int userId)
+        {
+            if (userId < 0)
+                throw new ArgumentOutOfRangeException(nameof(userId));
+
+            return roleRepository.GetRolesOfUser(userId).Select(r => r.ToBllRole());
+        }
+
         private readonly IUnitOfWork unitOfWork;
         private readonly IUserRepository userRepository;
         private readonly IRoleRepository roleRepository;
+        /*private readonly IPostRepository postRepository;
+        private readonly ICommentRepository commentRepository;
+        private readonly ILikeRepository likeRepository;*/
     }
 }

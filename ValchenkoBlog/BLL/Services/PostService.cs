@@ -9,6 +9,7 @@ using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using BLL.Mappers;
+using System.Diagnostics;
 
 namespace BLL.Services
 {
@@ -23,13 +24,23 @@ namespace BLL.Services
             this.likeRepository = likeRepository;
         }
 
-        public void Create(PostEntity entity)
+        public void Create(PostEntity entity, string[] tags)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            postRepository.Create(entity.ToDalPost());
+            var post = entity.ToDalPost();
+            postRepository.Create(post);
+            // just add tags
+            Debug.Write("\nADD TAG TO POST. PostId: " + post.Id);
+            postRepository.AddTagsToPost(post.Id, tags);
             unitOfWork.Commit();
+        }
+
+        // WHAT SHOULD I DO WITH IT?
+        public void Create(PostEntity entity)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(PostEntity entity)
@@ -93,6 +104,34 @@ namespace BLL.Services
         public void RemoveLike(LikeEntity likeEntity)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddTagsToPost(int postId, string[] tags)
+        {
+            if (postId < 0)
+                throw new ArgumentException(nameof(postId));
+
+            if (tags == null)
+                throw new ArgumentNullException(nameof(tags));
+
+            postRepository.AddTagsToPost(postId, tags);
+            unitOfWork.Commit();
+        }
+
+        public IEnumerable<LikeEntity> GetLikesByPostId(int postId)
+        {
+            if (postId < 0)
+                throw new ArgumentException(nameof(postId));
+
+            return likeRepository.GetDalLikesByPostId(postId).Select(like => like.ToBllLike());
+        }
+
+        public IEnumerable<CommentEntity> GetCommentsByPostId(int postId)
+        {
+            if (postId < 0)
+                throw new ArgumentException(nameof(postId));
+
+            return commentRepository.GetDalCommentsByPostId(postId).Select(comment => comment.ToBllComment());
         }
 
         private readonly IUnitOfWork unitOfWork;

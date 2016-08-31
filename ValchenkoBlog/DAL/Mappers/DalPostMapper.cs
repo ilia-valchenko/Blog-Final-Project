@@ -16,8 +16,7 @@ namespace DAL.Mappers
                 Title = ormPost.Title,
                 Description = ormPost.Description,
                 PublishDate = ormPost.PublishDate,
-                //UserId = ormPost.UserId
-                //UserId = ormPost.User.UserId
+                UserId = ormPost.User.UserId
             };
         }
 
@@ -28,11 +27,9 @@ namespace DAL.Mappers
 
             return new Post
             {
-                // without PostId
                 Title = dalPost.Title,
                 Description = dalPost.Description,
                 PublishDate = dalPost.PublishDate,
-                //UserId = dalPost.UserId
             };
         }
     }

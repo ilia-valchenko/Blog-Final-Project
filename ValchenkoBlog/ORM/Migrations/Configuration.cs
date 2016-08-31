@@ -10,7 +10,6 @@ namespace ORM.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "ORM.BlogDbContext";
         }
 
         protected override void Seed(ORM.BlogDbContext context)

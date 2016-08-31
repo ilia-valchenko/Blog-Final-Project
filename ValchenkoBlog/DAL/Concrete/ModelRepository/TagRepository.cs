@@ -13,10 +13,9 @@ namespace DAL.Concrete.ModelRepository
 {
     public class TagRepository : ITagRepository
     {
-        public TagRepository(DbContext context1)
+        public TagRepository(DbContext context)
         {
-            //unitOfWork = uow;
-            this.context = context1;
+            this.context = context;
         }
 
         public void Create(DalTag entity)
@@ -26,7 +25,6 @@ namespace DAL.Concrete.ModelRepository
 
             var tag = entity.ToOrmTag();
             context.Set<Tag>().Add(tag);
-            //unitOfWork.Commit();
         }
 
         public void Delete(DalTag entity)
@@ -35,7 +33,6 @@ namespace DAL.Concrete.ModelRepository
 
             if(tag != default(Tag))
                 context.Set<Tag>().Remove(tag);
-            //unitOfWork.Commit();
         }
 
         public void Update(DalTag entity)
@@ -54,9 +51,6 @@ namespace DAL.Concrete.ModelRepository
 
             tag.Name = entity.Name;
             context.Entry(tag).State = EntityState.Modified;
-
-            //unitOfWork.Context.Set<Tag>().AddOrUpdate(entity.ToOrmTag());
-            //unitOfWork.Commit();
         }
 
         public DalTag GetById(int key) => context.Set<Tag>().FirstOrDefault(t => t.TagId == key)?.ToDalTag();
@@ -75,7 +69,8 @@ namespace DAL.Concrete.ModelRepository
 
         public DalTag GetTagByName(string name) => context.Set<Tag>().FirstOrDefault(tag => tag.Name == name)?.ToDalTag();
 
-        //private readonly UnitOfWork unitOfWork;
+        public IEnumerable<DalTag> GetTagsOfPost(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag());
+
         private readonly DbContext context;
     }
 }

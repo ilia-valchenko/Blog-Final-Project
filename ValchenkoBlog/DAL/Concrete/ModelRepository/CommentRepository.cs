@@ -15,7 +15,6 @@ namespace DAL.Concrete.ModelRepository
     {
         public CommentRepository(DbContext context)
         {
-            //unitOfWork = uow;
             this.context = context;
         }
 
@@ -26,7 +25,6 @@ namespace DAL.Concrete.ModelRepository
 
             var comment = entity.ToOrmComment();
             context.Set<Comment>().Add(comment);
-            //unitOfWork.Commit();
         }
 
         public void Delete(DalComment entity)
@@ -38,8 +36,6 @@ namespace DAL.Concrete.ModelRepository
 
             if(comment != default(Comment))
                 context.Set<Comment>().Remove(comment);
-
-            //unitOfWork.Commit();
         }
 
         public void Update(DalComment entity)
@@ -82,8 +78,6 @@ namespace DAL.Concrete.ModelRepository
         //public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Comment>().Where(c => c.PostId == postId).ToList().Select(c => c.ToDalComment());
         public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Comments.ToList().Select(c => c.ToDalComment());
 
-
-        //private UnitOfWork unitOfWork;
-        private DbContext context;
+        private readonly DbContext context;
     }
 }

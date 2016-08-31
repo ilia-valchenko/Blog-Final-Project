@@ -21,7 +21,5 @@ C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\System.Web.WebPages.xml
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.InitialCreate.resources
-C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.csproj.GenerateResource.Cache
-C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.test.resources
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.Date31082016time0912.resources
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.Rebuilddatabase.resources
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.csproj.GenerateResource.Cache

@@ -6,5 +6,6 @@ namespace DAL.Interfacies.Repository.ModelRepository
     public interface ILikeRepository : IRepository<DalLike>
     {
         IEnumerable<DalLike> GetDalLikesByUserId(int userId);
+        IEnumerable<DalLike> GetDalLikesByPostId(int postId);
     }
 }
