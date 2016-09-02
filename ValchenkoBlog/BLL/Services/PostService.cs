@@ -46,7 +46,9 @@ namespace BLL.Services
                     dalTags.Add(tag);
             }
             
+            // CREATE and UPDATE should return ID of created entity.
             postRepository.Create(post, dalTags);
+
 
             // I don't know the future Id of the post.
             //postRepository.AddTagsToPost(post.Id, tags);
@@ -115,7 +117,7 @@ namespace BLL.Services
 
         public void AddLike(LikeEntity likeEntity)
         {
-            throw new NotImplementedException();
+            likeRepository.Create(likeEntity.ToDalLike());
         }
 
         public void RemoveLike(LikeEntity likeEntity)

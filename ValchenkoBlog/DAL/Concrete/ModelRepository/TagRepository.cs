@@ -19,31 +19,33 @@ namespace DAL.Concrete.ModelRepository
         }
 
         #region CRUD operations
-        public void Create(DalTag entity)
+        public int Create(DalTag entity)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var tag = entity.ToOrmTag();
-            context.Set<Tag>().Add(tag);
+            return context.Set<Tag>().Add(tag).TagId;
         }
 
-        public void Update(DalTag entity)
+        public int Update(DalTag entity)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
 
             if (tag == default(Tag))
             {
                 tag = entity.ToOrmTag();
-                context.Set<Tag>().Add(tag);
-                return;
+                return context.Set<Tag>().Add(tag).TagId;
+                //return;
             }
 
             tag.Name = entity.Name;
             context.Entry(tag).State = EntityState.Modified;
+            // Add new
+            return entity.Id;
         }
 
         public void Delete(DalTag entity)

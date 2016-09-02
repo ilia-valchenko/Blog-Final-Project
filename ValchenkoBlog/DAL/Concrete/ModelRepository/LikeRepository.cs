@@ -19,29 +19,41 @@ namespace DAL.Concrete.ModelRepository
         }
 
         #region CRUD operations
-        public void Create(DalLike entity)
+        public int Create(DalLike entity)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var like = entity.ToOrmLike();
-            context.Set<Like>().Add(like);
+            // Add new
+            int createdLikeId = context.Set<Like>().Add(like).LikeId;
+
+            var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId);
+            var user = context.Set<User>().FirstOrDefault(u => u.UserId == entity.UserId);
+
+
+            return createdLikeId;
+            //context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId)?.Likes.Add(like);
+            //context.Set<Like>().Add(like);
         }
 
-        public void Update(DalLike entity)
+        public int Update(DalLike entity)
         {
             var like = context.Set<Like>().FirstOrDefault(l => l.LikeId == entity.Id);
 
             if (like == default(Like))
             {
                 like = entity.ToOrmLike();
-                context.Set<Like>().Add(like);
-                return;
+                return context.Set<Like>().Add(like).LikeId;
+                //return;
             }
 
             //like.PostId = entity.PostId;
             //like.UserId = entity.UserId;
             context.Entry(like).State = EntityState.Modified;
+
+            // Add new
+            return entity.Id;
         }
 
         public void Delete(DalLike entity)

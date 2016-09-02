@@ -43,52 +43,33 @@ namespace DAL.Concrete.ModelRepository
 
 
         #region CRUD operations
-        // What should I do with it?
-        public void Create(DalPost entity)
-        {
-            /*if (entity == null)
-                return;
-
-            var post = entity.ToOrmPost();
-            // Add tags here
-            
-            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);*/
-
-            throw new NotImplementedException();
-        }
-        public void Create(DalPost entity, List<DalTag> tags)
+        public int Create(DalPost entity/*, List<DalTag> tags*/)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var post = entity.ToOrmPost();
+            // Test. I add post to the user before it.
+            int createdPostId = context.Set<Post>().Add(post).PostId;
 
             /*foreach (var dalTag in tags)
-                post.Tags.Add(dalTag?.ToOrmTag());*/
+                context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name)?.Posts.Add(post);*/
 
-            // test
-            foreach (var dalTag in tags)
-            {
-                context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name)?.Posts.Add(post);
-            }
-                
+            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);
 
-            //context.Set<User>().FirstOrDefault(u => u.UserId == post.User.UserId).Posts.Add(post);
-
-            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post); 
-            
-            //context.Set<Post>().Add(post);
+            // Add new
+            return createdPostId;
         }
 
-        public void Update(DalPost entity)
+        public int Update(DalPost entity)
         {
             var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.Id);
 
             if (post == default(Post))
             {
                 post = entity.ToOrmPost();
-                context.Set<Post>().Add(post);
-                return;
+                return context.Set<Post>().Add(post).PostId;
+                //return;
             }
 
             post.Title = entity.Title;
@@ -96,6 +77,9 @@ namespace DAL.Concrete.ModelRepository
             post.PublishDate = entity.PublishDate;
             //post.UserId = entity.UserId;
             context.Entry(post).State = EntityState.Modified;
+
+            // Add new 
+            return entity.Id;
         }
 
         public void Delete(DalPost entity)

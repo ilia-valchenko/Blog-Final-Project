@@ -74,7 +74,19 @@ namespace MvcPL.Controllers
             return RedirectToAction("Index");
         }
 
-        // Like and dislike
+        public ActionResult Like(/*int postId*/)
+        {
+            // We also should know the id of user.
+            // int postId, int userId
+            var like = new LikeEntity
+            {
+                PostId = 13,
+                UserId = 9
+            };
+
+            postService.AddLike(like);
+            return RedirectToAction("Index");
+        }
 
         // Add comment
 

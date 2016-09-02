@@ -13,8 +13,8 @@ namespace BLL.Mappers
             return new DalLike
             {
                 Id = bllLike.Id,
-                //PostId = bllLike.PostId,
-                //UserId = bllLike.UserId
+                PostId = bllLike.PostId,
+                UserId = bllLike.UserId
             };
         }
 
@@ -26,8 +26,8 @@ namespace BLL.Mappers
             return new LikeEntity
             {
                 Id = dalLike.Id,
-                //PostId = dalLike.PostId,
-                //UserId = dalLike.UserId
+                PostId = dalLike.PostId,
+                UserId = dalLike.UserId
             };
         }
     }
