@@ -15,8 +15,8 @@ namespace BLL.Mappers
                 Id = bllComment.Id,
                 Text = bllComment.Text,
                 PublishDate = bllComment.PublishDate,
-                PostId = bllComment.PostId,
-                UserId = bllComment.UserId
+                //PostId = bllComment.PostId,
+                //UserId = bllComment.UserId
             };
         }
 
@@ -30,8 +30,8 @@ namespace BLL.Mappers
                 Id = dalComment.Id,
                 Text = dalComment.Text,
                 PublishDate = dalComment.PublishDate,
-                PostId = dalComment.PostId,
-                UserId = dalComment.UserId
+                //PostId = dalComment.PostId,
+                //UserId = dalComment.UserId
             };
         }
     }

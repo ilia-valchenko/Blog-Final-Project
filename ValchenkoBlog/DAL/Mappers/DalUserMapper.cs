@@ -10,13 +10,19 @@ namespace DAL.Mappers
             if (ormUser == null)
                 return null;
 
-            return new DalUser
+            //return new DalUser
+            var dalUser = new DalUser
             {
                 Id = ormUser.UserId,
                 Nickname = ormUser.Nickname,
                 Password = ormUser.Password,
-                Avatar = ormUser.Avatar
+                Avatar = ormUser.Avatar,
             };
+
+            /*foreach (var ormRole in ormUser.Roles)
+                dalUser.Roles.Add(ormRole.ToDalRole());*/
+
+            return dalUser;
         }
 
         public static User ToOrmUser(this DalUser dalUser)

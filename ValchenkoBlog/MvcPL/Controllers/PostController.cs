@@ -28,10 +28,7 @@ namespace MvcPL.Controllers
             {
                 var mvcPost = bllPost.ToMvcPost();
 
-                mvcPost.Author = userService.GetById(bllPost.UserId).ToMvcUser();
-
-                Debug.Write("\nTest collection of tags. PostId = " + bllPost.Id + " .Number of tags: " + tagService.GetTagsOfPost(bllPost.Id).Count());
-                
+                mvcPost.Author = userService.GetById(bllPost.UserId)?.ToMvcUser();                
 
                 foreach (var tag in tagService.GetTagsOfPost(bllPost.Id).Select(tag => tag.ToMvcTag()))
                     mvcPost.Tags.Add(tag);
@@ -54,12 +51,18 @@ namespace MvcPL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreatePostViewModel createPostViewModel, string[] tags)
+        public ActionResult Create(CreatePostViewModel createPostViewModel, string[] tagsName)
         {   
-            // Should take from current user. 
-            createPostViewModel.UserId = 1;
+            // Now TagList and SelectedList is null. I should bind it from form.
 
-            postService.Create(createPostViewModel.ToBllPost(), tags);
+            // Should take from current user. 
+            createPostViewModel.UserId = 9;
+
+            /*Debug.Write("Out tags: ");
+            foreach (var tag in createPostViewModel.TagList)
+                Debug.Write(tag);*/
+
+            postService.Create(createPostViewModel.ToBllPost(), tagsName);
             return RedirectToAction("Index");
         }
 

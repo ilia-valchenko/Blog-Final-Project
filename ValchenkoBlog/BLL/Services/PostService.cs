@@ -15,29 +15,46 @@ namespace BLL.Services
 {
     public class PostService : IPostService
     {
-        public PostService(IUnitOfWork unitOfWork, IPostRepository postRepository, IUserRepository userRepository, ICommentRepository commentRepository, ILikeRepository likeRepository)
+        public PostService(IUnitOfWork unitOfWork, 
+                           IPostRepository postRepository, 
+                           IUserRepository userRepository, 
+                           ICommentRepository commentRepository, 
+                           ILikeRepository likeRepository,
+                           ITagRepository tagRepository)
         {
             this.unitOfWork = unitOfWork;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
             this.commentRepository = commentRepository;
             this.likeRepository = likeRepository;
+            this.tagRepository = tagRepository;
         }
 
-        public void Create(PostEntity entity, string[] tags)
+        public void Create(PostEntity entity, string[] tagsName)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
             var post = entity.ToDalPost();
-            postRepository.Create(post);
-            // just add tags
-            Debug.Write("\nADD TAG TO POST. PostId: " + post.Id);
-            postRepository.AddTagsToPost(post.Id, tags);
+
+            var dalTags = new List<DalTag>();
+            foreach (var name in tagsName)
+            {
+                var tag = tagRepository.GetTagByName(name);
+
+                if (tag != null)
+                    dalTags.Add(tag);
+            }
+            
+            postRepository.Create(post, dalTags);
+
+            // I don't know the future Id of the post.
+            //postRepository.AddTagsToPost(post.Id, tags);
+
             unitOfWork.Commit();
         }
 
-        // WHAT SHOULD I DO WITH IT?
+        // What should I do with it?
         public void Create(PostEntity entity)
         {
             throw new NotImplementedException();
@@ -106,6 +123,7 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
+        // What should I do with it?
         public void AddTagsToPost(int postId, string[] tags)
         {
             if (postId < 0)
@@ -139,5 +157,6 @@ namespace BLL.Services
         private readonly IUserRepository userRepository;
         private readonly ICommentRepository commentRepository;
         private readonly ILikeRepository likeRepository;
+        private readonly ITagRepository tagRepository;
     }
 }

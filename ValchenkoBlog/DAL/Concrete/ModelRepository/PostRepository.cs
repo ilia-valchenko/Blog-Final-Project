@@ -41,24 +41,43 @@ namespace DAL.Concrete.ModelRepository
             //unitOfWork.Commit();
         }*/
 
+
+        #region CRUD operations
+        // What should I do with it?
         public void Create(DalPost entity)
+        {
+            /*if (entity == null)
+                return;
+
+            var post = entity.ToOrmPost();
+            // Add tags here
+            
+            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);*/
+
+            throw new NotImplementedException();
+        }
+        public void Create(DalPost entity, List<DalTag> tags)
         {
             if (entity == null)
                 return;
 
             var post = entity.ToOrmPost();
-            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);
-        }
 
-        public void Delete(DalPost entity)
-        {
-            if (entity == null)
-                return;
+            /*foreach (var dalTag in tags)
+                post.Tags.Add(dalTag?.ToOrmTag());*/
 
-            var post = context.Set<Post>().SingleOrDefault(p => p.PostId == entity.Id);
+            // test
+            foreach (var dalTag in tags)
+            {
+                context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name)?.Posts.Add(post);
+            }
+                
 
-            if(post != default(Post))
-                context.Set<Post>().Remove(post);
+            //context.Set<User>().FirstOrDefault(u => u.UserId == post.User.UserId).Posts.Add(post);
+
+            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post); 
+            
+            //context.Set<Post>().Add(post);
         }
 
         public void Update(DalPost entity)
@@ -78,6 +97,19 @@ namespace DAL.Concrete.ModelRepository
             //post.UserId = entity.UserId;
             context.Entry(post).State = EntityState.Modified;
         }
+
+        public void Delete(DalPost entity)
+        {
+            if (entity == null)
+                return;
+
+            var post = context.Set<Post>().SingleOrDefault(p => p.PostId == entity.Id);
+
+            if (post != default(Post))
+                context.Set<Post>().Remove(post);
+        } 
+        #endregion
+
 
         public DalPost GetById(int key) => context.Set<Post>().FirstOrDefault(p => p.PostId == key)?.ToDalPost();
 

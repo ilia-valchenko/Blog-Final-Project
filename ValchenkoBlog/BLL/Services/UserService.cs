@@ -29,6 +29,7 @@ namespace BLL.Services
             this.likeRepository = likeRepository;*/
         }
 
+        #region CRUD operations
         public void Create(UserEntity entity)
         {
             if (entity == null)
@@ -54,7 +55,8 @@ namespace BLL.Services
 
             userRepository.Delete(entity.ToDalUser());
             unitOfWork.Commit();
-        }
+        } 
+        #endregion
 
         public IEnumerable<UserEntity> GetAll() => userRepository.GetAll().Select(u => u.ToBllUser());
 

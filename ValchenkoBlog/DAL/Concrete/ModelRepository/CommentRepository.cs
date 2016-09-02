@@ -18,6 +18,7 @@ namespace DAL.Concrete.ModelRepository
             this.context = context;
         }
 
+        #region CRUD operations
         public void Create(DalComment entity)
         {
             if (entity == null)
@@ -25,17 +26,6 @@ namespace DAL.Concrete.ModelRepository
 
             var comment = entity.ToOrmComment();
             context.Set<Comment>().Add(comment);
-        }
-
-        public void Delete(DalComment entity)
-        {
-            if (entity == null)
-                return;
-
-            var comment = context.Set<Comment>().Single(u => u.CommentId == entity.Id);
-
-            if(comment != default(Comment))
-                context.Set<Comment>().Remove(comment);
         }
 
         public void Update(DalComment entity)
@@ -55,6 +45,18 @@ namespace DAL.Concrete.ModelRepository
             //comment.UserId = entity.UserId;
             context.Entry(comment).State = EntityState.Modified;
         }
+
+        public void Delete(DalComment entity)
+        {
+            if (entity == null)
+                return;
+
+            var comment = context.Set<Comment>().Single(u => u.CommentId == entity.Id);
+
+            if (comment != default(Comment))
+                context.Set<Comment>().Remove(comment);
+        } 
+        #endregion
 
         public DalComment GetById(int key) => context.Set<Comment>().FirstOrDefault(u => u.CommentId == key)?.ToDalComment();
 

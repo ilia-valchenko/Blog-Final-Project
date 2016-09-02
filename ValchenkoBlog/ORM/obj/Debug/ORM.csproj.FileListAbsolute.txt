@@ -5,7 +5,6 @@ C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\EntityFramework.xml
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.dll
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.pdb
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\Microsoft.Web.Infrastructure.dll
@@ -23,3 +22,4 @@ C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\
 C:\Users\Ilia\documents\visual studio 2015\Projects\ValchenkoBlog\ORM\bin\Debug\System.Web.WebPages.Razor.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.Rebuilddatabase.resources
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.csproj.GenerateResource.Cache
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ORM\obj\Debug\ORM.Migrations.Date02092016time1615.resources

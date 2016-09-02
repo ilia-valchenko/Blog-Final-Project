@@ -19,22 +19,18 @@ namespace DAL.Concrete.ModelRepository
             this.context = context;
         }
 
+        #region CRUD operations
         public void Create(DalUser entity)
         {
             if (entity == null)
                 return;
 
             Role role = context.Set<Role>().FirstOrDefault(r => r.Name == "user");
+            //var role = new DalRole { Name = "Borch" }.ToOrmRole();
+
             var user = entity.ToOrmUser();
             user.Roles.Add(role);
             context.Set<User>().Add(user);
-        }
-
-        public void Delete(DalUser entity)
-        {
-            var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
-            if (user != default(User))
-                context.Set<User>().Remove(user);
         }
 
         public void Update(DalUser entity)
@@ -44,7 +40,7 @@ namespace DAL.Concrete.ModelRepository
 
             var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
 
-            if(user == default(User))
+            if (user == default(User))
             {
                 user = entity.ToOrmUser();
                 context.Set<User>().Add(user);
@@ -57,6 +53,14 @@ namespace DAL.Concrete.ModelRepository
 
             context.Entry(user).State = EntityState.Modified;
         }
+
+        public void Delete(DalUser entity)
+        {
+            var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
+            if (user != default(User))
+                context.Set<User>().Remove(user);
+        } 
+        #endregion
 
         public DalUser GetById(int key) => context.Set<User>().FirstOrDefault(user => user.UserId == key)?.ToDalUser();
 

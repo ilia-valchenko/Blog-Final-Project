@@ -18,6 +18,7 @@ namespace DAL.Concrete.ModelRepository
             this.context = context;
         }
 
+        #region CRUD operations
         public void Create(DalTag entity)
         {
             if (entity == null)
@@ -27,14 +28,6 @@ namespace DAL.Concrete.ModelRepository
             context.Set<Tag>().Add(tag);
         }
 
-        public void Delete(DalTag entity)
-        {
-            var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
-
-            if(tag != default(Tag))
-                context.Set<Tag>().Remove(tag);
-        }
-
         public void Update(DalTag entity)
         {
             if (entity == null)
@@ -42,7 +35,7 @@ namespace DAL.Concrete.ModelRepository
 
             var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
 
-            if(tag == default(Tag))
+            if (tag == default(Tag))
             {
                 tag = entity.ToOrmTag();
                 context.Set<Tag>().Add(tag);
@@ -52,6 +45,15 @@ namespace DAL.Concrete.ModelRepository
             tag.Name = entity.Name;
             context.Entry(tag).State = EntityState.Modified;
         }
+
+        public void Delete(DalTag entity)
+        {
+            var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
+
+            if (tag != default(Tag))
+                context.Set<Tag>().Remove(tag);
+        } 
+        #endregion
 
         public DalTag GetById(int key) => context.Set<Tag>().FirstOrDefault(t => t.TagId == key)?.ToDalTag();
 

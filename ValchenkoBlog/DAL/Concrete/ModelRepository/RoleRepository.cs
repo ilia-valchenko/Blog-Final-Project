@@ -18,6 +18,7 @@ namespace DAL.Concrete.ModelRepository
             this.context = context;
         }
 
+        #region CRUD operations
         public void Create(DalRole entity)
         {
             if (entity == null)
@@ -27,14 +28,6 @@ namespace DAL.Concrete.ModelRepository
             context.Set<Role>().Add(role);
         }
 
-        public void Delete(DalRole entity)
-        {
-            var role = context.Set<Role>().SingleOrDefault(r => r.RoleId == entity.Id);
-
-            if(role != default(Role))
-                context.Set<Role>().Remove(role);
-        }
-
         public void Update(DalRole entity)
         {
             if (entity == null)
@@ -42,7 +35,7 @@ namespace DAL.Concrete.ModelRepository
 
             var role = context.Set<Role>().SingleOrDefault(r => r.RoleId == entity.Id);
 
-            if(role == default(Role))
+            if (role == default(Role))
             {
                 role = entity.ToOrmRole();
                 context.Set<Role>().Add(role);
@@ -52,6 +45,15 @@ namespace DAL.Concrete.ModelRepository
             role.Name = entity.Name;
             context.Entry(role).State = EntityState.Modified;
         }
+
+        public void Delete(DalRole entity)
+        {
+            var role = context.Set<Role>().SingleOrDefault(r => r.RoleId == entity.Id);
+
+            if (role != default(Role))
+                context.Set<Role>().Remove(role);
+        } 
+        #endregion
 
         public DalRole GetById(int key) => context.Set<Role>().FirstOrDefault(r => r.RoleId == key)?.ToDalRole();
 

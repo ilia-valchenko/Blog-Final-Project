@@ -18,6 +18,7 @@ namespace DAL.Concrete.ModelRepository
             this.context = context;
         }
 
+        #region CRUD operations
         public void Create(DalLike entity)
         {
             if (entity == null)
@@ -25,17 +26,6 @@ namespace DAL.Concrete.ModelRepository
 
             var like = entity.ToOrmLike();
             context.Set<Like>().Add(like);
-        }
-
-        public void Delete(DalLike entity)
-        {
-            if (entity == null)
-                return;
-
-            var like = context.Set<Like>().Single(l => l.LikeId == entity.Id);
-
-            if (like != default(Like))
-                context.Set<Like>().Remove(like);
         }
 
         public void Update(DalLike entity)
@@ -53,6 +43,18 @@ namespace DAL.Concrete.ModelRepository
             //like.UserId = entity.UserId;
             context.Entry(like).State = EntityState.Modified;
         }
+
+        public void Delete(DalLike entity)
+        {
+            if (entity == null)
+                return;
+
+            var like = context.Set<Like>().Single(l => l.LikeId == entity.Id);
+
+            if (like != default(Like))
+                context.Set<Like>().Remove(like);
+        } 
+        #endregion
 
         public DalLike GetById(int key) => context.Set<Like>().FirstOrDefault(l => l.LikeId == key)?.ToDalLike();
 

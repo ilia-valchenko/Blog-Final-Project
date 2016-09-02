@@ -1,5 +1,6 @@
 ﻿using DAL.Interfacies.DTO;
 using ORM.Models;
+using System.Collections.Generic;
 
 namespace DAL.Mappers
 {
@@ -29,7 +30,12 @@ namespace DAL.Mappers
             {
                 Title = dalPost.Title,
                 Description = dalPost.Description,
-                PublishDate = dalPost.PublishDate,
+                PublishDate = dalPost.PublishDate
+                // Add new
+                /*User = new User(),
+                Tags = new HashSet<Tag>(),
+                Comments = new HashSet<Comment>(),
+                Likes = new HashSet<Like>()*/
             };
         }
     }

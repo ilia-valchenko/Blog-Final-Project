@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201608311702146_Rebuild-database.Designer.cs">
       <DependentUpon>201608311702146_Rebuild-database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609021315221_Date-02-09-2016-time-16-15.cs" />
+    <Compile Include="Migrations\201609021315221_Date-02-09-2016-time-16-15.Designer.cs">
+      <DependentUpon>201609021315221_Date-02-09-2016-time-16-15.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Like.cs" />
@@ -101,6 +105,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608311702146_Rebuild-database.resx">
       <DependentUpon>201608311702146_Rebuild-database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609021315221_Date-02-09-2016-time-16-15.resx">
+      <DependentUpon>201609021315221_Date-02-09-2016-time-16-15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
