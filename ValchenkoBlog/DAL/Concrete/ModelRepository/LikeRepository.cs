@@ -65,10 +65,12 @@ namespace DAL.Concrete.ModelRepository
 
             if (like != default(Like))
                 context.Set<Like>().Remove(like);
-        } 
+        }
         #endregion
 
-        public DalLike GetById(int key) => context.Set<Like>().FirstOrDefault(l => l.LikeId == key)?.ToDalLike();
+        #region Get operations
+        // NULLABLE
+        public DalLike GetById(int? key) => context.Set<Like>().FirstOrDefault(l => l.LikeId == key)?.ToDalLike();
 
         public IEnumerable<DalLike> GetAll() => context.Set<Like>().ToList().Select(l => l.ToDalLike());
 
@@ -86,7 +88,8 @@ namespace DAL.Concrete.ModelRepository
         //public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<Like>().Where(l => l.UserId == userId).ToList().Select(l => l.ToDalLike());
         public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes.Select(like => like.ToDalLike());
 
-        public IEnumerable<DalLike> GetDalLikesByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Likes.Select(like => like.ToDalLike());
+        public IEnumerable<DalLike> GetDalLikesByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Likes.Select(like => like.ToDalLike()); 
+        #endregion
 
         private readonly DbContext context;
     }

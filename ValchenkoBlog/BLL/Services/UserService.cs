@@ -62,10 +62,13 @@ namespace BLL.Services
 
         public IEnumerable<UserEntity> GetAll() => userRepository.GetAll().Select(u => u.ToBllUser());
 
-        public UserEntity GetById(int id)
+        public UserEntity GetById(int? id)
         {
             if (id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
+
+            if (id == null)
+                return null;
 
             return userRepository.GetById(id)?.ToBllUser();
         }

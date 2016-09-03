@@ -20,6 +20,14 @@
                 <p>#@tag.Name</p>
             }  
         </div>
+
+        <ul>
+            <li>@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+            <!--Allows only for authorized users.-->
+            <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+            <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+        </ul>
+
     </article>      
 }
 

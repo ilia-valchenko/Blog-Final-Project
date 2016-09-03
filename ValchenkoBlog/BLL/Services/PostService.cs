@@ -103,10 +103,14 @@ namespace BLL.Services
             }
         } 
 
-        public PostEntity GetById(int id)
+        public PostEntity GetById(int? id)
         {
             if (id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
+
+            // Like guys from micrisoft.
+            if (id == null)
+                return null;
 
             return postRepository.GetById(id)?.ToBllPost();
         }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Post;
-using System.Diagnostics;
-using MvcPL.Models.User;
-using System.Collections.Generic;
+using System.Net;
 
 namespace MvcPL.Controllers
 {
@@ -46,12 +43,30 @@ namespace MvcPL.Controllers
             return RedirectToAction("Index");
         }
 
+        // НЕСЕТ ПОТЕНЦИАЛЬНУЮ УЯЗВИМОСТЬ!
+        // GET: Posts/Delete/5
         //[Authorize(Roles = "Admin")]
-        public ActionResult Delete(int postId)
+        public ActionResult Delete(int? id)
         {
-            var post = postService.GetById(postId);
-            postService.Delete(post);
-            return RedirectToAction("Index");
+            // NULLABLE
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var post = postService.GetById(id)?.ToMvcPost();
+
+            if (post == null)
+                return HttpNotFound();
+
+            return View(post);
+        }
+
+        // POST: Posts/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            postService.Delete(postService.GetById(id));
+            return RedirectToAction("Index", "Post");
         }
 
         public ActionResult Like(/*int postId*/)

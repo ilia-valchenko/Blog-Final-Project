@@ -91,11 +91,14 @@ namespace DAL.Concrete.ModelRepository
 
             if (post != default(Post))
                 context.Set<Post>().Remove(post);
+
+            // And what happend with list of tags, likes and comments?
         }
         #endregion
 
         #region Get operations
-        public DalPost GetById(int key) => context.Set<Post>().FirstOrDefault(p => p.PostId == key)?.ToDalPost();
+        // NULLABLE
+        public DalPost GetById(int? key) => context.Set<Post>().FirstOrDefault(p => p.PostId == key)?.ToDalPost();
 
         public IEnumerable<DalPost> GetAll() => context.Set<Post>().ToList().Select(p => p.ToDalPost());
 

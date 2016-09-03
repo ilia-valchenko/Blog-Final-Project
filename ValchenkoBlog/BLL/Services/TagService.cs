@@ -57,10 +57,13 @@ namespace BLL.Services
             unitOfWork.Commit();
         }
 
-        public TagEntity GetById(int id)
+        public TagEntity GetById(int? id)
         {
             if (id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
+
+            if (id == null)
+                return null;
 
             return tagRepository.GetById(id)?.ToBllTag();
         }

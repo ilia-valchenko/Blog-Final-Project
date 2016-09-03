@@ -54,10 +54,12 @@ namespace DAL.Concrete.ModelRepository
 
             if (tag != default(Tag))
                 context.Set<Tag>().Remove(tag);
-        } 
+        }
         #endregion
 
-        public DalTag GetById(int key) => context.Set<Tag>().FirstOrDefault(t => t.TagId == key)?.ToDalTag();
+        #region Get operations
+        // NULLABLE
+        public DalTag GetById(int? key) => context.Set<Tag>().FirstOrDefault(t => t.TagId == key)?.ToDalTag();
 
         public IEnumerable<DalTag> GetAll() => context.Set<Tag>().ToList().Select(t => t.ToDalTag());
 
@@ -73,7 +75,8 @@ namespace DAL.Concrete.ModelRepository
 
         public DalTag GetTagByName(string name) => context.Set<Tag>().FirstOrDefault(tag => tag.Name == name)?.ToDalTag();
 
-        public IEnumerable<DalTag> GetTagsByPostId(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag());
+        public IEnumerable<DalTag> GetTagsByPostId(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag()); 
+        #endregion
 
         private readonly DbContext context;
     }

@@ -61,10 +61,12 @@ namespace DAL.Concrete.ModelRepository
             var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
             if (user != default(User))
                 context.Set<User>().Remove(user);
-        } 
+        }
         #endregion
 
-        public DalUser GetById(int key) => context.Set<User>().FirstOrDefault(user => user.UserId == key)?.ToDalUser();
+        #region Get operations
+        // NULLABLE
+        public DalUser GetById(int? key) => context.Set<User>().FirstOrDefault(user => user.UserId == key)?.ToDalUser();
 
         public IEnumerable<DalUser> GetAll() => context.Set<User>().ToList().Select(u => u.ToDalUser());
 
@@ -78,7 +80,8 @@ namespace DAL.Concrete.ModelRepository
             return final.Select(user => user.ToDalUser());
         }
 
-        public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser();
+        public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser(); 
+        #endregion
 
         public void AddRoleToUser(string nickname, string roleName)
         {

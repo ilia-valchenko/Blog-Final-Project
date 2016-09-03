@@ -54,10 +54,12 @@ namespace DAL.Concrete.ModelRepository
 
             if (role != default(Role))
                 context.Set<Role>().Remove(role);
-        } 
+        }
         #endregion
 
-        public DalRole GetById(int key) => context.Set<Role>().FirstOrDefault(r => r.RoleId == key)?.ToDalRole();
+        #region Get operations
+        // NULLABLE
+        public DalRole GetById(int? key) => context.Set<Role>().FirstOrDefault(r => r.RoleId == key)?.ToDalRole();
 
         public IEnumerable<DalRole> GetAll() => context.Set<Role>().ToList().Select(r => r.ToDalRole());
 
@@ -73,7 +75,8 @@ namespace DAL.Concrete.ModelRepository
 
         public DalRole GetRoleByName(string name) => context.Set<Role>().FirstOrDefault(role => role.Name == name)?.ToDalRole();
 
-        public IEnumerable<DalRole> GetRolesOfUser(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Roles.Select(r => r.ToDalRole()).ToList();
+        public IEnumerable<DalRole> GetRolesOfUser(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Roles.Select(r => r.ToDalRole()).ToList(); 
+        #endregion
 
         private readonly DbContext context;
     }

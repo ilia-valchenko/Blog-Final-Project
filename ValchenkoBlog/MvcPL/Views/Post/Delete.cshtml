@@ -1,0 +1,38 @@
+﻿@model MvcPL.Models.Post.PostViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="create-post-form">
+    <h3>Do you really want to delete this post?</h3>
+    <div class="form-group">
+
+        <article>
+            <h3>Title: @Model.Title</h3>
+            <p><bold>Description: </bold>@Model.Description</p>
+            <p><small>Posted by: @Model.Author.Nickname (Id: @Model.Author.Id)</small></p>
+            <p><small>Number of likes: @Model.NumberOfLikes</small></p>
+            <p><small>Number of comments: @Model.NumberOfComments</small></p>
+            <p><small>Date: </small>@Model.PublishDate</p>
+            <div>
+                Tags:
+                @foreach (var tag in Model.Tags)
+            {
+                    <p>#@tag.Name</p>
+                }
+            </div>
+        </article>
+
+
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Yes">
+            <div class="back-to-list-button">
+                @Html.ActionLink("Back", "Index", "Post", null)
+            </div>
+        }
+    </div>
+</div>

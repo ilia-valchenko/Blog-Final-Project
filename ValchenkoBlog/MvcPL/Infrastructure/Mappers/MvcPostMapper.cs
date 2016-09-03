@@ -28,6 +28,8 @@ namespace MvcPL.Infrastructure.Mappers
 
         public static PostViewModel ToMvcPost(this PostEntity bllPost)
         {
+            // is null
+
             var post = new PostViewModel
             {
                 Id = bllPost.Id,
@@ -45,11 +47,30 @@ namespace MvcPL.Infrastructure.Mappers
             return post;
         }
 
-        // ADD ONE MORE MAPPER FOR DETAIL-POST-VIEW-MODEL.
-
-        /*public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)
+        public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)
         {
-            throw new NotImplementedException();
-        }*/
+            // if null
+
+            var post = new DetailsPostViewModel
+            {
+                Id = bllPost.Id,
+                Title = bllPost.Title,
+                Description = bllPost.Description,
+                PublishDate = bllPost.PublishDate.ToShortDateString(),
+                Author = new UserViewModel
+                {
+                    Id = bllPost.User.Id,
+                    Nickname = bllPost.User.Nickname,
+                    Avatar = bllPost.User.Avatar
+                },
+                NumberOfLikes = bllPost.Likes.Count
+            };
+
+            foreach (var bllTag in bllPost.Tags)
+                post.Tags.Add(bllTag.ToMvcTag());
+
+            foreach (var bllComment in bllPost.Comments)
+                post.Comments.Add(bllComment.ToMvcComment());
+        }
     }
 }
