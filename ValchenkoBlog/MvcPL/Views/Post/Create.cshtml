@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            @Html.DropDownList("tagsName", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
+            @Html.DropDownList("namesOfTags", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
             @Html.ValidationMessageFor(m => m.SelectedTag)
               <!-- Google it-->
 

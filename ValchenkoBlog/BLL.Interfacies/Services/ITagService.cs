@@ -6,6 +6,6 @@ namespace BLL.Interfacies.Services
     public interface ITagService : IService<TagEntity>
     {
         TagEntity GetTagByName(string name);
-        IEnumerable<TagEntity> GetTagsOfPost(int postId); 
+        //IEnumerable<TagEntity> GetTagsOfPost(int postId); 
     }
 }

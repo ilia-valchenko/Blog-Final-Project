@@ -6,6 +6,6 @@ namespace DAL.Interfacies.Repository.ModelRepository
     public interface ITagRepository : IRepository<DalTag>
     {
         DalTag GetTagByName(string name);
-        IEnumerable<DalTag> GetTagsOfPost(int postId);
+        IEnumerable<DalTag> GetTagsByPostId(int postId);
     }
 }

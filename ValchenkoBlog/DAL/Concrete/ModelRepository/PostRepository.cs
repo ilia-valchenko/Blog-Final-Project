@@ -91,10 +91,10 @@ namespace DAL.Concrete.ModelRepository
 
             if (post != default(Post))
                 context.Set<Post>().Remove(post);
-        } 
+        }
         #endregion
 
-
+        #region Get operations
         public DalPost GetById(int key) => context.Set<Post>().FirstOrDefault(p => p.PostId == key)?.ToDalPost();
 
         public IEnumerable<DalPost> GetAll() => context.Set<Post>().ToList().Select(p => p.ToDalPost());
@@ -114,7 +114,8 @@ namespace DAL.Concrete.ModelRepository
 
 
         // Is it normal?
-        public IEnumerable<DalPost> GetDalPostsByTagName(string tagName) => context.Set<Tag>().FirstOrDefault(t => t.Name == tagName)?.Posts.Select(p => p.ToDalPost());
+        public IEnumerable<DalPost> GetDalPostsByTagName(string tagName) => context.Set<Tag>().FirstOrDefault(t => t.Name == tagName)?.Posts.Select(p => p.ToDalPost()); 
+        #endregion
 
         public void AddTagsToPost(int postId, string[] tags)
         {

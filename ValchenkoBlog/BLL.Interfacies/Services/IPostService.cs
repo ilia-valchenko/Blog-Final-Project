@@ -5,7 +5,6 @@ namespace BLL.Interfacies.Services
 {
     public interface IPostService : IService<PostEntity>
     {
-        void Create(PostEntity entity, string[] tags);
         void AddLike(LikeEntity likeEntity);
         void RemoveLike(LikeEntity likeEntity);
         // Is it necessary?

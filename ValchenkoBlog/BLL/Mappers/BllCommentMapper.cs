@@ -17,6 +17,9 @@ namespace BLL.Mappers
                 PublishDate = bllComment.PublishDate,
                 //PostId = bllComment.PostId,
                 //UserId = bllComment.UserId
+                // Add new
+                PostId = bllComment.Post.Id,
+                UserId = bllComment.User.Id
             };
         }
 

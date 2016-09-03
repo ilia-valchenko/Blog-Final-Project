@@ -20,26 +20,7 @@ namespace MvcPL.Controllers
             this.userService = userService;
         }
 
-        public ActionResult Index()
-        {
-            var mvcPosts = new List<PostViewModel>();
-
-            foreach(var bllPost in postService.GetAll())
-            {
-                var mvcPost = bllPost.ToMvcPost();
-
-                mvcPost.Author = userService.GetById(bllPost.UserId)?.ToMvcUser();                
-
-                foreach (var tag in tagService.GetTagsOfPost(bllPost.Id).Select(tag => tag.ToMvcTag()))
-                    mvcPost.Tags.Add(tag);
-                mvcPost.NumberOfLikes = postService.GetLikesByPostId(bllPost.Id).Count();
-                mvcPost.NumberOfComments = postService.GetCommentsByPostId(bllPost.Id).Count();
-
-                mvcPosts.Add(mvcPost);
-            }
-
-            return View(mvcPosts);
-        }
+        public ActionResult Index() => View(postService.GetAll().Select(post => post.ToMvcPost()));
 
         [HttpGet]
         public ActionResult Create()
@@ -51,18 +32,17 @@ namespace MvcPL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CreatePostViewModel createPostViewModel, string[] tagsName)
+        public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
         {   
             // Now TagList and SelectedList is null. I should bind it from form.
 
             // Should take from current user. 
             createPostViewModel.UserId = 9;
 
-            /*Debug.Write("Out tags: ");
-            foreach (var tag in createPostViewModel.TagList)
-                Debug.Write(tag);*/
+            // Should PostService takes post and tags as an arguments?
+            int idOfCreatedPost = postService.Create(createPostViewModel.ToBllPost());
+            postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
 
-            postService.Create(createPostViewModel.ToBllPost(), tagsName);
             return RedirectToAction("Index");
         }
 

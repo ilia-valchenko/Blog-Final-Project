@@ -28,22 +28,24 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public void Create(TagEntity entity)
+        public int Create(TagEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            tagRepository.Create(entity.ToDalTag());
+            int idOfCreatedTag = tagRepository.Create(entity.ToDalTag());
             unitOfWork.Commit();
+            return idOfCreatedTag;
         }
 
-        public void Update(TagEntity entity)
+        public int Update(TagEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            tagRepository.Update(entity.ToDalTag());
+            int idOfUpdatedTag = tagRepository.Update(entity.ToDalTag());
             unitOfWork.Commit();
+            return idOfUpdatedTag;
         }
 
         public void Delete(TagEntity entity)
@@ -75,13 +77,13 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TagEntity> GetTagsOfPost(int postId)
+        /*public IEnumerable<TagEntity> GetTagsOfPost(int postId)
         {
             if (postId < 0)
                 throw new ArgumentOutOfRangeException(nameof(postId));
 
             return tagRepository.GetTagsOfPost(postId).Select(tag => tag.ToBllTag());
-        }
+        }*/
 
         private readonly IUnitOfWork unitOfWork;
         private readonly ITagRepository tagRepository;

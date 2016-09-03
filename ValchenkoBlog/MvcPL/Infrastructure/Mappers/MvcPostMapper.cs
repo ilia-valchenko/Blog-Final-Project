@@ -15,24 +15,41 @@ namespace MvcPL.Infrastructure.Mappers
 
             return new PostEntity
             {
-                //Id = mvcPost.Id,
                 Title = mvcPost.Title,
                 Description = mvcPost.Description,
                 PublishDate = DateTime.Now,
-                UserId = mvcPost.UserId
+                // Cookie
+                User = new UserEntity
+                {
+                    Id = mvcPost.UserId
+                }
             };
         }
 
         public static PostViewModel ToMvcPost(this PostEntity bllPost)
         {
-            return new PostViewModel
+            var post = new PostViewModel
             {
                 Id = bllPost.Id,
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate.ToShortTimeString(),
-                // etc. in controller
+                Author = bllPost.User.ToMvcUser(),
+                NumberOfComments = bllPost.Comments.Count,
+                NumberOfLikes = bllPost.Likes.Count
             };
+
+            foreach (var bllTag in bllPost.Tags)
+                post.Tags.Add(bllTag.ToMvcTag());
+
+            return post;
         }
+
+        // ADD ONE MORE MAPPER FOR DETAIL-POST-VIEW-MODEL.
+
+        /*public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)
+        {
+            throw new NotImplementedException();
+        }*/
     }
 }

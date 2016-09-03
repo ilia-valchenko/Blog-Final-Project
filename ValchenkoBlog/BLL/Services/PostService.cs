@@ -30,45 +30,45 @@ namespace BLL.Services
             this.tagRepository = tagRepository;
         }
 
-        public void Create(PostEntity entity, string[] tagsName)
+        #region CRUD operations
+        public int Create(PostEntity entity/*, string[] tagsName*/)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var post = entity.ToDalPost();
+            
+            //var post = entity.ToDalPost();
 
-            var dalTags = new List<DalTag>();
+            /*var dalTags = new List<DalTag>();
             foreach (var name in tagsName)
             {
                 var tag = tagRepository.GetTagByName(name);
 
                 if (tag != null)
                     dalTags.Add(tag);
-            }
-            
+            }*/
+
             // CREATE and UPDATE should return ID of created entity.
-            postRepository.Create(post, dalTags);
+            //postRepository.Create(post/*, dalTags*/);
+            int createdPostId = postRepository.Create(entity.ToDalPost());
 
 
             // I don't know the future Id of the post.
             //postRepository.AddTagsToPost(post.Id, tags);
 
             unitOfWork.Commit();
+            // Add new
+            return createdPostId;
         }
 
-        // What should I do with it?
-        public void Create(PostEntity entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(PostEntity entity)
+        public int Update(PostEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            postRepository.Update(entity.ToDalPost());
+            int updatedPostId = postRepository.Update(entity.ToDalPost());
             unitOfWork.Commit();
+            return updatedPostId;
         }
 
         public void Delete(PostEntity entity)
@@ -79,8 +79,29 @@ namespace BLL.Services
             postRepository.Delete(entity.ToDalPost());
             unitOfWork.Commit();
         }
+        #endregion
 
-        public IEnumerable<PostEntity> GetAll() => postRepository.GetAll().Select(p => p.ToBllPost());
+        #region Get operations
+        public IEnumerable<PostEntity> GetAll()
+        {
+            foreach(var dalPost in postRepository.GetAll())
+            {
+                var bllPost = dalPost.ToBllPost();
+
+                bllPost.User = userRepository.GetById(dalPost.UserId).ToBllUser();
+
+                foreach (var dalTag in tagRepository.GetTagsByPostId(bllPost.Id))
+                    bllPost.Tags.Add(dalTag.ToBllTag());
+
+                foreach (var dalComment in commentRepository.GetDalCommentsByPostId(dalPost.Id))
+                    bllPost.Comments.Add(dalComment.ToBllComment());
+
+                foreach (var dalLike in likeRepository.GetDalLikesByPostId(dalPost.Id))
+                    bllPost.Likes.Add(dalLike.ToBllLike());
+
+                yield return bllPost;
+            }
+        } 
 
         public PostEntity GetById(int id)
         {
@@ -104,40 +125,6 @@ namespace BLL.Services
         {
             throw new NotImplementedException();
         }
-
-        public void AddComment(CommentEntity commentEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveComment(CommentEntity commentEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddLike(LikeEntity likeEntity)
-        {
-            likeRepository.Create(likeEntity.ToDalLike());
-        }
-
-        public void RemoveLike(LikeEntity likeEntity)
-        {
-            throw new NotImplementedException();
-        }
-
-        // What should I do with it?
-        public void AddTagsToPost(int postId, string[] tags)
-        {
-            if (postId < 0)
-                throw new ArgumentException(nameof(postId));
-
-            if (tags == null)
-                throw new ArgumentNullException(nameof(tags));
-
-            postRepository.AddTagsToPost(postId, tags);
-            unitOfWork.Commit();
-        }
-
         public IEnumerable<LikeEntity> GetLikesByPostId(int postId)
         {
             if (postId < 0)
@@ -152,6 +139,38 @@ namespace BLL.Services
                 throw new ArgumentException(nameof(postId));
 
             return commentRepository.GetDalCommentsByPostId(postId).Select(comment => comment.ToBllComment());
+        }
+        #endregion
+
+        public void AddTagsToPost(int postId, string[] tags)
+        {
+            if (postId < 0)
+                throw new ArgumentOutOfRangeException(nameof(postId));
+
+            if (tags == null)
+                throw new ArgumentNullException(nameof(tags));
+
+            postRepository.AddTagsToPost(postId, tags);
+            unitOfWork.Commit();
+        }
+        public void AddLike(LikeEntity likeEntity)
+        {
+            likeRepository.Create(likeEntity.ToDalLike());
+        }
+
+        public void RemoveLike(LikeEntity likeEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddComment(CommentEntity commentEntity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveComment(CommentEntity commentEntity)
+        {
+            throw new NotImplementedException();
         }
 
         private readonly IUnitOfWork unitOfWork;

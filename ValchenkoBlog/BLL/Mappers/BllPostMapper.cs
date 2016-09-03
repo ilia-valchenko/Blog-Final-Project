@@ -16,7 +16,8 @@ namespace BLL.Mappers
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate,
-                UserId = bllPost.UserId
+                //UserId = bllPost.UserId
+                UserId = bllPost.User.Id
             };
         }
 
@@ -31,7 +32,7 @@ namespace BLL.Mappers
                 Title = dalPost.Title,
                 Description = dalPost.Description,
                 PublishDate = dalPost.PublishDate,
-                UserId = dalPost.UserId
+                //UserId = dalPost.UserId
             };
         }
     }

@@ -6,8 +6,8 @@ namespace BLL.Interfacies.Services
 {
     public interface IService<TEntity>
     {
-        void Create(TEntity entity);
-        void Update(TEntity entity);
+        int Create(TEntity entity);
+        int Update(TEntity entity);
         void Delete(TEntity entity);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();

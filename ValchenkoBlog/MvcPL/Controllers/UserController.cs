@@ -16,17 +16,10 @@ namespace MvcPL.Controllers
             this.service = service;
         }
 
-        [ActionName("Index")]
-        public ActionResult GetAllUsers()
-        {
-            return View(service.GetAll().Select(user => user.ToMvcUser()));
-        }
+        public ActionResult Index() => View(service.GetAll().Select(user => user.ToMvcUser()));
 
         [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]

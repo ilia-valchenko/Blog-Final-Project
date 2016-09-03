@@ -73,7 +73,7 @@ namespace DAL.Concrete.ModelRepository
 
         public DalTag GetTagByName(string name) => context.Set<Tag>().FirstOrDefault(tag => tag.Name == name)?.ToDalTag();
 
-        public IEnumerable<DalTag> GetTagsOfPost(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag());
+        public IEnumerable<DalTag> GetTagsByPostId(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag());
 
         private readonly DbContext context;
     }
