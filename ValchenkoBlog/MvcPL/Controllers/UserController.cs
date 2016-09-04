@@ -13,7 +13,7 @@ namespace MvcPL.Controllers
 
         public UserController(IUserService service)
         {
-            this.service = service;
+           this.service = service;
         }
 
         public ActionResult Index() => View(service.GetAll().Select(user => user.ToMvcUser()));

@@ -1,151 +1,110 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using BLL.Interfacies.Entities;
-using BLL.Interfacies.Services;
 using System.Web.Helpers;
 using System.Web.Security;
-using MvcPL.Infrastructure.Mappers;
+using BLL.Interfacies.Entities;
+using BLL.Interfacies.Services;
 
 namespace MvcPL.Providers
 {
     public class CustomMembershipProvider : MembershipProvider
     {
         public IUserService UserService => (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
-
         public IRoleService RoleService => (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
 
-        public MembershipUser CreateUser(string nickname, string password /* avatar*/)
+        public MembershipUser CreateUser(string email, string nickname, string password)
         {
-            MembershipUser membershipUser = GetUser(nickname, false);
+            /*MembershipUser membershipUser = GetUser(email, false);
 
             if (membershipUser != null)
-            {
-                return null;
-            }
+                return null;*/
 
-            var user = new UserEntity
+            var bllUser = new UserEntity
             {
+                Email = email,
                 Nickname = nickname,
                 Password = Crypto.HashPassword(password),
                 // Avatar
             };
 
-            UserService.Create(user);
-            UserService.AddRoleToUser(user.Nickname, "user");
-
-            membershipUser = GetUser(nickname, false);
+            UserService.Create(bllUser);
+            var membershipUser = GetUser(nickname, false);
             return membershipUser;
         }
 
-       /* public override bool ValidateUser(string nickname, string password)
+        public override bool ValidateUser(string nickname, string password)
         {
-            UserModel user = new UserModel();
-            try
-            {
-                user = UserService.GetUserEntityByEmail(email).ToMvcUser();
-            }
-            catch (ValidationException ex) { return false; }
-            if (Crypto.VerifyHashedPassword(user.Password, password))
-            {
+            var user = UserService.GetUserEntityByNickname(nickname);
+
+            if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
                 return true;
-            }
+
             return false;
-        }*/
+        }
+
+        public override MembershipUser GetUser(string nickname, bool userIsOnline)
+        {
+            var user = UserService.GetUserEntityByNickname(nickname);
+
+            if (user == null)
+                return null;
+
+            return new MembershipUser(
+                "CustomMembershipProvider", // providerName
+                user.Nickname, // name 
+                null, // providerUserKey
+                null, // email
+                null, // passwordQuestion
+                null, // comment
+                false, // isApproved
+                false, // isLockedOut
+                default(DateTime), // creationDate
+                DateTime.MinValue, // lastLoginDate
+                DateTime.MinValue, // lastActivityDate
+                DateTime.MinValue, // lastPasswordChangedDate
+                DateTime.MinValue); // lastLockoutDate
+        }
+
+        public override string GetUserNameByEmail(string email)
+        {
+            var user = UserService.GetUserEntityByEmail(email);
+
+            if (user == null)
+                return null;
+
+            var memberUser = new MembershipUser(
+                "CustomMembershipProvider", 
+                user.Nickname,
+                null, 
+                null, 
+                null, 
+                null,
+                false, 
+                false, 
+                default(DateTime),
+                DateTime.MinValue, 
+                DateTime.MinValue,
+                DateTime.MinValue, 
+                DateTime.MinValue);
+
+            return memberUser.UserName;
+        }
 
         #region Not implemented methods
-        public override string ApplicationName
+        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
+            bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
-        public override bool EnablePasswordReset
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion,
+            string newPasswordAnswer)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
-        public override bool EnablePasswordRetrieval
+        public override string GetPassword(string username, string answer)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MaxInvalidPasswordAttempts
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MinRequiredNonAlphanumericCharacters
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int MinRequiredPasswordLength
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override int PasswordAttemptWindow
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override MembershipPasswordFormat PasswordFormat
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override string PasswordStrengthRegularExpression
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool RequiresQuestionAndAnswer
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public override bool RequiresUniqueEmail
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
@@ -153,27 +112,27 @@ namespace MvcPL.Providers
             throw new NotImplementedException();
         }
 
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
+        public override string ResetPassword(string username, string answer)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
+        public override void UpdateUser(MembershipUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool UnlockUser(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
             throw new NotImplementedException();
         }
 
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
@@ -188,45 +147,27 @@ namespace MvcPL.Providers
             throw new NotImplementedException();
         }
 
-        public override string GetPassword(string username, string answer)
+        public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser GetUser(string username, bool userIsOnline)
+        public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
         }
 
-        public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string GetUserNameByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string ResetPassword(string username, string answer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool UnlockUser(string userName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateUser(MembershipUser user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool ValidateUser(string username, string password)
-        {
-            throw new NotImplementedException();
-        } 
+        public override bool EnablePasswordRetrieval { get; }
+        public override bool EnablePasswordReset { get; }
+        public override bool RequiresQuestionAndAnswer { get; }
+        public override string ApplicationName { get; set; }
+        public override int MaxInvalidPasswordAttempts { get; }
+        public override int PasswordAttemptWindow { get; }
+        public override bool RequiresUniqueEmail { get; }
+        public override MembershipPasswordFormat PasswordFormat { get; }
+        public override int MinRequiredPasswordLength { get; }
+        public override int MinRequiredNonAlphanumericCharacters { get; }
+        public override string PasswordStrengthRegularExpression { get; } 
         #endregion
     }
 }

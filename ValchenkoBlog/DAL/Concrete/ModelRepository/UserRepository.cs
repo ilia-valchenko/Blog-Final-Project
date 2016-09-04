@@ -26,7 +26,6 @@ namespace DAL.Concrete.ModelRepository
                 throw new ArgumentNullException(nameof(entity));
 
             Role role = context.Set<Role>().FirstOrDefault(r => r.Name == "user");
-            //var role = new DalRole { Name = "Borch" }.ToOrmRole();
 
             var user = entity.ToOrmUser();
             user.Roles.Add(role);
@@ -77,7 +76,9 @@ namespace DAL.Concrete.ModelRepository
             return final.Select(user => user.ToDalUser());
         }
 
-        public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser(); 
+        public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser();
+        public DalUser GetByEmail(string email) => context.Set<User>().FirstOrDefault(u => u.Email == email)?.ToDalUser();
+
         #endregion
 
         public void AddRoleToUser(string nickname, string roleName)

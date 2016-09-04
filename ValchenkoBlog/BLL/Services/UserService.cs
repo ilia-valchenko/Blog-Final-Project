@@ -16,17 +16,11 @@ namespace BLL.Services
     {
         public UserService(IUnitOfWork unitOfWork, 
                            IUserRepository userRepository, 
-                           IRoleRepository roleRepository
-                           /*IPostRepository postRepository, 
-                           ICommentRepository commentRepository,
-                           ILikeRepository likeRepository*/)
+                           IRoleRepository roleRepository)
         {
             this.unitOfWork = unitOfWork;
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
-            /*this.postRepository = postRepository;
-            this.commentRepository = commentRepository;
-            this.likeRepository = likeRepository;*/
         }
 
         #region CRUD operations
@@ -55,9 +49,10 @@ namespace BLL.Services
 
             userRepository.Delete(entity.ToDalUser());
             unitOfWork.Commit();
-        } 
+        }
         #endregion
 
+        #region Get operations
         public IEnumerable<UserEntity> GetAll() => userRepository.GetAll().Select(u => u.ToBllUser());
 
         public UserEntity GetById(int? id)
@@ -86,17 +81,21 @@ namespace BLL.Services
         }
 
         public UserEntity GetUserEntityByNickname(string nickname) => userRepository.GetByNickname(nickname)?.ToBllUser();
+        public UserEntity GetUserEntityByEmail(string email) => userRepository.GetByEmail(email)?.ToBllUser();
+        #endregion
 
         public void AddRoleToUser(string nickname, string roleName)
         {
-            if (nickname != null && nickname != String.Empty)
+            /*if (nickname != null && nickname != String.Empty)
                 throw new ArgumentException(nameof(nickname));
 
             if (roleName != null && roleName != String.Empty)
                 throw new ArgumentException(nameof(roleName));
 
             userRepository.AddRoleToUser(nickname, roleName);
-            unitOfWork.Commit();
+            unitOfWork.Commit();*/
+
+            throw new NotImplementedException();
         }
 
         public IEnumerable<RoleEntity> GetRolesOfUser(int userId)
@@ -110,8 +109,5 @@ namespace BLL.Services
         private readonly IUnitOfWork unitOfWork;
         private readonly IUserRepository userRepository;
         private readonly IRoleRepository roleRepository;
-        /*private readonly IPostRepository postRepository;
-        private readonly ICommentRepository commentRepository;
-        private readonly ILikeRepository likeRepository;*/
     }
 }

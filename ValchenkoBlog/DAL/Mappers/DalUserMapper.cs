@@ -15,6 +15,7 @@ namespace DAL.Mappers
             {
                 Id = ormUser.UserId,
                 Nickname = ormUser.Nickname,
+                Email = ormUser.Email,
                 Password = ormUser.Password,
                 Avatar = ormUser.Avatar,
             };
@@ -33,6 +34,7 @@ namespace DAL.Mappers
             return new User
             {
                 Nickname = dalUser.Nickname,
+                Email = dalUser.Email,
                 Password = dalUser.Password,
                 Avatar = dalUser.Avatar
             };

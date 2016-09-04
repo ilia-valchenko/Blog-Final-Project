@@ -26,8 +26,9 @@ namespace ORM
             #region Users
             var admin = new User
             {
-                Nickname = "valchenko",
-                Password = Crypto.HashPassword("qwerty")
+                Nickname = "Ilia Valchenko",
+                Email = "ilia.valchenko@gmail.com",
+                Password = Crypto.HashPassword("qwerty"),
             };
 
             admin.Roles.Add(userRole);
@@ -35,7 +36,8 @@ namespace ORM
 
             var user = new User
             {
-                Nickname = "katzman",
+                Nickname = "Izia Katzman",
+                Email = "joseph.katzman@gmail.com",
                 Password = Crypto.HashPassword("qwerty")
             };
 

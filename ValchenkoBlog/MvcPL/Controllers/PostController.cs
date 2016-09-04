@@ -36,7 +36,7 @@ namespace MvcPL.Controllers
             // Now TagList and SelectedList is null. I should bind it from form.
 
             // Should take from current user. 
-            createPostViewModel.UserId = 9;
+            createPostViewModel.UserId = 11;
 
             // Should PostService takes post and tags as an arguments?
             //int idOfCreatedPost = postService.Create(createPostViewModel.ToBllPost());

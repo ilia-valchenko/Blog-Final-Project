@@ -10,9 +10,12 @@ namespace MvcPL.Infrastructure.Mappers
             return new UserViewModel()
             {
                 Id = userEntity.Id,
-                Nickname = userEntity.Nickname
+                Nickname = userEntity.Nickname,
+                Email = userEntity.Email
                 // Avatar
             };
+
+            // ADD USER'S ROLES
         }
 
         public static UserEntity ToBllUser(this UserViewModel userViewModel)
@@ -21,6 +24,7 @@ namespace MvcPL.Infrastructure.Mappers
             {
                 Id = userViewModel.Id,
                 Nickname = userViewModel.Nickname,
+                Email = userViewModel.Email,
                 //Password = userViewModel.Password
                 Password = "Hardcode_Qwerty_123"
             };

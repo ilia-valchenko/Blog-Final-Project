@@ -1,27 +1,33 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Drawing.Imaging;
+using System.Globalization;
+using System.Web.Mvc;
 using System.Web.Security;
+using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
+using MvcPL.Infrastructure;
+using MvcPL.Infrastructure.Mappers;
+using MvcPL.Models;
 using MvcPL.Models.User;
 using MvcPL.Models.Account;
 using MvcPL.Providers;
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IUserService _model;
+        private readonly IUserService userService;
 
-        public AccountController(IUserService model)
+        public AccountController(IUserService userService)
         {
-            _model = model;
+            this.userService = userService;
         }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            var type = HttpContext.User.GetType();
-            var iden = HttpContext.User.Identity.GetType();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -29,30 +35,34 @@ namespace MvcPL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel viewModel, string returnUrl)
+        public ActionResult Login(LoginViewModel loginViewModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(viewModel.Nickname, viewModel.Password))
-                //Проверяет учетные данные пользователя и управляет параметрами пользователей
+                if (Membership.ValidateUser(loginViewModel.Email, loginViewModel.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.Nickname, viewModel.RememberMe);
-                    //Управляет службами проверки подлинности с помощью форм для веб-приложений
+                    FormsAuthentication.SetAuthCookie(loginViewModel.Email, loginViewModel.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
-                    return RedirectToAction("Index", "User");
+                    else
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
                 }
-                ModelState.AddModelError("", "Incorrect login or password.");
+                else
+                {
+                    ModelState.AddModelError("", "Incorrect login or password.");
+                }
             }
-            return View(viewModel);
+            ViewBag.returnUrl = returnUrl;
+            return View(loginViewModel);
         }
 
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-
             return RedirectToAction("Login", "Account");
         }
 
@@ -66,34 +76,83 @@ namespace MvcPL.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterViewModel viewModel)
+        public ActionResult Register(RegisterViewModel registerViewModel)
         {
-            if (_model.GetOneByPredicate(u => u.Nickname == viewModel.Nickname) != null)
+            if (registerViewModel.Captcha != (string)Session[CaptchaImage.CaptchaValueKey])
+            {
+                ModelState.AddModelError("Captcha", "Incorrect input.");
+                return View(registerViewModel);
+            }
+
+            if (userService.GetOneByPredicate(u => u.Email == registerViewModel.Email) != null)
+            {
+                ModelState.AddModelError("", "User with this address already registered.");
+                return View(registerViewModel);
+            }
+            if (userService.GetOneByPredicate(u => u.Nickname == registerViewModel.Nickname) != null)
             {
                 ModelState.AddModelError("", "User with this nickname already registered.");
-                return View(viewModel);
+                return View(registerViewModel);
             }
+
+            /*UserViewModel anyUser;
+            try
+            {
+                anyUser = userService.GetUserEntityByEmail(registerViewModel.Email).ToMvcUser();
+                ModelState.AddModelError("", "User with this email already registered.");
+                return View(registerViewModel);
+            }
+            catch (ValidationException ex)
+            { }*/
+
+            //if (anyUser!=null)
+            //{
+            //    ModelState.AddModelError("", "User with this address already registered.");
+            //    return View(viewModel);
+            //}
 
             if (ModelState.IsValid)
             {
                 var membershipUser = ((CustomMembershipProvider)Membership.Provider)
-                    .CreateUser(viewModel.Nickname, viewModel.Password);
+                    .CreateUser(registerViewModel.Email, registerViewModel.Nickname, registerViewModel.Password);
 
                 if (membershipUser != null)
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.Nickname, false);
+                    FormsAuthentication.SetAuthCookie(registerViewModel.Email, false);
                     return RedirectToAction("Index", "User");
                 }
-                ModelState.AddModelError("", "Error registration.");
+                else
+                {
+                    ModelState.AddModelError("", "Error registration.");
+                }
             }
-            return View(viewModel);
+            return View(registerViewModel);
         }
 
+        [AllowAnonymous]
+        public ActionResult Captcha()
+        {
+            Session[CaptchaImage.CaptchaValueKey] =
+                new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString(CultureInfo.InvariantCulture);
+            var ci = new CaptchaImage(Session[CaptchaImage.CaptchaValueKey].ToString(), 211, 50, "Helvetica");
+
+            // Change the response headers to output a JPEG image.
+            this.Response.Clear();
+            this.Response.ContentType = "image/jpeg";
+
+            // Write the image to the response stream in JPEG format.
+            ci.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
+
+            // Dispose of the CAPTCHA image object.
+            ci.Dispose();
+            return null;
+        }
 
         [ChildActionOnly]
         public ActionResult LoginPartial()
         {
             return PartialView("_LoginPartial");
         }
+
     }
 }

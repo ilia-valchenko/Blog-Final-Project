@@ -14,6 +14,7 @@ namespace BLL.Mappers
             {
                 Id = bllUser.Id,
                 Nickname = bllUser.Nickname,
+                Email = bllUser.Email,
                 Password = bllUser.Password,
                 Avatar = bllUser.Avatar
             };
@@ -28,6 +29,7 @@ namespace BLL.Mappers
             {
                 Id = dalUser.Id,
                 Nickname = dalUser.Nickname,
+                Email = dalUser.Email,
                 Password = dalUser.Password,
                 Avatar = dalUser.Avatar
             };

@@ -15,10 +15,10 @@ namespace BLL.Services
 {
     public class PostService : IPostService
     {
-        public PostService(IUnitOfWork unitOfWork, 
-                           IPostRepository postRepository, 
-                           IUserRepository userRepository, 
-                           ICommentRepository commentRepository, 
+        public PostService(IUnitOfWork unitOfWork,
+                           IPostRepository postRepository,
+                           IUserRepository userRepository,
+                           ICommentRepository commentRepository,
                            ILikeRepository likeRepository,
                            ITagRepository tagRepository)
         {
@@ -69,7 +69,7 @@ namespace BLL.Services
         #region Get operations
         public IEnumerable<PostEntity> GetAll()
         {
-            foreach(var dalPost in postRepository.GetAll())
+            foreach (var dalPost in postRepository.GetAll())
             {
                 var bllPost = dalPost.ToBllPost();
 
@@ -86,7 +86,7 @@ namespace BLL.Services
 
                 yield return bllPost;
             }
-        } 
+        }
 
         public PostEntity GetById(int? id)
         {

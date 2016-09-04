@@ -24,6 +24,10 @@ namespace ORM.Models
         [Index(IsUnique = true)]*/
         public string Nickname { get; set; }
 
+        [Required(ErrorMessage = "Email is a required field.")]
+        // Add regex here
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "Password is a required field.")]
         //[MaxLength(30, ErrorMessage = "Length of password must be less than 30 characters.")]
         //[MinLength(4, ErrorMessage = "Length of password must be greater than 4 characters.")]

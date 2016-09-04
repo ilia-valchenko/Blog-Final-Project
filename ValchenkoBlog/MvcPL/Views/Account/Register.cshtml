@@ -1,47 +1,44 @@
 ﻿@model MvcPL.Models.Account.RegisterViewModel
+
 @{
     ViewBag.Title = "Register";
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post,
-                new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-register", role = "form" }))
 {
+    <h4>Register:</h4>
+   
     @Html.AntiForgeryToken()
-    <h4>Register</h4>
-    <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nickname, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Nickname, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Nickname, null, new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.LabelFor(m => m.Nickname, new { @class = "sr-only" })
+    @Html.TextBoxFor(m => m.Nickname, new { @class = "form-control", @placeholder = "Enter your nickname" })
+    @Html.ValidationMessageFor(m => m.Nickname, null, new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
-        </div>
-    </div>
+    @Html.LabelFor(m => m.Email, new { @class = "sr-only" })
+    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter your email" })
+    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
+    @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Please enter your password" })
+    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+
+
+    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only" })
+    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Please confirm password" })
+    @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger" })
+
+    @Html.LabelFor(m => m.Captcha, new { @class = "sr-only" })
+    @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control", @placeholder = "Enter the code from the image" })
+    @Html.ValidationMessageFor(m => m.Captcha, null, new { @class = "text-danger" })
+    <div class="img-responsive">
+        <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
     </div>
+    
+    <button type="submit">Register</button>
+
+    <p>
+        Already have an account? Click here to return to login @Html.ActionLink("Login page", "Login")
+    </p>
 }

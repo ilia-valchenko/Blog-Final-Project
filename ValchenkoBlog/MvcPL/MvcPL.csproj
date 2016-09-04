@@ -178,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\CaptchaImage.cs" />
     <Compile Include="Infrastructure\Mappers\MvcCommentMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcPostMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcTagMapper.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Models\User\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CustomMembershipProvider.cs" />
+    <Compile Include="Providers\CustomRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -237,8 +239,8 @@
     <Content Include="Views\Tag\Index.cshtml" />
     <Content Include="Views\Tag\Create.cshtml" />
     <Content Include="Views\Post\Delete.cshtml" />
-    <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\SearchByTag.cshtml" />
+    <Content Include="Views\Post\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
