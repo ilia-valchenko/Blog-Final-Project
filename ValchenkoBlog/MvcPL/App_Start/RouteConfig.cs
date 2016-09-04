@@ -14,6 +14,12 @@ namespace MvcPL
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Hashtag",                                           
+                url: "Hashtag/{tagname}",                            
+                defaults: new { controller = "Post", action = "SearchByTag" }  
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }

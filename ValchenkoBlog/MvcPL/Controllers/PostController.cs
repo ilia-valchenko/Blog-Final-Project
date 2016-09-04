@@ -5,6 +5,8 @@ using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Post;
 using System.Net;
+using System.Collections.Generic;
+using MvcPL.Models.Tag;
 
 namespace MvcPL.Controllers
 {
@@ -37,8 +39,15 @@ namespace MvcPL.Controllers
             createPostViewModel.UserId = 9;
 
             // Should PostService takes post and tags as an arguments?
-            int idOfCreatedPost = postService.Create(createPostViewModel.ToBllPost());
-            postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
+            //int idOfCreatedPost = postService.Create(createPostViewModel.ToBllPost());
+            var bllPost = createPostViewModel.ToBllPost();
+            // add tags
+            foreach (var tagName in namesOfTags)
+                bllPost.Tags.Add(new TagEntity { Name = tagName });
+
+            postService.Create(bllPost);
+
+            //postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
 
             return RedirectToAction("Index");
         }
@@ -88,6 +97,34 @@ namespace MvcPL.Controllers
         // Remove comment
 
         // Find by tag
+
+        public ActionResult SearchByTag(string tagname)
+        {
+            //var posts = new List<PostViewModel>();
+            ViewBag.TagName = tagname;
+
+            /*var post = new PostViewModel()
+            {
+                Id = 111,
+                Title = "I found this post by tag #lolipop",
+                Description = "Go go forever.",
+                PublishDate = "03-09-2016",
+                Author = new Models.User.UserViewModel
+                {
+                    Id = 1,
+                    Nickname = "Robin Hood"
+                },
+                Tags = new List<TagViewModel>(),
+                NumberOfComments = 0,
+                NumberOfLikes = 100
+            };*/
+
+            
+
+            //posts.Add(post);
+
+            return View(postService.GetPostsByTagName(tagname).Select(post => post.ToMvcPost()));
+        }
 
         private readonly IPostService postService;
         private readonly ITagService tagService;

@@ -31,44 +31,29 @@ namespace BLL.Services
         }
 
         #region CRUD operations
-        public int Create(PostEntity entity/*, string[] tagsName*/)
+        public void Create(PostEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            
-            //var post = entity.ToDalPost();
+            // CREATE and UPDATE should return ID or created entity.
+            postRepository.Create(entity.ToDalPost(), entity.Tags.Select(tag => tag.ToDalTag()));
+            unitOfWork.Commit();
 
-            /*var dalTags = new List<DalTag>();
-            foreach (var name in tagsName)
-            {
-                var tag = tagRepository.GetTagByName(name);
 
-                if (tag != null)
-                    dalTags.Add(tag);
-            }*/
-
-            // CREATE and UPDATE should return ID of created entity.
-            //postRepository.Create(post/*, dalTags*/);
-            int createdPostId = postRepository.Create(entity.ToDalPost());
-
+            //postRepository.AddTagsToPost(idOfCretedPost, entity.Tags.Select(tag => tag.Name).ToArray());
 
             // I don't know the future Id of the post.
-            //postRepository.AddTagsToPost(post.Id, tags);
-
-            unitOfWork.Commit();
-            // Add new
-            return createdPostId;
+            //postRepository.AddTagsToPost(post.Id, tags);         
         }
 
-        public int Update(PostEntity entity)
+        public void Update(PostEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            int updatedPostId = postRepository.Update(entity.ToDalPost());
+            postRepository.Update(entity.ToDalPost());
             unitOfWork.Commit();
-            return updatedPostId;
         }
 
         public void Delete(PostEntity entity)
@@ -117,7 +102,7 @@ namespace BLL.Services
 
         public IEnumerable<PostEntity> GetPostsByTagName(string tagName)
         {
-            throw new NotImplementedException();
+            return postRepository.GetDalPostsByTagName(tagName).Select(post => post.ToBllPost());
         }
 
         public PostEntity GetOneByPredicate(Expression<Func<PostEntity, bool>> predicates)

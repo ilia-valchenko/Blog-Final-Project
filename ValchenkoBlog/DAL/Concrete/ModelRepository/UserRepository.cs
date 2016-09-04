@@ -20,7 +20,7 @@ namespace DAL.Concrete.ModelRepository
         }
 
         #region CRUD operations
-        public int Create(DalUser entity)
+        public void Create(DalUser entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -30,10 +30,10 @@ namespace DAL.Concrete.ModelRepository
 
             var user = entity.ToOrmUser();
             user.Roles.Add(role);
-            return context.Set<User>().Add(user).UserId;
+            context.Set<User>().Add(user);
         }
 
-        public int Update(DalUser entity)
+        public void Update(DalUser entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -43,8 +43,7 @@ namespace DAL.Concrete.ModelRepository
             if (user == default(User))
             {
                 user = entity.ToOrmUser();
-                return context.Set<User>().Add(user).UserId;
-                //return;
+                context.Set<User>().Add(user);      
             }
 
             user.Nickname = entity.Nickname;
@@ -52,8 +51,6 @@ namespace DAL.Concrete.ModelRepository
             user.Avatar = entity.Avatar;
 
             context.Entry(user).State = EntityState.Modified;
-            // Add new
-            return entity.Id;
         }
 
         public void Delete(DalUser entity)

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using BLL.Interfacies.Entities;
-using MvcPL.Models;
 using MvcPL.Models.Post;
 using MvcPL.Models.User;
 
@@ -71,6 +69,8 @@ namespace MvcPL.Infrastructure.Mappers
 
             foreach (var bllComment in bllPost.Comments)
                 post.Comments.Add(bllComment.ToMvcComment());
+
+            return post;
         }
     }
 }

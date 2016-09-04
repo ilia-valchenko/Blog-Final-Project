@@ -30,24 +30,22 @@ namespace BLL.Services
         }
 
         #region CRUD operations
-        public int Create(UserEntity entity)
+        public void Create(UserEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            int idOfCreatedUser = userRepository.Create(entity.ToDalUser());
+            userRepository.Create(entity.ToDalUser());
             unitOfWork.Commit();
-            return idOfCreatedUser;
         }
 
-        public int Update(UserEntity entity)
+        public void Update(UserEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            int idOfUpdatedUser = userRepository.Update(entity.ToDalUser());
+            userRepository.Update(entity.ToDalUser());
             unitOfWork.Commit();
-            return idOfUpdatedUser;
         }
 
         public void Delete(UserEntity entity)

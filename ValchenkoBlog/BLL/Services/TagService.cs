@@ -28,24 +28,22 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public int Create(TagEntity entity)
+        public void Create(TagEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            int idOfCreatedTag = tagRepository.Create(entity.ToDalTag());
+            tagRepository.Create(entity.ToDalTag());
             unitOfWork.Commit();
-            return idOfCreatedTag;
         }
 
-        public int Update(TagEntity entity)
+        public void Update(TagEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            int idOfUpdatedTag = tagRepository.Update(entity.ToDalTag());
+            tagRepository.Update(entity.ToDalTag());
             unitOfWork.Commit();
-            return idOfUpdatedTag;
         }
 
         public void Delete(TagEntity entity)

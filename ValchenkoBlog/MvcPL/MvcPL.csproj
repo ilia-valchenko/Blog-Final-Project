@@ -178,6 +178,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Mappers\MvcCommentMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcPostMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcTagMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcUserMapper.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Models\Comment\CommentViewModel.cs" />
     <Compile Include="Models\Like\LikeModel.cs" />
     <Compile Include="Models\Post\CreatePostViewModel.cs" />
+    <Compile Include="Models\Post\DetailsPostViewModel.cs" />
     <Compile Include="Models\Post\PostViewModel.cs" />
     <Compile Include="Models\Tag\CreateTagViewModel.cs" />
     <Compile Include="Models\Tag\TagViewModel.cs" />
@@ -236,6 +238,7 @@
     <Content Include="Views\Tag\Create.cshtml" />
     <Content Include="Views\Post\Delete.cshtml" />
     <Content Include="Views\Post\Details.cshtml" />
+    <Content Include="Views\Post\SearchByTag.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

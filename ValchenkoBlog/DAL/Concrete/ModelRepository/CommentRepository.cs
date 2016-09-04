@@ -19,24 +19,23 @@ namespace DAL.Concrete.ModelRepository
         }
 
         #region CRUD operations
-        public int Create(DalComment entity)
+        public void Create(DalComment entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
             var comment = entity.ToOrmComment();
-            return context.Set<Comment>().Add(comment).CommentId;
+            context.Set<Comment>().Add(comment);
         }
 
-        public int Update(DalComment entity)
+        public void Update(DalComment entity)
         {
             var comment = context.Set<Comment>().FirstOrDefault(c => c.CommentId == entity.Id);
 
             if (comment == default(Comment))
             {
                 comment = entity.ToOrmComment();
-                return context.Set<Comment>().Add(comment).CommentId;
-                //return;
+                context.Set<Comment>().Add(comment);
             }
 
             comment.Text = entity.Text;
@@ -44,9 +43,6 @@ namespace DAL.Concrete.ModelRepository
             //comment.PostId = entity.PostId;
             //comment.UserId = entity.UserId;
             context.Entry(comment).State = EntityState.Modified;
-
-            // Add new 
-            return entity.Id;
         }
 
         public void Delete(DalComment entity)

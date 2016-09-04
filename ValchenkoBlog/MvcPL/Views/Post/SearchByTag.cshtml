@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<MvcPL.Models.Post.PostViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Hashtag #" + ViewBag.TagName + " in Blog";
 }
+
+<h2>Founded posts by #@ViewBag.TagName</h2>
 
 @foreach (var item in Model)
 {
@@ -15,12 +17,10 @@
         <p><small>Date: </small>@item.PublishDate</p>
         <div>
             Tags:
-            <ul>
-                @foreach (var tag in item.Tags)
-                {
-                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
-                }
-            </ul>
+            @foreach (var tag in item.Tags)
+            {
+                <p>#@tag.Name</p>
+            }
         </div>
 
         <ul>
@@ -30,7 +30,7 @@
             <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
         </ul>
 
-    </article>      
+    </article>
 }
 
 <p>
