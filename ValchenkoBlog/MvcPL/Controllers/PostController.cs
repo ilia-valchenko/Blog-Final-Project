@@ -114,19 +114,19 @@ namespace MvcPL.Controllers
         } 
         #endregion
 
-        public ActionResult Like(int postId)
+        public ActionResult Like(int id)
         {
             // We also should know the id of user.
             // int postId, int userId
             var like = new LikeEntity
             {
-                PostId = postId,
+                PostId = id,
                 UserId = 11
             };
 
             postService.Like(like);
 
-            return Json(postService.GetById(postId).Likes.Count);
+            return Json(postService.GetById(id).Likes.Count);
         }
 
         // Add comment

@@ -71,7 +71,8 @@ namespace DAL.Concrete.ModelRepository
         public DalLike GetDalLikeByPostIdAndUserId(int userId, int postId)
         {
             // check input data?
-            return context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes?.FirstOrDefault(l => l.Post.PostId == postId)?.ToDalLike();
+            //return context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes?.FirstOrDefault(l => l.Post.PostId == postId)?.ToDalLike();
+            return context.Set<Like>().FirstOrDefault(l => l.User.UserId == userId && l.Post.PostId == postId)?.ToDalLike();
         }
         #endregion
 

@@ -120,6 +120,9 @@ namespace DAL.Concrete.ModelRepository
 
             var post = context.Set<Post>().SingleOrDefault(p => p.PostId == entity.Id);
 
+            // Test
+            post.Likes.Clear();
+
             if (post != default(Post))
                 context.Set<Post>().Remove(post);
 

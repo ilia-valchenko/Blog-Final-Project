@@ -17,14 +17,14 @@ namespace ORM.Models
         [Key]
         public int UserId { get; set; }
 
-        [Required(ErrorMessage = "Nickname is a required field.")]
+        [Required]
         /*[MaxLength(30, ErrorMessage = "Length of nickname must be less than 30 characters.")]
         [MinLength(4, ErrorMessage = "Length of nickname must be greater than 4 characters.")]
         [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", ErrorMessage = "Numbers and special characters are not allowed in the name.")]
         [Index(IsUnique = true)]*/
         public string Nickname { get; set; }
 
-        [Required(ErrorMessage = "Email is a required field.")]
+        [Required]
         // Add regex here
         public string Email { get; set; }
 

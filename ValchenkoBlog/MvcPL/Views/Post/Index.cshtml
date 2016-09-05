@@ -17,7 +17,7 @@
             <h3>Title: @item.Title</h3>
             <p><bold>Description: </bold>@item.Description</p>
             <p><small>Posted by: @item.Author.Nickname (Id: @item.Author.Id)</small></p>
-            <p><small>Number of likes: <span id=@string.Format("like{0}", item.Id)>@item.NumberOfLikes</span></small></p>
+            <p><small>Number of likes: <span id=@string.Format($"like{item.Id}")>@item.NumberOfLikes</span></small></p>
             <p><small>Number of comments: @item.NumberOfComments</small></p>
             <p><small id="pom">Date: </small>@item.PublishDate</p>
             <div>
@@ -33,7 +33,7 @@
             <div>
                 @using (Ajax.BeginForm("Like", new AjaxOptions()
                 {
-                    UpdateTargetId = string.Format("like{0}", item.Id),
+                    UpdateTargetId = string.Format($"like{item.Id}"),
                     InsertionMode = InsertionMode.Replace
                 }))
                 {

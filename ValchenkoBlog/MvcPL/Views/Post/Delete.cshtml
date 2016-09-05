@@ -4,6 +4,9 @@
     ViewBag.Title = "Delete";
 }
 
+@Scripts.Render("~/scripts/jquery-1.10.2.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+
 <div class="create-post-form">
     <h3>Do you really want to delete this post?</h3>
     <div class="form-group">
@@ -12,16 +15,32 @@
             <h3>Title: @Model.Title</h3>
             <p><bold>Description: </bold>@Model.Description</p>
             <p><small>Posted by: @Model.Author.Nickname (Id: @Model.Author.Id)</small></p>
-            <p><small>Number of likes: @Model.NumberOfLikes</small></p>
+            <p><small>Number of likes: <span id=@string.Format($"like{Model.Id}")>@Model.NumberOfLikes</span></small></p>
             <p><small>Number of comments: @Model.NumberOfComments</small></p>
             <p><small>Date: </small>@Model.PublishDate</p>
+            
             <div>
                 Tags:
-                @foreach (var tag in Model.Tags)
-            {
-                    <p>#@tag.Name</p>
+                <ul>
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
+                    }
+                </ul>
+            </div>
+
+            <div>
+                @using (Ajax.BeginForm("Like", new AjaxOptions()
+                {
+                    UpdateTargetId = string.Format($"like{Model.Id}"),
+                    InsertionMode = InsertionMode.Replace
+                }))
+                {
+                    <input type="hidden" name="id" value=Model.Id>
+                    <input type="submit" value="Like">
                 }
             </div>
+
         </article>
 
 

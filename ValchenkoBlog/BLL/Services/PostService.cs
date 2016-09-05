@@ -38,13 +38,7 @@ namespace BLL.Services
 
             // CREATE and UPDATE should return ID or created entity.
             postRepository.Create(entity.ToDalPost(), entity.Tags.Select(tag => tag.ToDalTag()));
-            unitOfWork.Commit();
-
-
-            //postRepository.AddTagsToPost(idOfCretedPost, entity.Tags.Select(tag => tag.Name).ToArray());
-
-            // I don't know the future Id of the post.
-            //postRepository.AddTagsToPost(post.Id, tags);         
+            unitOfWork.Commit();  
         }
 
         public void Update(PostEntity entity)
@@ -52,7 +46,6 @@ namespace BLL.Services
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            //tagRepository.DeleteTagsFromPost(entity.Id);
             postRepository.Update(entity.ToDalPost(), entity.Tags.Select(tag => tag.ToDalTag()));
             unitOfWork.Commit();
         }
@@ -61,6 +54,13 @@ namespace BLL.Services
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
+
+            // test
+            /*var likes = likeRepository.GetDalLikesByPostId(entity.Id);
+            if (likes != null)
+                foreach (var dalLike in likes)
+                    likeRepository.Delete(dalLike);*/
+            // end of test
 
             postRepository.Delete(entity.ToDalPost());
             unitOfWork.Commit();
@@ -98,12 +98,41 @@ namespace BLL.Services
             if (id == null)
                 return null;
 
-            return postRepository.GetById(id)?.ToBllPost();
+            var dalPost = postRepository.GetById(id);
+            var bllPost = dalPost.ToBllPost();
+            bllPost.User = userRepository.GetById(dalPost.UserId).ToBllUser();
+
+            foreach (var dalTag in tagRepository.GetTagsByPostId(bllPost.Id))
+                bllPost.Tags.Add(dalTag.ToBllTag());
+
+            foreach (var dalComment in commentRepository.GetDalCommentsByPostId(dalPost.Id))
+                bllPost.Comments.Add(dalComment.ToBllComment());
+
+            foreach (var dalLike in likeRepository.GetDalLikesByPostId(dalPost.Id))
+                bllPost.Likes.Add(dalLike.ToBllLike());
+
+            return bllPost;
         }
 
         public IEnumerable<PostEntity> GetPostsByTagName(string tagName)
         {
-            return postRepository.GetDalPostsByTagName(tagName).Select(post => post.ToBllPost());
+            foreach (var dalPost in postRepository.GetDalPostsByTagName(tagName))
+            {
+                var bllPost = dalPost.ToBllPost();
+
+                bllPost.User = userRepository.GetById(dalPost.UserId).ToBllUser();
+
+                foreach (var dalTag in tagRepository.GetTagsByPostId(bllPost.Id))
+                    bllPost.Tags.Add(dalTag.ToBllTag());
+
+                foreach (var dalComment in commentRepository.GetDalCommentsByPostId(dalPost.Id))
+                    bllPost.Comments.Add(dalComment.ToBllComment());
+
+                foreach (var dalLike in likeRepository.GetDalLikesByPostId(dalPost.Id))
+                    bllPost.Likes.Add(dalLike.ToBllLike());
+
+                yield return bllPost;
+            }
         }
 
         public PostEntity GetOneByPredicate(Expression<Func<PostEntity, bool>> predicates)
