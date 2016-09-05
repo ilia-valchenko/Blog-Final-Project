@@ -5,8 +5,7 @@ namespace BLL.Interfacies.Services
 {
     public interface IPostService : IService<PostEntity>
     {
-        void AddLike(LikeEntity likeEntity);
-        void RemoveLike(LikeEntity likeEntity);
+        void Like(LikeEntity likeEntity);
         void AddComment(CommentEntity commentEntity);
         void RemoveComment(CommentEntity commentEntity);
 

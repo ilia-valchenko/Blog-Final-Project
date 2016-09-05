@@ -25,32 +25,11 @@ namespace DAL.Concrete.ModelRepository
                 throw new ArgumentNullException(nameof(entity));
 
             var like = entity.ToOrmLike();
-            // Add new
-            context.Set<Like>().Add(like);
+            like.User = context.Set<User>().FirstOrDefault(u => u.UserId == entity.UserId);
+            like.Post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId);
 
-            var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId);
-            var user = context.Set<User>().FirstOrDefault(u => u.UserId == entity.UserId);
-
-            //context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId)?.Likes.Add(like);
-            //context.Set<Like>().Add(like);
+            context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId)?.Likes.Add(like);
         }
-
-        public void Update(DalLike entity)
-        {
-            var like = context.Set<Like>().FirstOrDefault(l => l.LikeId == entity.Id);
-
-            if (like == default(Like))
-            {
-                like = entity.ToOrmLike();
-                context.Set<Like>().Add(like);
-                //return;
-            }
-
-            //like.PostId = entity.PostId;
-            //like.UserId = entity.UserId;
-            context.Entry(like).State = EntityState.Modified;
-        }
-
         public void Delete(DalLike entity)
         {
             if (entity == null)
@@ -60,6 +39,10 @@ namespace DAL.Concrete.ModelRepository
 
             if (like != default(Like))
                 context.Set<Like>().Remove(like);
+        }
+        public void Update(DalLike entity)
+        {
+            throw new NotImplementedException();
         }
         #endregion
 
@@ -83,7 +66,13 @@ namespace DAL.Concrete.ModelRepository
         //public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<Like>().Where(l => l.UserId == userId).ToList().Select(l => l.ToDalLike());
         public IEnumerable<DalLike> GetDalLikesByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes.Select(like => like.ToDalLike());
 
-        public IEnumerable<DalLike> GetDalLikesByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Likes.Select(like => like.ToDalLike()); 
+        public IEnumerable<DalLike> GetDalLikesByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Likes.Select(like => like.ToDalLike());
+
+        public DalLike GetDalLikeByPostIdAndUserId(int userId, int postId)
+        {
+            // check input data?
+            return context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Likes?.FirstOrDefault(l => l.Post.PostId == postId)?.ToDalLike();
+        }
         #endregion
 
         private readonly DbContext context;

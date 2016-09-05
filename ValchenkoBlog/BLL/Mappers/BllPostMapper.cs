@@ -1,4 +1,5 @@
-﻿using BLL.Interfacies.Entities;
+﻿using System.Collections.Generic;
+using BLL.Interfacies.Entities;
 using DAL.Interfacies.DTO;
 
 namespace BLL.Mappers
@@ -16,7 +17,6 @@ namespace BLL.Mappers
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate,
-                //UserId = bllPost.UserId
                 UserId = bllPost.User.Id
             };
         }
@@ -32,7 +32,10 @@ namespace BLL.Mappers
                 Title = dalPost.Title,
                 Description = dalPost.Description,
                 PublishDate = dalPost.PublishDate,
-                //UserId = dalPost.UserId
+                Tags = new List<TagEntity>(),
+                Comments = new List<CommentEntity>(),
+                Likes = new List<LikeEntity>(),
+                User = new UserEntity()
             };
         }
     }

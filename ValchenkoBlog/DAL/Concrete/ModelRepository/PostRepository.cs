@@ -48,22 +48,6 @@ namespace DAL.Concrete.ModelRepository
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            /*var post = entity.ToOrmPost();
-
-            //var idOfCreatedPost = context.Set<Post>().Add(post).PostId;
-            context.Set<Post>().Add(post);
-
-            int idOfCreatedPost = post.PostId;
-
-            // TEST
-            //unitOfWork.Commit();
-
-            context.Set<User>().FirstOrDefault(user => user.UserId == entity.UserId)?.Posts.Add(post);
-            
-
-            // Add new
-            return idOfCreatedPost;*/
-
             Create(entity, new List<DalTag>());
         }
 
@@ -73,10 +57,6 @@ namespace DAL.Concrete.ModelRepository
                 throw new ArgumentNullException(nameof(entity));
 
             var post = entity.ToOrmPost();
-
-            // HGHGHGHGH
-
-            //var post = context.Set<Post>().FirstOrDefault(p => p.PostId == postId);
 
             if (post != null)
             {
@@ -96,6 +76,14 @@ namespace DAL.Concrete.ModelRepository
 
         public void Update(DalPost entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            Update(entity, new List<DalTag>());
+        }
+
+        public void Update(DalPost entity, IEnumerable<DalTag> tags)
+        {
             var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.Id);
 
             if (post == default(Post))
@@ -105,10 +93,23 @@ namespace DAL.Concrete.ModelRepository
                 //return;
             }
 
+            if (post != null)
+            {
+                post.Tags.Clear();
+
+                if (tags != null)
+                {
+                    foreach (var dalTag in tags)
+                    {
+                        var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name);
+                        if (tag != null)
+                            post.Tags.Add(tag);
+                    }
+                }
+            }
+
             post.Title = entity.Title;
             post.Description = entity.Description;
-            post.PublishDate = entity.PublishDate;
-            //post.UserId = entity.UserId;
             context.Entry(post).State = EntityState.Modified;
         }
 

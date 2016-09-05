@@ -190,6 +190,7 @@
     <Compile Include="Models\Like\LikeModel.cs" />
     <Compile Include="Models\Post\CreatePostViewModel.cs" />
     <Compile Include="Models\Post\DetailsPostViewModel.cs" />
+    <Compile Include="Models\Post\EditPostViewModel.cs" />
     <Compile Include="Models\Post\PostViewModel.cs" />
     <Compile Include="Models\Tag\CreateTagViewModel.cs" />
     <Compile Include="Models\Tag\TagViewModel.cs" />
@@ -211,6 +212,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

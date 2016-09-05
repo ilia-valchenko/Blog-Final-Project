@@ -7,5 +7,6 @@ namespace DAL.Interfacies.Repository.ModelRepository
     {
         IEnumerable<DalLike> GetDalLikesByUserId(int userId);
         IEnumerable<DalLike> GetDalLikesByPostId(int postId);
+        DalLike GetDalLikeByPostIdAndUserId(int userId, int postId);
     }
 }

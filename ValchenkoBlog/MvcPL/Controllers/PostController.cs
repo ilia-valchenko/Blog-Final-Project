@@ -21,6 +21,7 @@ namespace MvcPL.Controllers
 
         public ActionResult Index() => View(postService.GetAll().Select(post => post.ToMvcPost()));
 
+        #region Create
         [HttpGet]
         public ActionResult Create()
         {
@@ -32,7 +33,7 @@ namespace MvcPL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
-        {   
+        {
             // Now TagList and SelectedList is null. I should bind it from form.
 
             // Should take from current user. 
@@ -50,8 +51,10 @@ namespace MvcPL.Controllers
             //postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
 
             return RedirectToAction("Index");
-        }
+        } 
+        #endregion
 
+        #region Delete
         // НЕСЕТ ПОТЕНЦИАЛЬНУЮ УЯЗВИМОСТЬ!
         // GET: Posts/Delete/5
         //[Authorize(Roles = "Admin")]
@@ -77,19 +80,53 @@ namespace MvcPL.Controllers
             postService.Delete(postService.GetById(id));
             return RedirectToAction("Index", "Post");
         }
+        #endregion
 
-        public ActionResult Like(/*int postId*/)
+        #region Edit
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            EditPostViewModel model = postService.GetById(id)?.ToMvcEditPost();
+
+            if (model == null)
+                return HttpNotFound();
+
+            model.TagList = new SelectList(tagService.GetAll().Select(tag => tag.ToMvcTag().Name));
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditPostViewModel model, string[] namesOfTags)
+        {
+            var post = model.ToBllPost();
+                
+            if(namesOfTags != null)
+                foreach (var tagName in namesOfTags)
+                    post.Tags.Add(new TagEntity { Name = tagName });
+
+            postService.Update(post);
+            return RedirectToAction("Index");
+        } 
+        #endregion
+
+        public ActionResult Like(int postId)
         {
             // We also should know the id of user.
             // int postId, int userId
             var like = new LikeEntity
             {
-                PostId = 13,
-                UserId = 9
+                PostId = postId,
+                UserId = 11
             };
 
-            postService.AddLike(like);
-            return RedirectToAction("Index");
+            postService.Like(like);
+
+            return Json(postService.GetById(postId).Likes.Count);
         }
 
         // Add comment
@@ -100,29 +137,7 @@ namespace MvcPL.Controllers
 
         public ActionResult SearchByTag(string tagname)
         {
-            //var posts = new List<PostViewModel>();
             ViewBag.TagName = tagname;
-
-            /*var post = new PostViewModel()
-            {
-                Id = 111,
-                Title = "I found this post by tag #lolipop",
-                Description = "Go go forever.",
-                PublishDate = "03-09-2016",
-                Author = new Models.User.UserViewModel
-                {
-                    Id = 1,
-                    Nickname = "Robin Hood"
-                },
-                Tags = new List<TagViewModel>(),
-                NumberOfComments = 0,
-                NumberOfLikes = 100
-            };*/
-
-            
-
-            //posts.Add(post);
-
             return View(postService.GetPostsByTagName(tagname).Select(post => post.ToMvcPost()));
         }
 

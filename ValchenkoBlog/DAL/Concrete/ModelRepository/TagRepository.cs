@@ -72,8 +72,20 @@ namespace DAL.Concrete.ModelRepository
 
         public DalTag GetTagByName(string name) => context.Set<Tag>().FirstOrDefault(tag => tag.Name == name)?.ToDalTag();
 
-        public IEnumerable<DalTag> GetTagsByPostId(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag()); 
+        public IEnumerable<DalTag> GetTagsByPostId(int postId) => context.Set<Post>().FirstOrDefault(post => post.PostId == postId)?.Tags.Select(tag => tag.ToDalTag());
         #endregion
+
+        /*public void DeleteTagsFromPost(int postId)
+        {
+            if (postId < 0)
+                throw new ArgumentOutOfRangeException(nameof(postId));
+
+            var post = context.Set<Post>().FirstOrDefault(p => p.PostId == postId);
+
+            if (post != null)
+                foreach (var tag in post.Tags)
+                    context.Set<Tag>().Remove(tag);
+        }*/
 
         private readonly DbContext context;
     }

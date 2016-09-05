@@ -7,23 +7,6 @@ namespace MvcPL.Infrastructure.Mappers
 {
     public static class MvcPostMapper
     {
-        public static PostEntity ToBllPost(this CreatePostViewModel mvcPost)
-        {
-            // if null
-
-            return new PostEntity
-            {
-                Title = mvcPost.Title,
-                Description = mvcPost.Description,
-                PublishDate = DateTime.Now,
-                // Cookie
-                User = new UserEntity
-                {
-                    Id = mvcPost.UserId
-                }
-            };
-        }
-
         public static PostViewModel ToMvcPost(this PostEntity bllPost)
         {
             // is null
@@ -43,6 +26,50 @@ namespace MvcPL.Infrastructure.Mappers
                 post.Tags.Add(bllTag.ToMvcTag());
 
             return post;
+        }
+
+        public static EditPostViewModel ToMvcEditPost(this PostEntity bllPost)
+        {
+            // if null
+
+            return new EditPostViewModel
+            {
+                Id = bllPost.Id,
+                Title = bllPost.Title,
+                Description = bllPost.Description,
+                // Tag list
+                // Selected list
+            };
+        }
+        public static PostEntity ToBllPost(this EditPostViewModel bllPost)
+        {
+            // if null
+
+            return new PostEntity
+            {
+                Id = bllPost.Id,
+                Title = bllPost.Title,
+                Description = bllPost.Description,
+                // Tag list
+                // Selected list
+            };
+        }
+
+        public static PostEntity ToBllPost(this CreatePostViewModel mvcPost)
+        {
+            // if null
+
+            return new PostEntity
+            {
+                Title = mvcPost.Title,
+                Description = mvcPost.Description,
+                PublishDate = DateTime.Now,
+                // Cookie
+                User = new UserEntity
+                {
+                    Id = mvcPost.UserId
+                }
+            };
         }
 
         public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)

@@ -52,7 +52,8 @@ namespace BLL.Services
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            postRepository.Update(entity.ToDalPost());
+            //tagRepository.DeleteTagsFromPost(entity.Id);
+            postRepository.Update(entity.ToDalPost(), entity.Tags.Select(tag => tag.ToDalTag()));
             unitOfWork.Commit();
         }
 
@@ -142,14 +143,16 @@ namespace BLL.Services
             postRepository.AddTagsToPost(postId, tags);
             unitOfWork.Commit();
         }
-        public void AddLike(LikeEntity likeEntity)
+        public void Like(LikeEntity likeEntity)
         {
-            likeRepository.Create(likeEntity.ToDalLike());
-        }
+            // if null
+            var dalLike = likeRepository.GetDalLikeByPostIdAndUserId(likeEntity.UserId, likeEntity.PostId);
+            if (dalLike != null)
+                likeRepository.Delete(dalLike);
+            else
+                likeRepository.Create(likeEntity.ToDalLike());
 
-        public void RemoveLike(LikeEntity likeEntity)
-        {
-            throw new NotImplementedException();
+            unitOfWork.Commit();
         }
 
         public void AddComment(CommentEntity commentEntity)

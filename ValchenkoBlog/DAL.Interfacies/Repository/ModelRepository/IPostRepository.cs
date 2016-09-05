@@ -7,6 +7,7 @@ namespace DAL.Interfacies.Repository.ModelRepository
     {
         // Add new overloaded 'Create' method
         void Create(DalPost entity, IEnumerable<DalTag> tags);
+        void Update(DalPost entity, IEnumerable<DalTag> tags);
         IEnumerable<DalPost> GetDalPostsByUserId(int userId);
         IEnumerable<DalPost> GetDalPostsByTagName(string tagName);
         void AddTagsToPost(int postId, string[] tags);
