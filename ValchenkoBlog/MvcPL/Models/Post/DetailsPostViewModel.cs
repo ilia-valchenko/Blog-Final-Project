@@ -18,9 +18,7 @@ namespace MvcPL.Models.Post
         public string Title { get; set; }
         public string Description { get; set; }
         public string PublishDate { get; set; }
-
         public UserViewModel Author { get; set; }
-
         public List<TagViewModel> Tags { get; set; }
         public List<CommentViewModel> Comments { get; set; }
         public int NumberOfLikes { get; set; }

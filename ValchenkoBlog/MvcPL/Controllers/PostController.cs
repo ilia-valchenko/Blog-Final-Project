@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
@@ -12,11 +13,15 @@ namespace MvcPL.Controllers
 {
     public class PostController : Controller
     {
-        public PostController(IPostService postService, ITagService tagService, IUserService userService)
+        public PostController(IPostService postService, 
+                              ITagService tagService, 
+                              IUserService userService,
+                              ICommentService commentService)
         {
             this.postService = postService;
             this.tagService = tagService;
             this.userService = userService;
+            this.commentService = commentService;
         }
 
         public ActionResult Index() => View(postService.GetAll().Select(post => post.ToMvcPost()));
@@ -58,6 +63,7 @@ namespace MvcPL.Controllers
         // НЕСЕТ ПОТЕНЦИАЛЬНУЮ УЯЗВИМОСТЬ!
         // GET: Posts/Delete/5
         //[Authorize(Roles = "Admin")]
+        //[HttpGet]
         public ActionResult Delete(int? id)
         {
             // NULLABLE
@@ -114,6 +120,27 @@ namespace MvcPL.Controllers
         } 
         #endregion
 
+        //[HttpGet]
+        public ActionResult Details(int id)
+        {
+            // NULLABLE
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var post = postService.GetById(id)?.ToMvcDetailsPost();
+            
+            if (post == null)
+                return HttpNotFound(); // Redirect to custom error page
+
+            var comments = commentService.GetCommentsByPostId(id);
+            if (comments != null)
+                foreach (var bllComment in comments)
+                    post.Comments.Add(bllComment.ToMvcComment());
+
+            return View(post);
+        }
+
+        [HttpPost]
         public ActionResult Like(int id)
         {
             // We also should know the id of user.
@@ -129,11 +156,30 @@ namespace MvcPL.Controllers
             return Json(postService.GetById(id).Likes.Count);
         }
 
-        // Add comment
+        public ActionResult AddComment(int postId, string text) 
+        {
+            var comment = new CommentEntity
+            {
+                Text = "Maharadga",
+                PublishDate = DateTime.Now,
+                Post = new PostEntity
+                {
+                    Id = postId
+                },
+                User = new UserEntity
+                {
+                    Id = 11 
+                }
+            };
+
+            postService.AddComment(comment);
+
+            return Json(commentService.GetCommentsByPostId(postId).Select(c => c.ToMvcComment()));
+
+            //return Json("It works!");
+        }
 
         // Remove comment
-
-        // Find by tag
 
         public ActionResult SearchByTag(string tagname)
         {
@@ -144,5 +190,6 @@ namespace MvcPL.Controllers
         private readonly IPostService postService;
         private readonly ITagService tagService;
         private readonly IUserService userService;
+        private readonly ICommentService commentService;
     }
 }

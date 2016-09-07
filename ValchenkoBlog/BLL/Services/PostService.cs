@@ -3,13 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using DAL.Interfacies.Repository;
-using DAL.Interfacies.Helper;
-using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using BLL.Mappers;
-using System.Diagnostics;
 
 namespace BLL.Services
 {
@@ -186,7 +183,9 @@ namespace BLL.Services
 
         public void AddComment(CommentEntity commentEntity)
         {
-            throw new NotImplementedException();
+            // if null
+            commentRepository.Create(commentEntity.ToDalComment());
+            unitOfWork.Commit();
         }
 
         public void RemoveComment(CommentEntity commentEntity)

@@ -25,7 +25,10 @@ namespace DAL.Concrete.ModelRepository
                 throw new ArgumentNullException(nameof(entity));
 
             var comment = entity.ToOrmComment();
-            context.Set<Comment>().Add(comment);
+            comment.User = context.Set<User>().FirstOrDefault(u => u.UserId == entity.UserId);
+            comment.Post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId);
+
+            context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId)?.Comments.Add(comment);
         }
 
         public void Update(DalComment entity)

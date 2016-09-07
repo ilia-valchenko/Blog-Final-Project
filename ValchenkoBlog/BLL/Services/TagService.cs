@@ -23,11 +23,7 @@ namespace BLL.Services
             this.postRepository = postRepository;
         }
 
-        public TagEntity GetTagByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
+        #region CRUD operations
         public void Create(TagEntity entity)
         {
             if (entity == null)
@@ -54,7 +50,10 @@ namespace BLL.Services
             tagRepository.Delete(entity.ToDalTag());
             unitOfWork.Commit();
         }
+        #endregion
 
+        #region Get operations
+        public IEnumerable<TagEntity> GetAll() => tagRepository.GetAll().Select(t => t.ToBllTag());
         public TagEntity GetById(int? id)
         {
             if (id < 0)
@@ -65,18 +64,19 @@ namespace BLL.Services
 
             return tagRepository.GetById(id)?.ToBllTag();
         }
-
-        public IEnumerable<TagEntity> GetAll() => tagRepository.GetAll().Select(t => t.ToBllTag());
-
         public TagEntity GetOneByPredicate(Expression<Func<TagEntity, bool>> predicates)
         {
             throw new NotImplementedException();
         }
-
         public IEnumerable<TagEntity> GetAllByPredicate(Expression<Func<TagEntity, bool>> predicates)
         {
             throw new NotImplementedException();
         }
+        public TagEntity GetTagByName(string name)
+        {
+            throw new NotImplementedException();
+        } 
+        #endregion
 
         /*public IEnumerable<TagEntity> GetTagsOfPost(int postId)
         {

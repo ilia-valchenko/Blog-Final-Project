@@ -12,7 +12,7 @@ using BLL.Mappers;
 
 namespace BLL.Services
 {
-    class RoleService : IRoleService
+    public class RoleService : IRoleService
     {
         public RoleService(IUnitOfWork unitOfWork,
                            IUserRepository userRepository,

@@ -39,13 +39,13 @@ namespace DependencyResolver
             kernel.Bind<IUserService>().To<UserService>();
             kernel.Bind<IUserRepository>().To<UserRepository>();
 
-            // Role Service
+            kernel.Bind<IRoleService>().To<RoleService>();
             kernel.Bind<IRoleRepository>().To<RoleRepository>();
 
             kernel.Bind<IPostService>().To<PostService>();
             kernel.Bind<IPostRepository>().To<PostRepository>();
 
-            // Comment service
+            kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<ICommentRepository>().To<CommentRepository>();
 
             // Like service
@@ -53,8 +53,6 @@ namespace DependencyResolver
 
             kernel.Bind<ITagService>().To<TagService>();
             kernel.Bind<ITagRepository>().To<TagRepository>();
-
-            // Add more
         }
     }
 }

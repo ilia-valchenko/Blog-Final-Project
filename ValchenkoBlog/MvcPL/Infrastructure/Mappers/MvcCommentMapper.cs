@@ -34,7 +34,7 @@ namespace MvcPL.Infrastructure.Mappers
             {
                 Id = bllComment.Id,
                 Text = bllComment.Text,
-                PublishDate = bllComment.PublishDate.ToShortDateString(),
+                PublishDate = bllComment.PublishDate.ToString(),
                 // Post is unnecessary
                 User = new UserViewModel
                 {

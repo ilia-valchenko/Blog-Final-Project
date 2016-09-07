@@ -47,6 +47,7 @@
     <Compile Include="Mappers\BllTagMapper.cs" />
     <Compile Include="Mappers\BllUserMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Services\RoleService.cs" />
     <Compile Include="Services\TagService.cs" />
