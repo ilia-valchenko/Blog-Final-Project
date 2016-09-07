@@ -36,22 +36,15 @@ namespace MvcPL.Controllers
         }
 
         [HttpPost]
+        //[Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
         {
-            // Now TagList and SelectedList is null. I should bind it from form.
+            // Авторизация через HttpModule AutorixzationCkookiw ложить еще и id, чтобы не доставать из базы
+            // или логине в куки 
+            createPostViewModel.UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id;
 
-            // Should take from current user. 
-            createPostViewModel.UserId = 11;
-
-            // Should PostService takes post and tags as an arguments?
-            //int idOfCreatedPost = postService.Create(createPostViewModel.ToBllPost());
-            var bllPost = createPostViewModel.ToBllPost();
-            // add tags
-            foreach (var tagName in namesOfTags)
-                bllPost.Tags.Add(new TagEntity { Name = tagName });
-
-            postService.Create(bllPost);
+            postService.Create(createPostViewModel.ToBllPost(namesOfTags));
 
             //postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
 
@@ -148,7 +141,7 @@ namespace MvcPL.Controllers
             var like = new LikeEntity
             {
                 PostId = id,
-                UserId = 11
+                UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id
             };
 
             postService.Like(like);
@@ -175,8 +168,6 @@ namespace MvcPL.Controllers
             postService.AddComment(comment);
 
             return Json(commentService.GetCommentsByPostId(postId).Select(c => c.ToMvcComment()));
-
-            //return Json("It works!");
         }
 
         // Remove comment

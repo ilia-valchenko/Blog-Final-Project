@@ -8,8 +8,8 @@ namespace MvcPL.Models.Account
         [Display(Name = "Enter your nickname")]
         public string Nickname { get; set; }*/
         [Required(ErrorMessage = "The field can not be empty!")]
-        [Display(Name = "Enter your email")]
-        public string Email { get; set; }
+        [Display(Name = "Enter your login")]
+        public string Nickname { get; set; }
 
         [Required(ErrorMessage = "The field can not be empty!")]
         [DataType(DataType.Password)]

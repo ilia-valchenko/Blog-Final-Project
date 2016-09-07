@@ -1,4 +1,5 @@
-﻿using DAL.Interfacies.DTO;
+﻿using System;
+using DAL.Interfacies.DTO;
 using ORM.Models;
 
 namespace DAL.Mappers
@@ -21,7 +22,7 @@ namespace DAL.Mappers
         public static Like ToOrmLike(this DalLike dalLike)
         {
             if (dalLike == null)
-                return null;
+                throw new ArgumentNullException(nameof(dalLike));
 
             return new Like();
         }

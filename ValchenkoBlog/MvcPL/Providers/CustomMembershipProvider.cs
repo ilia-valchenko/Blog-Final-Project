@@ -3,6 +3,7 @@ using System.Web.Helpers;
 using System.Web.Security;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Providers
 {
@@ -13,28 +14,33 @@ namespace MvcPL.Providers
 
         public MembershipUser CreateUser(string email, string nickname, string password)
         {
-            /*MembershipUser membershipUser = GetUser(email, false);
+            if (GetUser(nickname, false) != null)
+                return null;
 
-            if (membershipUser != null)
-                return null;*/
-
-            var bllUser = new UserEntity
-            {
-                Email = email,
-                Nickname = nickname,
-                Password = Crypto.HashPassword(password),
-                // Avatar
-            };
-
-            UserService.Create(bllUser);
-            var membershipUser = GetUser(nickname, false);
-            return membershipUser;
+            // Forgot about avatar
+            // Create and Update must returns entity or id
+            UserService.Create(new UserEntity { Email = email,
+                                                Nickname = nickname,
+                                                Password = Crypto.HashPassword(password) });
+            
+            return GetUser(nickname, false);
         }
 
         public override bool ValidateUser(string nickname, string password)
         {
-            var user = UserService.GetUserEntityByNickname(nickname);
+            UserEntity user;
 
+            // try
+            // If database will be disconnected
+            try
+            {
+                user = UserService.GetUserEntityByNickname(nickname);
+            }
+            catch (ValidationException exc)
+            {
+                return false;
+            }
+            
             if (user != null && Crypto.VerifyHashedPassword(user.Password, password))
                 return true;
 
@@ -52,7 +58,7 @@ namespace MvcPL.Providers
                 "CustomMembershipProvider", // providerName
                 user.Nickname, // name 
                 null, // providerUserKey
-                null, // email
+                user.Email, // email
                 null, // passwordQuestion
                 null, // comment
                 false, // isApproved
@@ -66,7 +72,7 @@ namespace MvcPL.Providers
 
         public override string GetUserNameByEmail(string email)
         {
-            var user = UserService.GetUserEntityByEmail(email);
+            /*var user = UserService.GetUserEntityByEmail(email);
 
             if (user == null)
                 return null;
@@ -86,7 +92,9 @@ namespace MvcPL.Providers
                 DateTime.MinValue, 
                 DateTime.MinValue);
 
-            return memberUser.UserName;
+            return memberUser.UserName;*/
+
+            throw new NotImplementedException();
         }
 
         #region Not implemented methods

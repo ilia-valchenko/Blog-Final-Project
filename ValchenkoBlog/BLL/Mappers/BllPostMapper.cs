@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using BLL.Interfacies.Entities;
 using DAL.Interfacies.DTO;
 
@@ -9,7 +9,7 @@ namespace BLL.Mappers
         public static DalPost ToDalPost(this PostEntity bllPost)
         {
             if (bllPost == null)
-                return null;
+                throw new ArgumentNullException(nameof(bllPost));
 
             return new DalPost
             {
@@ -31,11 +31,7 @@ namespace BLL.Mappers
                 Id = dalPost.Id,
                 Title = dalPost.Title,
                 Description = dalPost.Description,
-                PublishDate = dalPost.PublishDate,
-                Tags = new List<TagEntity>(),
-                Comments = new List<CommentEntity>(),
-                Likes = new List<LikeEntity>(),
-                User = new UserEntity()
+                PublishDate = dalPost.PublishDate
             };
         }
     }

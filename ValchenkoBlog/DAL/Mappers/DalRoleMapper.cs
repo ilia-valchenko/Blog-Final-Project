@@ -1,4 +1,5 @@
-﻿using DAL.Interfacies.DTO;
+﻿using System;
+using DAL.Interfacies.DTO;
 using ORM.Models;
 
 namespace DAL.Mappers
@@ -20,7 +21,7 @@ namespace DAL.Mappers
         public static Role ToOrmRole(this DalRole dalRole)
         {
             if (dalRole == null)
-                return null;
+                throw new ArgumentNullException(nameof(dalRole));
 
             return new Role
             {

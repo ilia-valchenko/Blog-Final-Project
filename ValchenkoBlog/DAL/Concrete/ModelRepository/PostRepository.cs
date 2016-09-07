@@ -86,12 +86,12 @@ namespace DAL.Concrete.ModelRepository
         {
             var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.Id);
 
-            if (post == default(Post))
+            /*if (post == default(Post))
             {
                 post = entity.ToOrmPost();
                 context.Set<Post>().Add(post);
                 //return;
-            }
+            }*/
 
             if (post != null)
             {
@@ -110,7 +110,7 @@ namespace DAL.Concrete.ModelRepository
 
             post.Title = entity.Title;
             post.Description = entity.Description;
-            context.Entry(post).State = EntityState.Modified;
+            //context.Entry(post).State = EntityState.Modified;
         }
 
         public void Delete(DalPost entity)

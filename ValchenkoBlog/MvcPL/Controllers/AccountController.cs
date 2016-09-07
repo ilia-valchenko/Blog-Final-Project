@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AccountController : Controller
     {
         private readonly IUserService userService;
@@ -26,6 +26,7 @@ namespace MvcPL.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -39,9 +40,9 @@ namespace MvcPL.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(loginViewModel.Email, loginViewModel.Password))
+                if (Membership.ValidateUser(loginViewModel.Nickname, loginViewModel.Password))
                 {
-                    FormsAuthentication.SetAuthCookie(loginViewModel.Email, loginViewModel.RememberMe);
+                    FormsAuthentication.SetAuthCookie(loginViewModel.Nickname, loginViewModel.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -58,6 +59,31 @@ namespace MvcPL.Controllers
             }
             ViewBag.returnUrl = returnUrl;
             return View(loginViewModel);
+
+
+            ///////////
+            /*if (ModelState.IsValid)
+            {
+                if (Membership.ValidateUser(model.UserName, model.Password))
+                {
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный пароль или логин");
+                }
+            }
+            return View(model);*/
+
+            ///////////
         }
 
         public ActionResult LogOff()

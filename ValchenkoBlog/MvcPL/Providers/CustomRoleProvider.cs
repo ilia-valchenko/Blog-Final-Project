@@ -15,9 +15,9 @@ namespace MvcPL.Providers
         public IUserService UserService => (IUserService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IUserService));
         public IRoleService RoleService => (IRoleService)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(IRoleService));
 
-        public override bool IsUserInRole(string email, string roleName)
+        public override bool IsUserInRole(string nickname, string roleName)
         {
-            var user = UserService.GetUserEntityByEmail(email).ToMvcUser();
+            var user = UserService.GetUserEntityByNickname(nickname).ToMvcUser();
 
             if (user == null)
                 return false;
@@ -33,10 +33,10 @@ namespace MvcPL.Providers
             return false;
         }
 
-        public override string[] GetRolesForUser(string username)
+        public override string[] GetRolesForUser(string nickname)
         {
             var roles = new string[] { };
-            var user = UserService.GetUserEntityByEmail(username).ToMvcUser();
+            var user = UserService.GetUserEntityByNickname(nickname).ToMvcUser();
 
             if (user == null)
                 return roles;
@@ -54,9 +54,8 @@ namespace MvcPL.Providers
             RoleService.Create(new RoleEntity() { Name = roleName });
         }
 
-        public override string ApplicationName { get; set; }
-
         #region Not implemented methods
+        public override string ApplicationName { get; set; }
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
             throw new NotImplementedException();

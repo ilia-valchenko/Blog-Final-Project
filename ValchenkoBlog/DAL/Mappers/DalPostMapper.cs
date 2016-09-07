@@ -1,4 +1,5 @@
-﻿using DAL.Interfacies.DTO;
+﻿using System;
+using DAL.Interfacies.DTO;
 using ORM.Models;
 using System.Collections.Generic;
 
@@ -24,18 +25,13 @@ namespace DAL.Mappers
         public static Post ToOrmPost(this DalPost dalPost)
         {
             if (dalPost == null)
-                return null;
+                throw new ArgumentNullException(nameof(dalPost));
 
             return new Post
             {
                 Title = dalPost.Title,
                 Description = dalPost.Description,
                 PublishDate = dalPost.PublishDate
-                // Add new
-                /*User = new User(),
-                Tags = new HashSet<Tag>(),
-                Comments = new HashSet<Comment>(),
-                Likes = new HashSet<Like>()*/
             };
         }
     }

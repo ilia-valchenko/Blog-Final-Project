@@ -15,7 +15,7 @@ namespace MvcPL.Models.Post
         [Display(Name = "Tags")]
         public string SelectedTag { get; set; }
         public SelectList TagList { get; set; }
-
+        // Take it from identity in controller
         public int UserId { get; set; }
     }
 }

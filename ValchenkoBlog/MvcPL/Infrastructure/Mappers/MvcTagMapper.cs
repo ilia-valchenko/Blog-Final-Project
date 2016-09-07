@@ -9,17 +9,20 @@ namespace MvcPL.Infrastructure.Mappers
     {
         public static TagEntity ToBllTag(this CreateTagViewModel mvcTag)
         {
-            // if null
+            if (mvcTag == null)
+                throw new ArgumentNullException(nameof(mvcTag));
 
             return new TagEntity
             { 
-                // ?? Id
                 Name = mvcTag.Name,
             };
         }
 
         public static TagViewModel ToMvcTag(this TagEntity bllTag)
         {
+            if (bllTag == null)
+                return null;
+
             return new TagViewModel
             {
                 Id = bllTag.Id,

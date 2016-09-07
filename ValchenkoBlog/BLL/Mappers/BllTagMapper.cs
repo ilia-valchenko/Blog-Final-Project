@@ -1,4 +1,5 @@
-﻿using BLL.Interfacies.Entities;
+﻿using System;
+using BLL.Interfacies.Entities;
 using DAL.Interfacies.DTO;
 
 namespace BLL.Mappers
@@ -8,7 +9,7 @@ namespace BLL.Mappers
         public static DalTag ToDalTag(this TagEntity bllTag)
         {
             if (bllTag == null)
-                return null;
+                throw new ArgumentNullException(nameof(bllTag));
 
             return new DalTag
             {

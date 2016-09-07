@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BLL.Interfacies.Entities;
 using MvcPL.Models.Post;
 using MvcPL.Models.User;
+using MvcPL.Models.Tag;
 
 namespace MvcPL.Infrastructure.Mappers
 {
@@ -9,67 +12,64 @@ namespace MvcPL.Infrastructure.Mappers
     {
         public static PostViewModel ToMvcPost(this PostEntity bllPost)
         {
-            // is null
+            if (bllPost == null)
+                return null;
 
-            var post = new PostViewModel
+            return new PostViewModel
             {
                 Id = bllPost.Id,
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate.ToShortTimeString(),
-                Author = bllPost.User.ToMvcUser(),
-                NumberOfComments = bllPost.Comments.Count,
-                NumberOfLikes = bllPost.Likes.Count
+                Author = bllPost.User.ToMvcUser() ?? new UserViewModel(),
+                NumberOfComments = bllPost.Comments?.Count ?? 0,
+                NumberOfLikes = bllPost.Likes?.Count ?? 0,
+                Tags = bllPost.Tags?.Select(tag => new TagViewModel { Name = tag.Name }).ToList() ?? new List<TagViewModel>()
             };
-
-            foreach (var bllTag in bllPost.Tags)
-                post.Tags.Add(bllTag.ToMvcTag());
-
-            return post;
         }
 
         public static EditPostViewModel ToMvcEditPost(this PostEntity bllPost)
         {
-            // if null
+            if (bllPost == null)
+                return null;
 
             return new EditPostViewModel
             {
                 Id = bllPost.Id,
                 Title = bllPost.Title,
-                Description = bllPost.Description,
-                // Tag list
-                // Selected list
+                Description = bllPost.Description
             };
         }
-        public static PostEntity ToBllPost(this EditPostViewModel bllPost)
+        public static PostEntity ToBllPost(this EditPostViewModel editPostViewModel)
         {
-            // if null
+            if (editPostViewModel == null)
+                throw new ArgumentNullException(nameof(editPostViewModel));
 
             return new PostEntity
             {
-                Id = bllPost.Id,
-                Title = bllPost.Title,
-                Description = bllPost.Description,
+                Id = editPostViewModel.Id,
+                Title = editPostViewModel.Title,
+                Description = editPostViewModel.Description,
                 // Tag list
                 // Selected list
             };
         }
 
-        public static PostEntity ToBllPost(this CreatePostViewModel mvcPost)
+        public static PostEntity ToBllPost(this CreatePostViewModel mvcPost, IEnumerable<string> tags)
         {
-            // if null
+            if (mvcPost == null)
+                throw new ArgumentNullException(nameof(mvcPost));
 
             return new PostEntity
             {
                 Title = mvcPost.Title,
                 Description = mvcPost.Description,
                 PublishDate = DateTime.Now,
-                // Cookie
-                User = new UserEntity
-                {
-                    Id = mvcPost.UserId
-                }
+                User = new UserEntity { Id = mvcPost.UserId },
+                Tags = tags?.Select(tag => new TagEntity() { Name = tag }).ToList() ?? new List<TagEntity>()
             };
+
+            
         }
 
         public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)

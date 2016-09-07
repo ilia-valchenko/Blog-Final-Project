@@ -1,4 +1,5 @@
-﻿using ORM.Models;
+﻿using System;
+using ORM.Models;
 using DAL.Interfacies.DTO;
 
 namespace DAL.Mappers
@@ -23,7 +24,7 @@ namespace DAL.Mappers
         public static Comment ToOrmComment(this DalComment dalComment)
         {
             if (dalComment == null)
-                return null;
+                throw new ArgumentNullException(nameof(dalComment));
 
             return new Comment
             {

@@ -17,8 +17,6 @@ namespace BLL.Interfacies.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime PublishDate { get; set; }
-        //public int UserId { get; set; }
-        // Add new
         public UserEntity User { get; set; }
         public List<TagEntity> Tags { get; set; }
         public List<CommentEntity> Comments { get; set; }
