@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function () {  
     $('.like-button').click(function () {
 
         var id = $(this).attr('id');
@@ -9,8 +9,8 @@
             data: { 'id': id },
             dataType: 'json',
             success: function (result) 
-            {  
-                $('#like' + id).text(result);
+            {
+                $('#like' + id).text(result);               
             },
             async: true,
         });

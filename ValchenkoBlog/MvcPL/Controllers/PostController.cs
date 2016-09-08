@@ -83,12 +83,9 @@ namespace MvcPL.Controllers
 
         #region Edit
         [HttpGet]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-            EditPostViewModel model = postService.GetById(id)?.ToMvcEditPost();
+            EditPostViewModel model = postService.GetById(id).ToMvcEditPost();
 
             if (model == null)
                 return HttpNotFound();
@@ -102,33 +99,23 @@ namespace MvcPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditPostViewModel model, string[] namesOfTags)
         {
-            var post = model.ToBllPost();
-                
-            if(namesOfTags != null)
-                foreach (var tagName in namesOfTags)
-                    post.Tags.Add(new TagEntity { Name = tagName });
-
-            postService.Update(post);
+            postService.Update(model.ToBllPost(namesOfTags));
             return RedirectToAction("Index");
         } 
         #endregion
 
-        //[HttpGet]
+        [HttpGet]
         public ActionResult Details(int id)
         {
-            // NULLABLE
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
             var post = postService.GetById(id)?.ToMvcDetailsPost();
             
             if (post == null)
                 return HttpNotFound(); // Redirect to custom error page
 
-            var comments = commentService.GetCommentsByPostId(id);
+            /*var comments = commentService.GetCommentsByPostId(id);
             if (comments != null)
                 foreach (var bllComment in comments)
-                    post.Comments.Add(bllComment.ToMvcComment());
+                    post.Comments.Add(bllComment.ToMvcComment());*/
 
             return View(post);
         }
@@ -136,36 +123,20 @@ namespace MvcPL.Controllers
         [HttpPost]
         public ActionResult Like(int id)
         {
-            // We also should know the id of user.
-            // int postId, int userId
-            var like = new LikeEntity
-            {
-                PostId = id,
-                UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id
-            };
-
-            postService.Like(like);
+            postService.Like(new LikeEntity { PostId = id,
+                                              UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id});
 
             return Json(postService.GetById(id).Likes.Count);
         }
 
         public ActionResult AddComment(int postId, string text) 
         {
-            var comment = new CommentEntity
-            {
-                Text = "Maharadga",
+            postService.AddComment(new CommentEntity {
                 PublishDate = DateTime.Now,
-                Post = new PostEntity
-                {
-                    Id = postId
-                },
-                User = new UserEntity
-                {
-                    Id = 11 
-                }
-            };
-
-            postService.AddComment(comment);
+                Text = text,
+                Post = new PostEntity { Id = postId },
+                User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
+            });
 
             return Json(commentService.GetCommentsByPostId(postId).Select(c => c.ToMvcComment()));
         }

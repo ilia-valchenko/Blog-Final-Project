@@ -110,7 +110,6 @@ namespace DAL.Concrete.ModelRepository
 
             post.Title = entity.Title;
             post.Description = entity.Description;
-            //context.Entry(post).State = EntityState.Modified;
         }
 
         public void Delete(DalPost entity)
@@ -134,7 +133,7 @@ namespace DAL.Concrete.ModelRepository
         // NULLABLE
         public DalPost GetById(int? key) => context.Set<Post>().FirstOrDefault(p => p.PostId == key)?.ToDalPost();
 
-        public IEnumerable<DalPost> GetAll() => context.Set<Post>().ToList().Select(p => p.ToDalPost());
+        public IEnumerable<DalPost> GetAll() => context.Set<Post>().ToList().Select(p => p.ToDalPost()).OrderByDescending(p => p.Id);
 
         public DalPost GetOneByPredicate(Expression<Func<DalPost, bool>> predicate) => GetAllByPredicate(predicate).FirstOrDefault();
 

@@ -7,6 +7,7 @@ using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using BLL.Mappers;
+using System.IO;
 
 namespace BLL.Services
 {
@@ -103,14 +104,41 @@ namespace BLL.Services
                 bllPost.Tags.Add(dalTag.ToBllTag());
 
             foreach (var dalComment in commentRepository.GetDalCommentsByPostId(dalPost.Id))
-                bllPost.Comments.Add(dalComment.ToBllComment());
+            {
+                var user = userRepository.GetById(dalComment.UserId);
+
+                var bllComment = new CommentEntity
+                {
+                    Id = dalComment.Id,
+                    Text = dalComment.Text,
+                    PublishDate = dalComment.PublishDate,
+                    User = new UserEntity
+                    {
+                        Id = user.Id,
+                        Nickname = user.Nickname,
+                        Email = user.Email,
+                        // Avatar
+                    }
+                };
+
+                /*if(user.Avatar != null)
+                {
+                    using (var ms = new MemoryStream(user.Avatar))
+                    {
+                        return Image.FromStream(ms);
+                    }
+                }*/
+
+                bllPost.Comments.Add(bllComment);
+            }
+                
 
             foreach (var dalLike in likeRepository.GetDalLikesByPostId(dalPost.Id))
-                bllPost.Likes.Add(dalLike.ToBllLike());
+                bllPost.Likes.Add(dalLike.ToBllLike());             
 
             return bllPost;
         }
-
+        
         public IEnumerable<PostEntity> GetPostsByTagName(string tagName)
         {
             foreach (var dalPost in postRepository.GetDalPostsByTagName(tagName))

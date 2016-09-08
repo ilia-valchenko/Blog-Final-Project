@@ -10,38 +10,29 @@ namespace MvcPL.Infrastructure.Mappers
     {
         public static CommentEntity ToBllComment(this CommentViewModel mvcComment)
         {
-            // if null
+            if (mvcComment == null)
+                throw new ArgumentNullException(nameof(mvcComment));
+
             return new CommentEntity()
             {
-                // without id
                 Text = mvcComment.Text,
                 PublishDate = DateTime.Now,
-                Post = new PostEntity
-                {
-                    Id = mvcComment.Post.Id
-                },
-                User = new UserEntity
-                {
-                    Id = mvcComment.Id
-                }
+                Post = new PostEntity { Id = mvcComment.Post.Id },
+                User = new UserEntity { Id = mvcComment.User.Id }
             };
         }
 
         public static CommentViewModel ToMvcComment(this CommentEntity bllComment)
         {
-            // if null
+            if (bllComment == null)
+                return null;
+
             return new CommentViewModel
             {
                 Id = bllComment.Id,
                 Text = bllComment.Text,
                 PublishDate = bllComment.PublishDate.ToString(),
-                // Post is unnecessary
-                User = new UserViewModel
-                {
-                    Id = bllComment.User.Id,
-                    Nickname = bllComment.User.Nickname,
-                    Avatar = bllComment.User.Avatar
-                }
+                User = bllComment.User?.ToMvcUser() ?? new UserViewModel()
             };
         }
     }

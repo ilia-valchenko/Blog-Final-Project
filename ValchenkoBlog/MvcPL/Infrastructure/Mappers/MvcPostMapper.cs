@@ -5,6 +5,7 @@ using BLL.Interfacies.Entities;
 using MvcPL.Models.Post;
 using MvcPL.Models.User;
 using MvcPL.Models.Tag;
+using MvcPL.Models.Comment;
 
 namespace MvcPL.Infrastructure.Mappers
 {
@@ -40,7 +41,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Description = bllPost.Description
             };
         }
-        public static PostEntity ToBllPost(this EditPostViewModel editPostViewModel)
+        public static PostEntity ToBllPost(this EditPostViewModel editPostViewModel, IEnumerable<string> tags)
         {
             if (editPostViewModel == null)
                 throw new ArgumentNullException(nameof(editPostViewModel));
@@ -50,8 +51,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Id = editPostViewModel.Id,
                 Title = editPostViewModel.Title,
                 Description = editPostViewModel.Description,
-                // Tag list
-                // Selected list
+                Tags = tags?.Select(tag => new TagEntity() { Name = tag }).ToList() ?? new List<TagEntity>()
             };
         }
 
@@ -68,36 +68,24 @@ namespace MvcPL.Infrastructure.Mappers
                 User = new UserEntity { Id = mvcPost.UserId },
                 Tags = tags?.Select(tag => new TagEntity() { Name = tag }).ToList() ?? new List<TagEntity>()
             };
-
-            
         }
 
         public static DetailsPostViewModel ToMvcDetailsPost(this PostEntity bllPost)
         {
-            // if null
+            if (bllPost == null)
+                return null;
 
-            var post = new DetailsPostViewModel
+            return new DetailsPostViewModel
             {
                 Id = bllPost.Id,
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate.ToShortDateString(),
-                Author = new UserViewModel
-                {
-                    Id = bllPost.User.Id,
-                    Nickname = bllPost.User.Nickname,
-                    Avatar = bllPost.User.Avatar
-                },
-                NumberOfLikes = bllPost.Likes.Count
+                Author = bllPost.User?.ToMvcUser() ?? new UserViewModel(),
+                NumberOfLikes = bllPost.Likes.Count,
+                Tags = bllPost.Tags?.Select(tag => tag.ToMvcTag()).ToList() ?? new List<TagViewModel>(),
+                Comments = bllPost.Comments?.Select(comment => comment.ToMvcComment()).ToList() ?? new List<CommentViewModel>()
             };
-
-            foreach (var bllTag in bllPost.Tags)
-                post.Tags.Add(bllTag.ToMvcTag());
-
-            foreach (var bllComment in bllPost.Comments)
-                post.Comments.Add(bllComment.ToMvcComment());
-
-            return post;
         }
     }
 }
