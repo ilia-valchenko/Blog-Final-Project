@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="../../Content/Images/Icon/BatkaBatmen.png" type="image/png">
+    <meta charset="utf-8">
+    <title>@ViewBag.Title | Valchenko Blog</title>
+
+    @Styles.Render("~/Content/new_elements.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/home.css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+
+<body>
+    <div id="header_container">
+        <header>
+            <div id="logo_container">
+                <a href="index.html">
+                    <img src="../../../Content/Images/Logo/batman_from_gomel.png" alt="valchenko_blog_logo">
+                </a>
+            </div>
+            <nav id="responsive_nav">
+                <ul>
+                    <li><span><a>@Html.ActionLink("LOG IN", "Login", "Account")</a></span></li>
+                    <li><span><a>@Html.ActionLink("REGISTER", "Register", "Account")</a></span></li>
+                    <li><span><a>@Html.ActionLink("LOG OUT", "Logout", "Account")</a></span></li>
+                    <li><span><a>@Html.ActionLink("POSTS", "Index", "Post")</a></span></li>
+                    <li><span><a>@Html.ActionLink("TAGS", "Index", "Tag")</a></span></li>
+                </ul>
+            </nav>
+        </header>
+        <footer id="responsive_footer" class="default-footer">
+            <p><small>&copy; @DateTime.Now.Year</small></p>
+            <p>
+                <small>
+                    <a href="#" title="Follow me on Facebook">Ilia Valchenko</a>
+                </small>
+            </p>
+        </footer>
+    </div>
+
+    <article id="content_container">
+        @RenderBody()
+    </article>
+
+    <div class="header-slogan">
+        <h1 id="responsive_h1"><a href="#">Log In</a> or <a href="#">Sign Up</a> to create a new post in the blog.</h1>
+        <!--This blog needs it's own hero!-->
+        <!--Login partial-->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
