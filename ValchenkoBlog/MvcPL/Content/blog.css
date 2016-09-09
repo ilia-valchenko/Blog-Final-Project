@@ -1,11 +1,11 @@
 @font-face {
 font-family:'a_Monumento_DemiBold_ttf';
-src: url('../font/a_Monumento_DemiBold.ttf');
+src: url('../fonts/a_Monumento_DemiBold.ttf');
 }
 
 @font-face {
 font-family:'a_Monumento_DemiBold_eot';
-src: url('../font/a_Monumento_DemiBold_EOT.eot');
+src: url('../fonts/a_Monumento_DemiBold_EOT.eot');
 }
 
 .post a {

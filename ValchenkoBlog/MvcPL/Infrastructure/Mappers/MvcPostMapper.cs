@@ -21,7 +21,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Id = bllPost.Id,
                 Title = bllPost.Title,
                 Description = bllPost.Description,
-                PublishDate = bllPost.PublishDate.ToShortTimeString(),
+                PublishDate = bllPost.PublishDate.ToShortDateString(),
                 Author = bllPost.User.ToMvcUser() ?? new UserViewModel(),
                 NumberOfComments = bllPost.Comments?.Count ?? 0,
                 NumberOfLikes = bllPost.Likes?.Count ?? 0,

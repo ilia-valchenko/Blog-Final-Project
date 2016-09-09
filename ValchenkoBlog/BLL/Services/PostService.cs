@@ -141,7 +141,14 @@ namespace BLL.Services
         
         public IEnumerable<PostEntity> GetPostsByTagName(string tagName)
         {
-            foreach (var dalPost in postRepository.GetDalPostsByTagName(tagName))
+            var posts = postRepository.GetDalPostsByTagName(tagName);
+
+            if (posts == null)
+                return null;
+
+            var bllPosts = new List<PostEntity>();
+
+            foreach (var dalPost in posts)
             {
                 var bllPost = dalPost.ToBllPost();
 
@@ -156,8 +163,10 @@ namespace BLL.Services
                 foreach (var dalLike in likeRepository.GetDalLikesByPostId(dalPost.Id))
                     bllPost.Likes.Add(dalLike.ToBllLike());
 
-                yield return bllPost;
+                bllPosts.Add(bllPost);
             }
+
+            return bllPosts;
         }
 
         public PostEntity GetOneByPredicate(Expression<Func<PostEntity, bool>> predicates)

@@ -1,0 +1,21 @@
+﻿.posts-not-found-by-tag {
+    margin: 0.7em 0 0 0;
+}
+
+.posts-not-found-by-tag p {
+    margin-left: -1em;
+}
+
+.posts-not-found-by-tag a {
+    text-decoration: none;
+	background: #0084b4;
+	color: #fff;
+	display: inline-block;
+	padding: 4px 10px;
+    margin-left: 1em;
+}
+
+.posts-not-found-by-tag a:hover {
+	color: #fff;
+	background: #55acee;
+}

@@ -86,7 +86,7 @@ namespace MvcPL.Controllers
             ///////////
         }
 
-        public ActionResult LogOff()
+        public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");

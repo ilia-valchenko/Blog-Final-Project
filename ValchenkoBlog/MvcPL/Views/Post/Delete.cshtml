@@ -27,15 +27,16 @@
                 }
             </ul>
 
-            <ul class="post-footer">
-                <li><small>@Html.DisplayFor(modelItem => Model.PublishDate)</small></li>
+            <ul class="post-footer">   
+                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>        
                 <li><span id="comments"><i class="fa fa-comment"></i> @Html.DisplayFor(modelItem => Model.NumberOfComments)</span></li>
                 <li>
-                    <button type="submit" class="like-button">
+                    <button type="submit" class="like-button" id=@Model.Id>
                         <i class="fa fa-heart"></i>
-                        <span id=@string.Format("Like{0}", Model.Id) class="test183">@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
+                        <span id=@string.Format("like{0}", Model.Id)>@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
                     </button>
                 </li>
+                <li><small>@Html.DisplayFor(modelItem => Model.PublishDate)</small></li>
             </ul>
         </article>
 

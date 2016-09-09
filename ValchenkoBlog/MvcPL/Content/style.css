@@ -9,6 +9,16 @@ body {
 	margin: 0 auto;
 }
 
+@font-face {
+font-family:'a_Monumento_DemiBold_ttf';
+src: url('../fonts/a_Monumento_DemiBold.ttf');
+}
+
+@font-face {
+font-family:'a_Monumento_DemiBold_eot';
+src: url('../fonts/a_Monumento_DemiBold_EOT.eot');
+}
+
 /*IMG border for IE*/
 
 a img {

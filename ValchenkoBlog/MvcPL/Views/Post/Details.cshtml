@@ -26,15 +26,15 @@
                 }
             </ul>
 
-            <ul class="post-footer">
-                <li><small>@Html.DisplayFor(model => model.PublishDate)</small></li>
+            <ul class="post-footer">             
                 <li><span id="comments"><i class="fa fa-comment"></i> @Html.DisplayFor(model => model.Comments.Count)</span></li>
                 <li>
-                    <button type="submit" class="like-button">
+                    <button type="submit" class="like-button" id=@Model.Id>
                         <i class="fa fa-heart"></i>
-                        <span id=@string.Format("Like{0}", Model.Id) class="test183">@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
+                        <span id=@string.Format("like{0}", Model.Id)>@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
                     </button>
                 </li>
+                <li><small>@Html.DisplayFor(model => model.PublishDate)</small></li>
             </ul>
 
             <ul class="post-control-panel">
@@ -46,7 +46,8 @@
             <h5>Comments</h5>
 
             <form class="comment-create-form" method="post" action="@Url.Action("AddComment", "Post")">
-                <textarea rows="5" cols="60" id="comment-textarea" name="Description" required></textarea> <br>
+                <input type="hidden" name="postId" value=@Model.Id>
+                <textarea rows="5" cols="60" id="comment-textarea" name="text" required></textarea> <br>
                 <input type="submit" value="Submit">
             </form>
 

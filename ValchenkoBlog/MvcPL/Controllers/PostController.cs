@@ -27,6 +27,7 @@ namespace MvcPL.Controllers
         public ActionResult Index() => View(postService.GetAll().Select(post => post.ToMvcPost()));
 
         #region Create
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
@@ -36,11 +37,11 @@ namespace MvcPL.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
         {
-            // Авторизация через HttpModule AutorixzationCkookiw ложить еще и id, чтобы не доставать из базы
+            // Авторизация через HttpModule AutorixzationCkooki ложить еще и id, чтобы не доставать из базы
             // или логине в куки 
             createPostViewModel.UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id;
 
@@ -55,7 +56,7 @@ namespace MvcPL.Controllers
         #region Delete
         // НЕСЕТ ПОТЕНЦИАЛЬНУЮ УЯЗВИМОСТЬ!
         // GET: Posts/Delete/5
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "admin")]
         //[HttpGet]
         public ActionResult Delete(int? id)
         {
@@ -72,6 +73,7 @@ namespace MvcPL.Controllers
         }
 
         // POST: Posts/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -82,10 +84,21 @@ namespace MvcPL.Controllers
         #endregion
 
         #region Edit
+        //[Authorize(Roles = "admin")]
+        // Редактировать пост может только его сощдатель.
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            EditPostViewModel model = postService.GetById(id).ToMvcEditPost();
+            var post = postService.GetById(id);
+
+            if (post == null)
+                return HttpNotFound(); // Redirect to custom error page
+
+            if (User.Identity.Name != post.User.Nickname)
+                return RedirectToAction("Index"); // Custom error page
+
+            //EditPostViewModel model = postService.GetById(id).ToMvcEditPost();
+            EditPostViewModel model = post.ToMvcEditPost();
 
             if (model == null)
                 return HttpNotFound();
@@ -95,6 +108,8 @@ namespace MvcPL.Controllers
             return View(model);
         }
 
+        //[Authorize(Roles = "admin")]
+        // Редактировать пост может только его сощдатель.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditPostViewModel model, string[] namesOfTags)
@@ -112,14 +127,10 @@ namespace MvcPL.Controllers
             if (post == null)
                 return HttpNotFound(); // Redirect to custom error page
 
-            /*var comments = commentService.GetCommentsByPostId(id);
-            if (comments != null)
-                foreach (var bllComment in comments)
-                    post.Comments.Add(bllComment.ToMvcComment());*/
-
             return View(post);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Like(int id)
         {
@@ -129,6 +140,7 @@ namespace MvcPL.Controllers
             return Json(postService.GetById(id).Likes.Count);
         }
 
+        [Authorize]
         public ActionResult AddComment(int postId, string text) 
         {
             postService.AddComment(new CommentEntity {
@@ -146,7 +158,7 @@ namespace MvcPL.Controllers
         public ActionResult SearchByTag(string tagname)
         {
             ViewBag.TagName = tagname;
-            return View(postService.GetPostsByTagName(tagname).Select(post => post.ToMvcPost()));
+            return View(postService.GetPostsByTagName(tagname)?.Select(post => post.ToMvcPost()));
         }
 
         private readonly IPostService postService;

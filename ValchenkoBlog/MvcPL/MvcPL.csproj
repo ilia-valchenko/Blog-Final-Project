@@ -212,6 +212,7 @@
     <Content Include="Content\Images\Icon\create.png" />
     <Content Include="Content\Images\Logo\batman_from_gomel.png" />
     <Content Include="Content\new_elements.css" />
+    <Content Include="Content\search_by_tag.css" />
     <Content Include="Content\select.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
@@ -252,6 +253,8 @@
     <Content Include="Content\Fontawesome\scss\_screen-reader.scss" />
     <Content Include="Content\Fontawesome\scss\_stacked.scss" />
     <Content Include="Content\Fontawesome\scss\_variables.scss" />
+    <Content Include="fonts\a_Monumento_DemiBold.ttf" />
+    <Content Include="fonts\a_Monumento_DemiBold_EOT.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\comment.js" />
     <Content Include="Scripts\Custom\like.js" />
