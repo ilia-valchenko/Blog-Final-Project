@@ -1,9 +1,0 @@
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\BLL.Interfacies.dll.config
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\BLL.Interfacies.dll
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\BLL.Interfacies.pdb
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\EntityFramework.dll
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\EntityFramework.SqlServer.dll
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\EntityFramework.xml
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\bin\Release\EntityFramework.SqlServer.xml
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\obj\Release\BLL.Interfacies.dll
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\BLL.Interfacies\obj\Release\BLL.Interfacies.pdb
