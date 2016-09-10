@@ -1,0 +1,91 @@
+﻿@model MvcPL.Models.Post.DetailsPostViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@Styles.Render("~/Content/blog.css")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.css")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.min.css")
+@Scripts.Render("~/scripts/jquery-1.10.2.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+@Scripts.Render("~/scripts/Custom/like.js")
+@Scripts.Render("~/scripts/Custom/comment.js")
+
+<div class="create-post-form">
+    <div class="form-group">
+
+        <article class="post">
+            <h3>@Html.DisplayFor(model => model.Title)</h3>
+            <p>@Html.DisplayFor(model => model.Description)</p>
+
+            <ul class="tags">
+                @foreach (var tag in Model.Tags)
+                {
+                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
+                }
+            </ul>
+
+            <ul class="post-footer">
+                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>             
+                <li><span id="comments"><i class="fa fa-comment"></i> <span id="number_of_comments">@Html.DisplayFor(model => model.Comments.Count)</span></span></li>
+                <li>
+                    <button type="submit" class="like-button" id=@Model.Id>
+                        <i class="fa fa-heart"></i>
+                        <span id=@string.Format("like{0}", Model.Id)>@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
+                    </button>
+                </li>
+                <li><small>@Html.DisplayFor(model => model.PublishDate)</small></li>
+            </ul>
+
+            <ul class="post-control-panel">
+                <li>@Html.ActionLink("Back", "Index")</li>
+                <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</li>
+                <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</li>
+            </ul>
+
+            <h5>Comments</h5>
+
+            <form class="comment-create-form" id="comment-form-id" method="post" action="@Url.Action("AddComment", "Post")">
+                <input type="hidden" id="postid" name="postId" value=@Model.Id>
+                <textarea rows="5" cols="60" id="text" name="text" required></textarea> <br>
+                <input type="submit" value="Submit">
+            </form>
+
+            <div id="commentwrapper">
+            @foreach (var item in Model.Comments)
+            {
+                <div class="comment">
+                    <div class="avatar-wrapper">
+                        @if (item.User.Avatar == null)
+                        {
+                            <img src="~/Content/Images/Avatars/default.png" alt="default_user_avatar">
+                        }
+                        else
+                        {
+                            // Hardcode
+                            string imageBase64 = Convert.ToBase64String(item.User.Avatar);
+                            string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                            // Add custom style in css file
+                            <img src="@imageSrc" width="100" height="100" alt="@item.User.Nickname avatar">
+                        }  
+                    </div>
+
+                    <div class="comment-area">
+                        <p><strong>@Html.DisplayFor(modelItem => item.User.Nickname)</strong><span>@Html.DisplayFor(modelItem => item.PublishDate)</span></p>
+
+                        <p>@Html.DisplayFor(modelItem => item.Text)</p>
+
+                        <form method="post" id="comment-delete-form" action="@Url.Action("DeleteComment", "Post", new { id = item.Id})">
+                            <input type="hidden" id="commentid" name="id" value=@item.Id>
+                            <input type="submit" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            }
+            </div>
+        </article>
+
+    </div>
+</div>
+

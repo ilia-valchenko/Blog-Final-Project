@@ -1,0 +1,62 @@
+﻿@model IEnumerable<MvcPL.Models.Post.PostViewModel>
+
+@{
+    ViewBag.Title = "Hashtag #" + ViewBag.TagName;
+}
+
+<div class="create-create-form">
+    <h4>Search by #@ViewBag.TagName</h4>
+</div>
+
+@Styles.Render("~/Content/create_post.css")
+@Styles.Render("~/Content/blog.css")
+@Styles.Render("~/Content/search_by_tag.css")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.css")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.min.css")
+@Scripts.Render("~/scripts/jquery-1.10.2.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+@Scripts.Render("~/scripts/Custom/like.js")
+
+@if (Model == null)
+{
+    <div class="posts-not-found-by-tag">
+        <p>No results.</p>
+
+        @Html.ActionLink("Back", "Index")
+    </div>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <article class="post">
+            <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+
+            <ul class="tags">
+                @foreach (var tag in item.Tags)
+                {
+                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
+                }
+            </ul>
+
+            <ul class="post-footer">
+                <li><small>Posted by: @Html.DisplayFor(modelItem => item.Author.Nickname)</small></li>
+                <li><span id="comments"><i class="fa fa-comment"></i> @Html.DisplayFor(modelItem => item.NumberOfComments)</span></li>
+                <li>
+                    <button type="submit" class="like-button" id=@item.Id>
+                        <i class="fa fa-heart"></i>
+                        <span id=@string.Format("like{0}", item.Id)>@Html.DisplayFor(modelItem => item.NumberOfLikes)</span>
+                    </button>
+                </li>
+                <li><small>@Html.DisplayFor(modelItem => item.PublishDate)</small></li>
+            </ul>
+
+            <ul class="post-control-panel">
+                <li>@Html.ActionLink("Read more", "Details", new { id = item.Id })</li>
+                <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+                <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+            </ul>
+        </article>
+    }
+}
