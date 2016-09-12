@@ -75,6 +75,15 @@ namespace DAL.Concrete.ModelRepository
         }
         #endregion
 
+        public void DeleteLikesFromPost(int postId)
+        {
+            var likes = context.Set<Like>().Where(like => like.Post.PostId == postId);
+
+            if (likes != null)
+                foreach (var like in likes)
+                    context.Set<Like>().Remove(like);
+        }
+
         private readonly DbContext context;
     }
 }

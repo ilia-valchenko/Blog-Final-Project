@@ -27,11 +27,13 @@ namespace MvcPL.Infrastructure.Mappers
             if (bllComment == null)
                 return null;
 
+            var date = bllComment.PublishDate;
+
             return new CommentViewModel
             {
                 Id = bllComment.Id,
                 Text = bllComment.Text,
-                PublishDate = bllComment.PublishDate.ToString(),
+                PublishDate = date.ToShortDateString() + $" {date.Hour}:{date.Second}",
                 User = bllComment.User?.ToMvcUser() ?? new UserViewModel()
             };
         }

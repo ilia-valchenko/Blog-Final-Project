@@ -1,4 +1,4 @@
-h4 {
+п»їh4 {
 	font-size: 1.2em;
 	border-bottom: 0.15em solid #000000;
 	width: 97%;
@@ -11,16 +11,16 @@ h4 {
 	padding-left: 1.5%;
 }
 
-/* Красные звездочки - required поля */
+/* РљСЂР°СЃРЅС‹Рµ Р·РІРµР·РґРѕС‡РєРё - required РїРѕР»СЏ */
 
 .form-group strong span {
     color: red;
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
 	border: none;
-	width: 25em;
+	width: 18em;
 	padding: 0.4em 1em 0.4em 1em;
 	background-color: #d9d9d9;
 	border-left: 1em solid #55acee;
@@ -61,7 +61,19 @@ input[type="button"]:hover {
 	background: #55acee;
 }
 
-/* Кнопка для Popup login*/
+/* РЎРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ РІР°Р»РёРґР°С†РёРё */
+
+.field-validation-error {
+    /*display: block;*/
+    color: red;
+    padding-left: 10px;
+}
+
+.login-remember-checkbox {
+    padding: 0.3em 0 0 1em;
+}
+
+/* РљРЅРѕРїРєР° РґР»СЏ Popup login*/
 
 #popup form input[type="submit"] {
     border: none;

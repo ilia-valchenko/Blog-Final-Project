@@ -4,41 +4,63 @@
     ViewBag.Title = "Register";
 }
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-register", role = "form" }))
+@Styles.Render("~/Content/registration.css")
+
+@using (Html.BeginForm())
 {
-    <h4>Register:</h4>
-   
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.LabelFor(m => m.Nickname, new { @class = "sr-only" })
-    @Html.TextBoxFor(m => m.Nickname, new { @class = "form-control", @placeholder = "Enter your nickname" })
-    @Html.ValidationMessageFor(m => m.Nickname, null, new { @class = "text-danger" })
+    <div class="create-post-form">
+        <h4>Create a new account.</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.LabelFor(m => m.Email, new { @class = "sr-only" })
-    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Enter your email" })
-    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Nickname): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { placeholder = "crazyhorse183", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Email): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "example@site.com", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
-    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Please enter your password" })
-    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" })
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Password): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "")
+            </div>
+        </div>
 
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.ConfirmPassword): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "")
+            </div>
+        </div>
 
-    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only" })
-    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Please confirm password" })
-    @Html.ValidationMessageFor(m => m.ConfirmPassword, null, new { @class = "text-danger" })
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Captcha): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Captcha, new { htmlAttributes = new { placeholder = "Enter captcha code", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Captcha, "")
+            </div>
+        </div>
 
-    @Html.LabelFor(m => m.Captcha, new { @class = "sr-only" })
-    @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control", @placeholder = "Enter the code from the image" })
-    @Html.ValidationMessageFor(m => m.Captcha, null, new { @class = "text-danger" })
-    <div class="img-responsive">
-        <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
+        <div class="img-responsive">
+            <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
+        </div>
+
+        <div class="post-create-button">
+            <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="location.href='@Url.Action("Index", "Post")'">
+        </div>
     </div>
-    
-    <button type="submit">Register</button>
-
-    <p>
-        Already have an account? Click here to return to login @Html.ActionLink("Login page", "Login")
-    </p>
 }

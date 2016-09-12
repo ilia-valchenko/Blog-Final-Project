@@ -90,7 +90,7 @@ namespace DAL.Concrete.ModelRepository
 
             // Test
             // But they still exist
-            post.Likes.Clear();
+            //post.Likes.Clear();
 
             if (post != default(Post))
                 context.Set<Post>().Remove(post);

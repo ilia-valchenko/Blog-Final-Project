@@ -53,14 +53,10 @@ namespace BLL.Services
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            // Likes don't remove
-            /*var likes = likeRepository.GetDalLikesByPostId(entity.Id);
-            if (likes != null)
-                foreach (var dalLike in likes)
-                    likeRepository.Delete(dalLike);*/
-            // end of test
-
+            likeRepository.DeleteLikesFromPost(entity.Id);
+            commentRepository.DeleteCommentsFromPost(entity.Id);
             postRepository.Delete(entity.ToDalPost());
+
             unitOfWork.Commit();
         }
         #endregion

@@ -154,6 +154,21 @@ namespace MvcPL.Controllers
 
         [Authorize]
         [HttpPost]
+        public ActionResult AddCommentViaAjax(int postId, string text)
+        {
+            postService.AddComment(new CommentEntity
+            {
+                PublishDate = DateTime.Now,
+                Text = text,
+                Post = new PostEntity { Id = postId },
+                User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
+            });
+
+            return Json(commentService.GetCommentsByPostId(postId).OrderByDescending(c => c.Id).FirstOrDefault(c => c.User.Id == userService.GetUserEntityByNickname(User.Identity.Name).Id)?.ToMvcComment());
+        }
+
+        [Authorize]
+        [HttpPost]
         public ActionResult AddComment(int postId, string text) 
         {
             postService.AddComment(new CommentEntity {
@@ -163,8 +178,7 @@ namespace MvcPL.Controllers
                 User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
             });
 
-            //return Json(commentService.GetCommentsByPostId(postId).Select(c => c.ToMvcComment()));
-            return Json(commentService.GetCommentsByPostId(postId).OrderByDescending(c => c.Id).FirstOrDefault(c => c.User.Id == userService.GetUserEntityByNickname(User.Identity.Name).Id));
+            return RedirectToAction("Details/" + postId);
         }
 
         [Authorize]
@@ -176,11 +190,38 @@ namespace MvcPL.Controllers
 
             var comment = commentService.GetById((int)id);
 
-            if (comment == null)
+            // Add filter
+            if (User.Identity.Name != comment.User.Nickname || !User.IsInRole("admin"))
+                return RedirectToAction("Login");
+
+                if (comment == null)
                 return HttpNotFound();
             
             commentService.Delete(comment);
             return RedirectToAction("Details/" + comment.Post.Id);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult DeleteCommentViaAjax(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var comment = commentService.GetById((int)id);
+
+            var currentUserName = User.Identity.Name;
+            var authorName = comment.User.Nickname;
+            // Add filter
+            if (User.Identity.Name != comment.User.Nickname || User.IsInRole("admin"))
+                return RedirectToAction("Login");
+
+            if (comment == null)
+                return HttpNotFound();
+
+            commentService.Delete(comment);
+            return Json(true);
+            //return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         public ActionResult SearchByTag(string tagname)

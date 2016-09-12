@@ -16,12 +16,14 @@ namespace MvcPL.Infrastructure.Mappers
             if (bllPost == null)
                 return null;
 
+            var date = bllPost.PublishDate;
+
             return new PostViewModel
             {
                 Id = bllPost.Id,
                 Title = bllPost.Title,
                 Description = bllPost.Description,
-                PublishDate = bllPost.PublishDate.ToShortDateString(),
+                PublishDate = date.ToShortDateString() + $" {date.Hour}:{date.Second}",
                 Author = bllPost.User.ToMvcUser() ?? new UserViewModel(),
                 NumberOfComments = bllPost.Comments?.Count ?? 0,
                 NumberOfLikes = bllPost.Likes?.Count ?? 0,

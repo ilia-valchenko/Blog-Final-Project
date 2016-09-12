@@ -212,6 +212,8 @@
     <Content Include="Content\Images\Icon\create.png" />
     <Content Include="Content\Images\Logo\batman_from_gomel.png" />
     <Content Include="Content\new_elements.css" />
+    <Content Include="Content\popup.css" />
+    <Content Include="Content\registration.css" />
     <Content Include="Content\search_by_tag.css" />
     <Content Include="Content\select.css" />
     <Content Include="Content\style.css" />
@@ -258,6 +260,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\comment.js" />
     <Content Include="Scripts\Custom\like.js" />
+    <Content Include="Scripts\Custom\popup_login.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

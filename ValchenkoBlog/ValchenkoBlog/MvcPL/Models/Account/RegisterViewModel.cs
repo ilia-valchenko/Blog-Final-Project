@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Models.Account
 {
@@ -10,27 +9,27 @@ namespace MvcPL.Models.Account
 
         [Display(Name = "Enter your nickname")]
         [Required(ErrorMessage = "The field can not be empty!")]
-        //[RegularExpression(@"(\w+)", ErrorMessage = "Invalid name")]
-        [StringLength(30, ErrorMessage = "The name must contain at lest {2} characters", MinimumLength = 4)]
+        [RegularExpression(@"[a-zA-Z][a-zA-Z0-9]{3,11}$", ErrorMessage = "Nickname must contains only only letter and digits! Must starts from letter!")]
         public string Nickname { get; set; }
 
         [Display(Name = "Enter your email")]
-        [Required(ErrorMessage = "The field can not be empty!")]
+        [Required(ErrorMessage = "Email field can't be empty!")]
+        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Invalid email address!")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Enter your password")]
-        [StringLength(100, ErrorMessage = "The password must contain at least {2} characters", MinimumLength = 6)]
+        [StringLength(30, ErrorMessage = "The password must contain at least 6 characters", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Enter your password")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Confirm the password")]
+        [Required(ErrorMessage = "Confirm password field can't be empty!")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm the password")]
-        [Compare("Password", ErrorMessage = "Passwords must match")]
+        [Compare("Password", ErrorMessage = "Passwords must match!")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field for captcha field can't be empty!")]
         [Display(Name = "Enter the code from the image")]
         public string Captcha { get; set; }
     }

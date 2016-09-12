@@ -55,7 +55,7 @@
             <div id="commentwrapper">
             @foreach (var item in Model.Comments)
             {
-                <div class="comment">
+                <div class="comment" id=@string.Format("comment{0}", item.Id)>
                     <div class="avatar-wrapper">
                         @if (item.User.Avatar == null)
                         {
@@ -76,10 +76,13 @@
 
                         <p>@Html.DisplayFor(modelItem => item.Text)</p>
 
-                        <form method="post" id="comment-delete-form" action="@Url.Action("DeleteComment", "Post", new { id = item.Id})">
-                            <input type="hidden" id="commentid" name="id" value=@item.Id>
-                            <input type="submit" value="Delete">
-                        </form>
+                        @if (User.Identity.Name == item.User.Nickname || User.IsInRole("admin"))
+                        {
+                            <form method="post" id="comment-delete-form" action="@Url.Action("DeleteComment", "Post", new { id = item.Id})">
+                                <input type="hidden" id="commentid" name="id" value=@item.Id>
+                                <input type="submit" value="Delete">
+                            </form>
+                        }
                     </div>
                 </div>
             }

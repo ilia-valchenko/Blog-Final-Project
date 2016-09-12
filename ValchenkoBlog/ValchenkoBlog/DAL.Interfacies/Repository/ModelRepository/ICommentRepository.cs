@@ -7,5 +7,6 @@ namespace DAL.Interfacies.Repository.ModelRepository
     {
         IEnumerable<DalComment> GetDalCommentsByUserId(int userId);
         IEnumerable<DalComment> GetDalCommentsByPostId(int postId);
+        void DeleteCommentsFromPost(int postId);
     }
 }

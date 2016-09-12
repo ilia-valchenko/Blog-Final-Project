@@ -35,7 +35,7 @@ namespace MvcPL.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -59,31 +59,6 @@ namespace MvcPL.Controllers
             }
             ViewBag.returnUrl = returnUrl;
             return View(loginViewModel);
-
-
-            ///////////
-            /*if (ModelState.IsValid)
-            {
-                if (Membership.ValidateUser(model.UserName, model.Password))
-                {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (Url.IsLocalUrl(returnUrl))
-                    {
-                        return Redirect(returnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный пароль или логин");
-                }
-            }
-            return View(model);*/
-
-            ///////////
         }
 
         public ActionResult Logout()

@@ -68,7 +68,21 @@ namespace BLL.Services
             if (id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id));
 
-            return commentRepository.GetById(id)?.ToBllComment();
+            var dalComment = commentRepository.GetById(id);
+
+            if (dalComment == null)
+                return null;
+
+            var bllComment = dalComment.ToBllComment();
+            var commentAuthor = userRepository.GetById(dalComment.UserId);
+            bllComment.User = new UserEntity
+            {
+                Id = dalComment.UserId,
+                Nickname = commentAuthor.Nickname,
+                Avatar = commentAuthor.Avatar
+            };
+           
+            return bllComment;
         }
         public CommentEntity GetOneByPredicate(Expression<Func<CommentEntity, bool>> predicates)
         {

@@ -53,7 +53,9 @@ namespace DAL.Concrete.ModelRepository
             if (entity == null)
                 return;
 
-            var comment = context.Set<Comment>().Single(u => u.CommentId == entity.Id);
+            //var comment = context.Set<Comment>().Single(u => u.CommentId == entity.Id);
+
+            var comment = context.Set<Comment>().FirstOrDefault(u => u.CommentId == entity.Id);
 
             if (comment != default(Comment))
                 context.Set<Comment>().Remove(comment);
@@ -83,6 +85,15 @@ namespace DAL.Concrete.ModelRepository
         //public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Comment>().Where(c => c.PostId == postId).ToList().Select(c => c.ToDalComment());
         public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Comments.ToList().Select(c => c.ToDalComment()); 
         #endregion
+
+        public void DeleteCommentsFromPost(int postId)
+        {
+            var comments = context.Set<Comment>().Where(comment => comment.Post.PostId == postId);
+
+            if (comments != null)
+                foreach (var comment in comments)
+                    context.Set<Comment>().Remove(comment);
+        }
 
         private readonly DbContext context;
     }

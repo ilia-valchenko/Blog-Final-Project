@@ -6,7 +6,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: "/Post/AddComment",
+                url: "/Post/AddCommentViaAjax",
                 data: {
                     'postId': $('#postid').val(),
                     'text': $('#text').val()
@@ -31,6 +31,27 @@
                 },
                 async: true,
             });
+
+    });
+
+    $("#comment-delete-form").submit(function (event) {
+        
+        event.preventDefault();
+        var id = $(this).find("#commentid").val();
+
+        $.ajax({
+            type: 'POST',
+            url: "/Post/DeleteCommentViaAjax",
+            data: {
+                'id': id
+            },
+            dataType: 'json',
+            success: function (result) {
+                $("#comment" + id).remove();
+                $("#number_of_comments").replaceWith(parseInt($("#number_of_comments").text()) - 1);
+            },
+            async: true,
+        });
 
     });
 

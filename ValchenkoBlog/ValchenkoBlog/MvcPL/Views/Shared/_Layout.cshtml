@@ -8,8 +8,11 @@
     @Styles.Render("~/Content/new_elements.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/home.css")
+    @Styles.Render("~/Content/popup.css")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/scripts/jquery-1.10.2.js")
+    @Scripts.Render("~/scripts/Custom/popup_login.js")
 </head>
 
 <body>
@@ -24,7 +27,6 @@
                 <ul>
                     <li><span><a>@Html.ActionLink("LOG IN", "Login", "Account")</a></span></li>
                     <li><span><a>@Html.ActionLink("REGISTER", "Register", "Account")</a></span></li>
-                    <li><span><a>@Html.ActionLink("LOG OUT", "Logout", "Account")</a></span></li>
                     <li><span><a>@Html.ActionLink("POSTS", "Index", "Post")</a></span></li>
                     <li><span><a>@Html.ActionLink("TAGS", "Index", "Tag")</a></span></li>
                 </ul>
@@ -45,10 +47,35 @@
     </article>
 
     <div class="header-slogan">
-        <h1 id="responsive_h1"><a href="#">Log In</a> or <a href="#">Sign Up</a> to create a new post in the blog.</h1>
-        <!--This blog needs it's own hero!-->
-        <!--Login partial-->
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h1 id="responsive_h1">Hi, @@@User.Identity.Name! Nice to see you. @Html.ActionLink("Log Out", "Logout", "Account")</h1>
+        }
+        else
+        {
+            <h1 id="responsive_h1"><a href=@Url.Action("Login", "Account") id="open">Log In</a> or <a href="#">Sign Up</a> to create a new post in the blog.</h1>
+        }
     </div>
+
+    <!--Login form-->
+
+        <div id="popup" class="popup-wrapper hide">
+            <div class="popup-content">
+                <div class="popup-title">
+                    <button type="button" class="popup-close" id="close_button" onclick="ClosePopup();">&times;</button>
+                    <h3>Log In</h3>
+                </div>
+
+                <div class="popup-body">
+                    <form action="/Account/Login" method="post">
+                        <div><p>Login: <span>*</span></p><input type="text" name="Nickname"></div>
+                        <div><p>Password: <span>*</span></p><input type="password" name="Password"></div>
+                        <div><p>Remember?</p><input type="checkbox" name="RemeberMe"></div>
+                        <input type="submit" />
+                        </form>
+                </div>
+            </div>
+        </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
