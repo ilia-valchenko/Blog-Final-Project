@@ -5,9 +5,7 @@ using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Post;
-using System.Net;
-using System.Collections.Generic;
-using MvcPL.Models.Tag;
+using System.Configuration;
 
 namespace MvcPL.Controllers
 {
@@ -22,11 +20,11 @@ namespace MvcPL.Controllers
             this.tagService = tagService;
             this.userService = userService;
             this.commentService = commentService;
+            Int32.TryParse(ConfigurationManager.AppSettings["PageSize"], out pageSize);
         }
 
         public ActionResult Index(int page = 0)
         {
-            const int pageSize = 6;
             int count = postService.Count();
 
             ViewBag.NumberOfPages = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
@@ -36,17 +34,18 @@ namespace MvcPL.Controllers
         }
 
         #region Create
-        [Authorize]
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             var model = new CreatePostViewModel();
             model.TagList = new SelectList(tagService.GetAll().Select(tag => tag.ToMvcTag().Name));
+
             return View(model);
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
         {
@@ -56,36 +55,28 @@ namespace MvcPL.Controllers
 
             postService.Create(createPostViewModel.ToBllPost(namesOfTags));
 
-            //postService.AddTagsToPost(idOfCreatedPost, namesOfTags);
-
             return RedirectToAction("Index");
         } 
         #endregion
 
         #region Delete
         // НЕСЕТ ПОТЕНЦИАЛЬНУЮ УЯЗВИМОСТЬ!
-        // GET: Posts/Delete/5
-        //[Authorize(Roles = "admin")]
-        //[HttpGet]
+        [Authorize(Roles = "admin")]
+        [HttpGet]
         public ActionResult Delete(int? id)
         {
-            // NULLABLE
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Error");
 
             var post = postService.GetById((int)id)?.ToMvcPost();
 
             if (post == null)
-            {
-                Response.StatusCode = 404;
                 return RedirectToAction("NotFound", "Error");
-            }
 
             return View(post);
         }
 
-        // POST: Posts/Delete/5
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -96,33 +87,25 @@ namespace MvcPL.Controllers
         #endregion
 
         #region Edit
-        //[Authorize(Roles = "admin")]
-        // Редактировать пост может только его сощдатель.
         [HttpGet]
-        public ActionResult Edit(int id)
+        [Authorize(Roles = "admin")] 
+        public ActionResult Edit(int? id)
         {
-            var post = postService.GetById(id);
+            if(id == null)
+                return RedirectToAction("BadRequest", "Error");
 
-            if (post == null)
-                return HttpNotFound(); // Redirect to custom error page
-
-            if (User.Identity.Name != post.User.Nickname)
-                return RedirectToAction("Index"); // Custom error page
-
-            //EditPostViewModel model = postService.GetById(id).ToMvcEditPost();
-            EditPostViewModel model = post.ToMvcEditPost();
+            EditPostViewModel model = postService.GetById((int)id)?.ToMvcEditPost();
 
             if (model == null)
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
 
             model.TagList = new SelectList(tagService.GetAll().Select(tag => tag.ToMvcTag().Name));
 
             return View(model);
         }
 
-        //[Authorize(Roles = "admin")]
-        // Редактировать пост может только его сощдатель.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EditPostViewModel model, string[] namesOfTags)
         {
@@ -135,16 +118,13 @@ namespace MvcPL.Controllers
         public ActionResult Details(int? id)
         {
             if(id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Error");
 
             var post = postService.GetById((int)id)?.ToMvcDetailsPost();
 
             if (post == null)
-            {
-                Response.StatusCode = 404;
                 return RedirectToAction("NotFound", "Error");
-            }
-                
+  
             return View(post);
         }
 
@@ -184,7 +164,7 @@ namespace MvcPL.Controllers
                 User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
             });
 
-            return RedirectToAction("Details/" + postId);
+            return RedirectToAction("Details", "Post", new { id = postId });
         }
 
         [Authorize]
@@ -192,19 +172,20 @@ namespace MvcPL.Controllers
         public ActionResult DeleteComment(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Error");
 
             var comment = commentService.GetById((int)id);
 
             // Add filter
-            if (User.Identity.Name != comment.User.Nickname || !User.IsInRole("admin"))
-                return RedirectToAction("Login");
+            if (User.Identity.Name != comment.User.Nickname && !User.IsInRole("admin"))
+                return RedirectToAction("Login", "Account");
 
-                if (comment == null)
-                return HttpNotFound();
-            
+            if (comment == null)
+                return RedirectToAction("NotFound", "Error");
+
             commentService.Delete(comment);
-            return RedirectToAction("Details/" + comment.Post.Id);
+
+            return RedirectToAction("Details", "Post", new { id = comment.Post.Id });
         }
 
         [Authorize]
@@ -212,18 +193,17 @@ namespace MvcPL.Controllers
         public ActionResult DeleteCommentViaAjax(int? id)
         {
             if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Error");
 
             var comment = commentService.GetById((int)id);
 
-            var currentUserName = User.Identity.Name;
-            var authorName = comment.User.Nickname;
             // Add filter
-            if (User.Identity.Name != comment.User.Nickname || User.IsInRole("admin"))
-                return RedirectToAction("Login");
+            if (User.Identity.Name != comment.User.Nickname || !User.IsInRole("admin"))
+                return RedirectToAction("Login", "Account");
+            // Check out this 
 
             if (comment == null)
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
 
             commentService.Delete(comment);
             return Json(true);
@@ -233,7 +213,7 @@ namespace MvcPL.Controllers
         public ActionResult SearchByTag(string tagname)
         {
             if(tagname == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("BadRequest", "Error");
 
             ViewBag.TagName = tagname;
             return View(postService.GetPostsByTagName(tagname)?.Select(post => post.ToMvcPost()));
@@ -243,7 +223,8 @@ namespace MvcPL.Controllers
         private readonly IPostService postService;
         private readonly ITagService tagService;
         private readonly IUserService userService;
-        private readonly ICommentService commentService; 
+        private readonly ICommentService commentService;
+        private readonly int pageSize;
         #endregion
     }
 }

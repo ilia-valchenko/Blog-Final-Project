@@ -35,21 +35,18 @@ namespace DAL.Concrete.ModelRepository
 
             var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
 
-            if (tag == default(Tag))
-            {
-                tag = entity.ToOrmTag();
-                context.Set<Tag>().Add(tag);
-            }
-
-            tag.Name = entity.Name;
-            context.Entry(tag).State = EntityState.Modified;
+            if (tag != null)
+                tag.Name = entity.Name;
         }
 
         public void Delete(DalTag entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var tag = context.Set<Tag>().SingleOrDefault(t => t.TagId == entity.Id);
 
-            if (tag != default(Tag))
+            if (tag != null)
                 context.Set<Tag>().Remove(tag);
         }
         #endregion

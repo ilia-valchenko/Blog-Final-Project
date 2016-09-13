@@ -6,23 +6,21 @@ namespace MvcPL.Infrastructure.Mappers
 {
     public static class MvcUserMapper
     {
-        public static UserViewModel ToMvcUser(this UserEntity userEntity)
+        public static UserProfileViewModel ToMvcUser(this UserEntity userEntity)
         {
             if (userEntity == null)
                 return null;
 
-            return new UserViewModel()
+            return new UserProfileViewModel()
             {
                 Id = userEntity.Id,
                 Nickname = userEntity.Nickname,
-                Email = userEntity.Email
-                // Avatar
+                Email = userEntity.Email,
+                Avatar = userEntity.Avatar
             };
-
-            // ADD USER'S ROLES
         }
 
-        public static UserEntity ToBllUser(this UserViewModel userViewModel)
+        public static UserEntity ToBllUser(this UserProfileViewModel userViewModel)
         {
             if (userViewModel == null)
                 throw new ArgumentNullException(nameof(userViewModel));

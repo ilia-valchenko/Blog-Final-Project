@@ -90,6 +90,7 @@ namespace MvcPL.Controllers
                 ModelState.AddModelError("", "User with this address already registered.");
                 return View(registerViewModel);
             }
+
             if (userService.GetOneByPredicate(u => u.Nickname == registerViewModel.Nickname) != null)
             {
                 ModelState.AddModelError("", "User with this nickname already registered.");

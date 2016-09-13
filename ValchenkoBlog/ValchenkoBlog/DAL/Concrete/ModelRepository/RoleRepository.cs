@@ -35,22 +35,18 @@ namespace DAL.Concrete.ModelRepository
 
             var role = context.Set<Role>().SingleOrDefault(r => r.RoleId == entity.Id);
 
-            if (role == default(Role))
-            {
-                role = entity.ToOrmRole();
-                context.Set<Role>().Add(role);
-                //return;
-            }
-
-            role.Name = entity.Name;
-            context.Entry(role).State = EntityState.Modified;
+            if(role != null)
+                role.Name = entity.Name;
         }
 
         public void Delete(DalRole entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var role = context.Set<Role>().SingleOrDefault(r => r.RoleId == entity.Id);
 
-            if (role != default(Role))
+            if (role != null)
                 context.Set<Role>().Remove(role);
         }
         #endregion

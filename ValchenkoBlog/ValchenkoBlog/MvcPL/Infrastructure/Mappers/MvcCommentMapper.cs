@@ -34,7 +34,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Id = bllComment.Id,
                 Text = bllComment.Text,
                 PublishDate = date.ToShortDateString() + $" {date.Hour}:{date.Second}",
-                User = bllComment.User?.ToMvcUser() ?? new UserViewModel()
+                User = bllComment.User?.ToMvcUser() ?? new UserProfileViewModel()
             };
         }
     }

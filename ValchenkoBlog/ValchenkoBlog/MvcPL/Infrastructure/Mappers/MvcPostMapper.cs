@@ -24,7 +24,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = date.ToShortDateString() + $" {date.Hour}:{date.Second}",
-                Author = bllPost.User.ToMvcUser() ?? new UserViewModel(),
+                Author = bllPost.User.ToMvcUser() ?? new UserProfileViewModel(),
                 NumberOfComments = bllPost.Comments?.Count ?? 0,
                 NumberOfLikes = bllPost.Likes?.Count ?? 0,
                 Tags = bllPost.Tags?.Select(tag => new TagViewModel { Name = tag.Name }).ToList() ?? new List<TagViewModel>()
@@ -83,7 +83,7 @@ namespace MvcPL.Infrastructure.Mappers
                 Title = bllPost.Title,
                 Description = bllPost.Description,
                 PublishDate = bllPost.PublishDate.ToShortDateString(),
-                Author = bllPost.User?.ToMvcUser() ?? new UserViewModel(),
+                Author = bllPost.User?.ToMvcUser() ?? new UserProfileViewModel(),
                 NumberOfLikes = bllPost.Likes.Count,
                 Tags = bllPost.Tags?.Select(tag => tag.ToMvcTag()).ToList() ?? new List<TagViewModel>(),
                 Comments = bllPost.Comments?.Select(comment => comment.ToMvcComment()).ToList() ?? new List<CommentViewModel>()

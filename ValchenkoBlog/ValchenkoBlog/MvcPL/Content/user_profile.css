@@ -1,0 +1,18 @@
+﻿user-profile-wrapper {
+    padding-left: 1.5%;
+}
+
+div.user-profile-wrapper h4 {
+	font-size: 1.2em;
+	border-bottom: 0.15em solid #000000;
+	width: 97%;
+	margin: 0 auto;
+	padding-bottom: 0.4em;
+	margin-bottom: 0.5em;
+}
+
+div.user-profile-wrapper div.user-info {
+    padding: 0 1.5% 0 1.5%;
+}
+
+

@@ -33,31 +33,26 @@ namespace DAL.Concrete.ModelRepository
 
         public void Update(DalComment entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var comment = context.Set<Comment>().FirstOrDefault(c => c.CommentId == entity.Id);
 
-            if (comment == default(Comment))
+            if(comment != null)
             {
-                comment = entity.ToOrmComment();
-                context.Set<Comment>().Add(comment);
+                comment.Text = entity.Text;
+                comment.PublishDate = entity.PublishDate;
             }
-
-            comment.Text = entity.Text;
-            comment.PublishDate = entity.PublishDate;
-            //comment.PostId = entity.PostId;
-            //comment.UserId = entity.UserId;
-            context.Entry(comment).State = EntityState.Modified;
         }
 
         public void Delete(DalComment entity)
         {
             if (entity == null)
-                return;
-
-            //var comment = context.Set<Comment>().Single(u => u.CommentId == entity.Id);
+                throw new ArgumentNullException(nameof(entity));
 
             var comment = context.Set<Comment>().FirstOrDefault(u => u.CommentId == entity.Id);
 
-            if (comment != default(Comment))
+            if (comment != null)
                 context.Set<Comment>().Remove(comment);
         }
         #endregion

@@ -8,7 +8,6 @@ using ORM.Models;
 using DAL.Mappers;
 using DAL.Interfacies.Helper;
 using System.Data.Entity;
-using DAL.Interfacies.Repository;
 
 namespace DAL.Concrete.ModelRepository
 {
@@ -39,23 +38,22 @@ namespace DAL.Concrete.ModelRepository
 
             var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
 
-            if (user == default(User))
+            if (user != null)
             {
-                user = entity.ToOrmUser();
-                context.Set<User>().Add(user);      
+                user.Nickname = entity.Nickname;
+                user.Password = entity.Password;
+                user.Avatar = entity.Avatar;
             }
-
-            user.Nickname = entity.Nickname;
-            user.Password = entity.Password;
-            user.Avatar = entity.Avatar;
-
-            context.Entry(user).State = EntityState.Modified;
         }
 
         public void Delete(DalUser entity)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var user = context.Set<User>().SingleOrDefault(u => u.UserId == entity.Id);
-            if (user != default(User))
+
+            if (user != null)
                 context.Set<User>().Remove(user);
         }
         #endregion
@@ -82,6 +80,12 @@ namespace DAL.Concrete.ModelRepository
 
         public void AddRoleToUser(string nickname, string roleName)
         {
+            if (nickname == null)
+                throw new ArgumentNullException(nameof(nickname));
+
+            if (roleName == null)
+                throw new ArgumentNullException(nameof(roleName));
+
             var user = context.Set<User>().FirstOrDefault(u => u.Nickname == nickname);
 
             if (user != null)

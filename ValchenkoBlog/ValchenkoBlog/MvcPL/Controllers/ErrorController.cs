@@ -12,11 +12,17 @@ namespace MvcPL.Controllers
         {
             return View("Error");
         }
+
         public ViewResult NotFound()
         {
             Response.StatusCode = 404;
-            ViewBag.UserQuery = HttpContext.Request.Path;
             return View("NotFound");
+        }
+
+        public ViewResult BadRequest()
+        {
+            Response.StatusCode = 400;
+            return View("BadRequest");
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MvcPL.Models.Comment
         public int Id { get; set; }
         public string Text { get; set; }
         public string PublishDate { get; set; }
-        public UserViewModel User { get; set; }
+        public UserProfileViewModel User { get; set; }
         public PostViewModel Post { get; set; }
     }
 }

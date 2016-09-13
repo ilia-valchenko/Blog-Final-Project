@@ -20,9 +20,21 @@ namespace MvcPL
             );
 
             routes.MapRoute(
+                name: "UserProfile",
+                url: "User/{nickname}",
+                defaults: new { controller = "User", action = "UserProfile" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "404-PageNotFound",
+                url: "{*url}",
+                defaults: new { controller = "Error", action = "NotFound" }
             );
         }
     }

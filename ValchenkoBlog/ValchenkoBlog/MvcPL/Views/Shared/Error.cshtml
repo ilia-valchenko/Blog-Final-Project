@@ -1,13 +1,28 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
-</body>
-</html>
+﻿@{
+    ViewBag.Title = "Error";
+}
+
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.css")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.min.css")
+@Styles.Render("~/Content/error.css")
+
+<div class="not-found-wrapper">
+    <h4>Error</h4>
+
+    <div>
+        <h5><i class="fa fa-meh-o" aria-hidden="true"></i> Oops! An error occurred while processing your request.</h5>
+
+        <p>This might be because:</p>
+
+        <ol>
+            <li>
+                The web server could be overloaded and therefore unable to handle requests properly.
+            </li>
+            <li>
+                An Internal server error.
+            </li>
+        </ol>
+    </div>
+</div>
+
+

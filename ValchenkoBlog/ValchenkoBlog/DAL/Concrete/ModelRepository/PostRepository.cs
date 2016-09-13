@@ -32,18 +32,18 @@ namespace DAL.Concrete.ModelRepository
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
+            if (tags == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var post = entity.ToOrmPost();
 
             if (post != null)
             {
-                if (tags != null)
-                {
-                    foreach (var dalTag in tags)
-                    {
-                        var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name);
-                        if (tag != null)
-                            post.Tags.Add(tag);
-                    }
+                foreach (var dalTag in tags)
+                { 
+                    var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name);
+                    if (tag != null)
+                        post.Tags.Add(tag);
                 }
             }
 
@@ -60,42 +60,39 @@ namespace DAL.Concrete.ModelRepository
 
         public void Update(DalPost entity, IEnumerable<DalTag> tags)
         {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            if (tags == null)
+                throw new ArgumentNullException(nameof(entity));
+
             var post = context.Set<Post>().FirstOrDefault(p => p.PostId == entity.Id);
 
-            if (post != null)
+            if(post != null)
             {
                 post.Tags.Clear();
 
-                if (tags != null)
+                foreach (var dalTag in tags)
                 {
-                    foreach (var dalTag in tags)
-                    {
-                        var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name);
-                        if (tag != null)
-                            post.Tags.Add(tag);
-                    }
+                    var tag = context.Set<Tag>().FirstOrDefault(t => t.Name == dalTag.Name);
+                    if (tag != null)
+                        post.Tags.Add(tag);
                 }
-            }
 
-            post.Title = entity.Title;
-            post.Description = entity.Description;
+                post.Title = entity.Title;
+                post.Description = entity.Description;
+            }
         }
 
         public void Delete(DalPost entity)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var post = context.Set<Post>().SingleOrDefault(p => p.PostId == entity.Id);
 
-            // Test
-            // But they still exist
-            //post.Likes.Clear();
-
-            if (post != default(Post))
+            if(post != null)
                 context.Set<Post>().Remove(post);
-
-            // And what happend with list of tags, likes and comments?
         }
         #endregion
 

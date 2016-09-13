@@ -45,12 +45,9 @@
 
         <ul class="post-control-panel">
             <li>@Html.ActionLink("Read more", "Details", new { id = item.Id })</li>
-            @if (User.Identity.Name == item.Author.Nickname)
+            @if (Request.IsAuthenticated && User.IsInRole("admin"))
             {
                 <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
-            }
-            @if (User.Identity.Name == item.Author.Nickname || User.IsInRole("admin"))
-            {
                 <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
             }
         </ul>

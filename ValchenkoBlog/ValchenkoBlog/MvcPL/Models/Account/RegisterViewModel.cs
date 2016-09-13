@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web;
 
 namespace MvcPL.Models.Account
 {
@@ -28,6 +29,8 @@ namespace MvcPL.Models.Account
         [Display(Name = "Confirm the password")]
         [Compare("Password", ErrorMessage = "Passwords must match!")]
         public string ConfirmPassword { get; set; }
+
+        public HttpPostedFileBase Avatar { get; set; }
 
         [Required(ErrorMessage = "Field for captcha field can't be empty!")]
         [Display(Name = "Enter the code from the image")]

@@ -30,16 +30,18 @@ namespace DAL.Concrete.ModelRepository
 
             context.Set<Post>().FirstOrDefault(p => p.PostId == entity.PostId)?.Likes.Add(like);
         }
+
         public void Delete(DalLike entity)
         {
             if (entity == null)
-                return;
+                throw new ArgumentNullException(nameof(entity));
 
             var like = context.Set<Like>().Single(l => l.LikeId == entity.Id);
 
-            if (like != default(Like))
+            if (like != null)
                 context.Set<Like>().Remove(like);
         }
+
         public void Update(DalLike entity)
         {
             throw new NotImplementedException();

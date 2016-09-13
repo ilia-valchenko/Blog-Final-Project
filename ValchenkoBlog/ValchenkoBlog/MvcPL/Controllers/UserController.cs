@@ -9,31 +9,19 @@ namespace MvcPL.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService service;
-
-        public UserController(IUserService service)
+        public UserController(IUserService userService, IRoleService roleService)
         {
-           this.service = service;
+           this.userService = userService;
+           this.roleService = roleService;
         }
 
-        public ActionResult Index() => View(service.GetAll().Select(user => user.ToMvcUser()));
-
-        [HttpGet]
-        public ActionResult Create() => View();
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(UserViewModel userViewModel)
-        {
-            service.Create(userViewModel.ToBllUser());
-            return RedirectToAction("Index");
-        }
+        public ActionResult Index() => View(userService.GetAll().Select(user => user.ToMvcUser()));
 
         //GET-запрос к методу Delete несет потенциальную уязвимость!
         [HttpGet]
         public ActionResult Delete(int id = 0)
         {
-            UserEntity user = service.GetById(id);
+            UserEntity user = userService.GetById(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -48,10 +36,35 @@ namespace MvcPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(UserEntity user)
         {
-            service.Delete(user);
+            userService.Delete(user);
             return RedirectToAction("Index");
         }
 
         //etc.
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult UserProfile(string nickname)
+        {
+            if (nickname == null)
+                return RedirectToAction("BadRequest", "Error");
+
+            var user = userService.GetUserEntityByNickname(nickname);
+            var model = user?.ToMvcUser();
+
+            if (model == null)
+                return RedirectToAction("NotFound", "Error");
+
+            var roles = roleService.GetRolesOfUser(user.Id);
+
+            if (roles != null)
+                foreach (var role in roles)
+                    model.Roles.Add(role.Name);
+
+            return View(model);
+        }
+
+        private readonly IUserService userService;
+        private readonly IRoleService roleService;
     }
 }
