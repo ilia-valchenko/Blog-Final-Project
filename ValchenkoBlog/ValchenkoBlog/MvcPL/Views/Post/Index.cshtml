@@ -11,9 +11,12 @@
 @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
 @Scripts.Render("~/scripts/Custom/like.js")
 
-<p class="post-create-button">
-    @Html.ActionLink("Add new post", "Create")
-</p>
+@if (Request.IsAuthenticated && User.IsInRole("admin"))
+{
+    <p class="post-create-button">
+        @Html.ActionLink("Add new post", "Create")
+    </p>
+}
 
 @foreach (var item in Model)
 {

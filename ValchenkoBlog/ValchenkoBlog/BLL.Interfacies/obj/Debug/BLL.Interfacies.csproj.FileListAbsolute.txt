@@ -15,6 +15,5 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\bin\Debug\EntityFramework.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\obj\Debug\BLL.Interfacies.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\obj\Debug\BLL.Interfacies.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL.Interfacies\obj\Debug\BLL.Interfacies.pdb

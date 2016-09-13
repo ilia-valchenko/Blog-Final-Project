@@ -76,7 +76,10 @@ namespace MvcPL.Controllers
             var post = postService.GetById((int)id)?.ToMvcPost();
 
             if (post == null)
-                return HttpNotFound();
+            {
+                Response.StatusCode = 404;
+                return RedirectToAction("NotFound", "Error");
+            }
 
             return View(post);
         }
@@ -135,10 +138,13 @@ namespace MvcPL.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var post = postService.GetById((int)id)?.ToMvcDetailsPost();
-            
-            if (post == null)
-                return HttpNotFound(); // Redirect to custom error page
 
+            if (post == null)
+            {
+                Response.StatusCode = 404;
+                return RedirectToAction("NotFound", "Error");
+            }
+                
             return View(post);
         }
 

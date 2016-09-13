@@ -102,6 +102,10 @@ namespace BLL.Services
                 throw new ArgumentOutOfRangeException(nameof(id));
 
             var dalPost = postRepository.GetById(id);
+
+            if (dalPost == null)
+                return null;
+
             var bllPost = dalPost.ToBllPost();
             bllPost.User = userRepository.GetById(dalPost.UserId).ToBllUser();
 
