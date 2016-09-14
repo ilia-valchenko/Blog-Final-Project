@@ -148,3 +148,4 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\MvcPL\obj\Debug\MvcPL.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\MvcPL\obj\Debug\MvcPL.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\MvcPL\obj\Debug\MvcPL.pdb
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\MvcPL\bin\ORM.xml

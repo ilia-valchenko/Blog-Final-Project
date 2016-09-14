@@ -213,6 +213,7 @@
     <Content Include="Content\Images\Icon\BatkaBatmen.png" />
     <Content Include="Content\Images\Icon\create.png" />
     <Content Include="Content\Images\Logo\batman_from_gomel.png" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\new_elements.css" />
     <Content Include="Content\popup.css" />
     <Content Include="Content\registration.css" />
@@ -288,7 +289,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
     <Content Include="Views\User\UserProfile.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -302,6 +303,8 @@
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -64,3 +64,4 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DependencyResolver\obj\Debug\DependencyResolver.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DependencyResolver\obj\Debug\DependencyResolver.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DependencyResolver\obj\Debug\DependencyResolver.pdb
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DependencyResolver\bin\Debug\ORM.xml

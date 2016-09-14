@@ -147,3 +147,10 @@ input[name="PostId"] {
 	visibility: hidden;
 }
 
+/* ошибки при заполнении полей */
+.text-danger {
+    display:block;
+    color: red;
+    margin: 5px 0 5px 0;
+}
+

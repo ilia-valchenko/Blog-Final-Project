@@ -46,3 +46,4 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL\obj\Debug\BLL.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL\obj\Debug\BLL.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL\obj\Debug\BLL.pdb
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\BLL\bin\Debug\ORM.xml

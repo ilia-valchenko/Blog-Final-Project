@@ -44,3 +44,4 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DAL\bin\Debug\System.Web.WebPages.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DAL\bin\Debug\System.Web.Razor.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DAL\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\DAL\bin\Debug\ORM.xml
