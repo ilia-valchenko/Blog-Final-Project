@@ -50,4 +50,3 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Debug\ORM.csproj.GenerateResource.Cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Debug\ORM.dll
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Debug\ORM.pdb
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Debug\ORM.csprojResolveAssemblyReference.cache

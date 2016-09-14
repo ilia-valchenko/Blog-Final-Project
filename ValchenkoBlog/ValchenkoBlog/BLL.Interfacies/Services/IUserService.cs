@@ -1,4 +1,5 @@
-﻿using BLL.Interfacies.Entities;
+﻿using System.Web;
+using BLL.Interfacies.Entities;
 
 namespace BLL.Interfacies.Services
 {
@@ -7,5 +8,6 @@ namespace BLL.Interfacies.Services
         UserEntity GetUserEntityByNickname(string nickname);
         UserEntity GetUserEntityByEmail(string email);
         void AddRoleToUser(string nickname, string roleName);
+        void ChangeAvatar(string nickname, HttpPostedFileBase file);
     }
 }

@@ -135,6 +135,7 @@ input[type="submit"]:hover {
 
 .avatar-wrapper img {
 	width: 5em;
+    height: 5em;
 }
 
 .comment div:first-of-type {

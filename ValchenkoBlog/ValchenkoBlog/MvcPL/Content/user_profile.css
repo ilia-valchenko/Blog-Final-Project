@@ -12,7 +12,20 @@ div.user-profile-wrapper h4 {
 }
 
 div.user-profile-wrapper div.user-info {
-    padding: 0 1.5% 0 1.5%;
+    padding: 0.5% 1.5% 0 1.5%;
 }
 
+div.user-profile-wrapper div.user-info div img {
+    width: 14em;
+    height: 14em;
+    float: left;
+    margin: 0 0.9em 0 0;
+}
 
+div.user-info p {
+    
+}
+
+div.user-info p span {
+    font-weight: bold;
+}

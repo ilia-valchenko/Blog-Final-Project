@@ -6,6 +6,7 @@ using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Post;
 using System.Configuration;
+using System.Web;
 
 namespace MvcPL.Controllers
 {
@@ -176,7 +177,6 @@ namespace MvcPL.Controllers
 
             var comment = commentService.GetById((int)id);
 
-            // Add filter
             if (User.Identity.Name != comment.User.Nickname && !User.IsInRole("admin"))
                 return RedirectToAction("Login", "Account");
 
@@ -198,9 +198,8 @@ namespace MvcPL.Controllers
             var comment = commentService.GetById((int)id);
 
             // Add filter
-            if (User.Identity.Name != comment.User.Nickname || !User.IsInRole("admin"))
+            if (User.Identity.Name != comment.User.Nickname && !User.IsInRole("admin"))
                 return RedirectToAction("Login", "Account");
-            // Check out this 
 
             if (comment == null)
                 return RedirectToAction("NotFound", "Error");

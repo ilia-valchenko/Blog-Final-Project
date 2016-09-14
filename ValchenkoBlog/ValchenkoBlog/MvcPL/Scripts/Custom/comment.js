@@ -13,9 +13,13 @@
                 },
                 dataType: 'json',
                 success: function (result) {
-            
+
+                    var file = base64js.fromByteArray(jQuery.makeArray(result.User.Avatar);
+
                     $("#commentwrapper").append('<div class="comment">' +
-                        '<div class="avatar-wrapper"><img src="/Content/Images/Avatars/default.png" alt="default_user_avatar"></div>' +
+                        '<div class="avatar-wrapper">' +
+                            '<img src="data:image/png;base64,' + file + '" alt="' + result.User.Nickname + '_avatar_image' + '">' +
+                        '</div>' +
                             '<div class="comment-area">' + 
                                 '<p><strong>' + result.User.Nickname + '</strong><span>' + result.PublishDate + '</span></p>' +
                                 '<p>' + result.Text + '</p>' + 
@@ -26,8 +30,7 @@
                             '</div>' +
                         '</div>');
                     
-                    $("#number_of_comments").replaceWith(parseInt($("#number_of_comments").text()) + 1);
-
+                    $("#number_of_comments").html(parseInt($("#number_of_comments").text()) + 1);
                 },
                 async: true,
             });
@@ -48,7 +51,7 @@
             dataType: 'json',
             success: function (result) {
                 $("#comment" + id).remove();
-                $("#number_of_comments").replaceWith(parseInt($("#number_of_comments").text()) - 1);
+                $("#number_of_comments").html(parseInt($("#number_of_comments").text()) - 1);
             },
             async: true,
         });

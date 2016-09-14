@@ -30,8 +30,6 @@ namespace MvcPL.Models.Account
         [Compare("Password", ErrorMessage = "Passwords must match!")]
         public string ConfirmPassword { get; set; }
 
-        public HttpPostedFileBase Avatar { get; set; }
-
         [Required(ErrorMessage = "Field for captcha field can't be empty!")]
         [Display(Name = "Enter the code from the image")]
         public string Captcha { get; set; }

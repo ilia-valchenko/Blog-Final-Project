@@ -43,13 +43,14 @@ namespace MvcPL.Controllers
                 if (Membership.ValidateUser(loginViewModel.Nickname, loginViewModel.Password))
                 {
                     FormsAuthentication.SetAuthCookie(loginViewModel.Nickname, loginViewModel.RememberMe);
+
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
                     }
                     else
                     {
-                        return RedirectToAction("Index", "User");
+                        return RedirectToAction("Index", "Post");
                     }
                 }
                 else
@@ -120,8 +121,8 @@ namespace MvcPL.Controllers
 
                 if (membershipUser != null)
                 {
-                    FormsAuthentication.SetAuthCookie(registerViewModel.Email, false);
-                    return RedirectToAction("Index", "User");
+                    FormsAuthentication.SetAuthCookie(registerViewModel.Nickname, false);
+                    return RedirectToAction("Index", "Post");
                 }
                 else
                 {

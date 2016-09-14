@@ -126,7 +126,7 @@ namespace BLL.Services
                         Id = user.Id,
                         Nickname = user.Nickname,
                         Email = user.Email,
-                        // Avatar
+                        Avatar = user.Avatar
                     }
                 };
 

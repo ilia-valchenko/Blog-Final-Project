@@ -25,10 +25,11 @@
             </div>
             <nav id="responsive_nav">
                 <ul>
-                    <li><span><a>@Html.ActionLink("LOG IN", "Login", "Account")</a></span></li>
-                    <li><span><a>@Html.ActionLink("REGISTER", "Register", "Account")</a></span></li>
-                    <li><span><a>@Html.ActionLink("POSTS", "Index", "Post")</a></span></li>
-                    <li><span><a>@Html.ActionLink("TAGS", "Index", "Tag")</a></span></li>
+                    <li><span>@Html.RouteLink("PROFILE", "UserProfile", new { nickname = User.Identity.Name })</span></li>
+                    <li><span>@Html.ActionLink("LOG IN", "Login", "Account")</span></li>
+                    <li><span>@Html.ActionLink("REGISTER", "Register", "Account")</span></li>
+                    <li><span>@Html.ActionLink("POSTS", "Index", "Post")</span></li>
+                    <li><span>@Html.ActionLink("TAGS", "Index", "Tag")</span></li>
                 </ul>
             </nav>
         </header>
@@ -53,7 +54,7 @@
         }
         else
         {
-            <h1 id="responsive_h1"><a href=@Url.Action("Login", "Account") id="open">Log In</a> or <a href="#">Sign Up</a> to create a new post in the blog.</h1>
+            <h1 id="responsive_h1"><a href=@Url.Action("Login", "Account") id="open">Log In</a> or <a href=@Url.Action("Register", "Account")>Sign Up</a> to create a new post in the blog.</h1>
         }
     </div>
 

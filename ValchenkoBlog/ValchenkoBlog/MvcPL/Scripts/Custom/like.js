@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {  
     $('.like-button').click(function () {
 
+        event.preventDefault();
         var id = $(this).attr('id');
 
         $.ajax({

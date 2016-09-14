@@ -11,23 +11,31 @@
         <h4>Profile</h4>
 
         <div class="user-info">
-           @if (Model.Avatar == null)
-           {
+           <div>
+               @if (Model.Avatar == null)
+               {
                 <img src="~/Content/Images/Avatars/default.png" alt="default_user_avatar">
-           }
-           else
-           {
-               // Hardcode
-               string imageBase64 = Convert.ToBase64String(Model.Avatar);
-               string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-               // Add custom style in css file
-               <img src="@imageSrc" width="100" height="100" alt="@Model.Nickname avatar">
-           }
-           <p>Nickname: @Model.Nickname</p>
-           <p>Email: @Model.Email</p>
+               }
+               else
+               {
+                   // Hardcode
+                   string imageBase64 = Convert.ToBase64String(Model.Avatar);
+                   string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+                   // Add custom style in css file
+                <img src="@imageSrc" width="100" height="100" alt="@Model.Nickname avatar">
+               }
+            <p><span>Nickname:</span> @Model.Nickname</p>
+            <p><span>Email:</span> @Model.Email</p>
+            <p><span>Bio:</span></p>
+           </div>
         </div>
-    </div>
 
+        <form method="post" action=@Url.Action("ChangeAvatar", "User") enctype="multipart/form-data">
+            <input type="hidden" name="nickname" value=@Model.Nickname>
+            <input type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")

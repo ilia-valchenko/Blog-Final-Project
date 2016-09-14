@@ -261,6 +261,7 @@
     <Content Include="fonts\a_Monumento_DemiBold.ttf" />
     <Content Include="fonts\a_Monumento_DemiBold_EOT.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\base64js.min.js" />
     <Content Include="Scripts\Custom\comment.js" />
     <Content Include="Scripts\Custom\like.js" />
     <Content Include="Scripts\Custom\popup_login.js" />

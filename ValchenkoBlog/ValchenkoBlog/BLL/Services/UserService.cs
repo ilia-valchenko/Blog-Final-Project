@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Web;
 using System.Linq;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -101,6 +103,53 @@ namespace BLL.Services
                 throw new ArgumentOutOfRangeException(nameof(userId));
 
             return roleRepository.GetRolesOfUser(userId).Select(r => r.ToBllRole());
+        }
+
+        public void ChangeAvatar(string nickname, HttpPostedFileBase file)
+        {
+            if (nickname == null)
+                throw new ArgumentNullException(nameof(nickname));
+
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
+            if (file.ContentLength < 0) ;
+            // throw an exception
+
+            var user = userRepository.GetByNickname(nickname);
+
+            // John Skeet
+            // As Darin says, you can read from the input stream - but I'd avoid relying on all the data being available in a single go. If you're using .NET 4 this is simple:
+
+            // MemoryStream target = new MemoryStream();
+            // model.File.InputStream.CopyTo(target);
+            // byte[] data = target.ToArray();
+            // It's easy enough to write the equivalent of CopyTo in .NET 3.5 if you want. The important part is that you read from HttpPostedFileBase.InputStream.
+
+            // For efficient purposes you could check whether the stream returned is already a MemoryStream:
+
+
+            if (user != null)
+            {
+                byte[] avatar;
+
+                using (Stream inputStream = file.InputStream)
+                {
+                    MemoryStream memoryStream = inputStream as MemoryStream;
+
+                    if (memoryStream == null)
+                    {
+                        memoryStream = new MemoryStream();
+                        inputStream.CopyTo(memoryStream);
+                    }
+                    
+                    avatar = memoryStream.ToArray();
+                }
+
+                user.Avatar = avatar;
+                userRepository.Update(user);
+                unitOfWork.Commit();
+            }
         }
 
         private readonly IUnitOfWork unitOfWork;

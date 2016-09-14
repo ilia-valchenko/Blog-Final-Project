@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Web;
+using System.Linq;
 using System.Web.Mvc;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
@@ -62,6 +63,25 @@ namespace MvcPL.Controllers
                     model.Roles.Add(role.Name);
 
             return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ChangeAvatar(string nickname, HttpPostedFileBase file)
+        {
+            if(file == null)
+                return RedirectToAction("BadRequest", "Error");
+
+            // throw an exception
+            if (file.ContentLength < 0)
+                return RedirectToAction("Error", "Error");
+
+            if (nickname != User.Identity.Name)
+                return RedirectToAction("Login", "Account");
+
+            userService.ChangeAvatar(nickname, file);
+
+            return RedirectToAction("UserProfile", "User", new { nickname = nickname });
         }
 
         private readonly IUserService userService;
