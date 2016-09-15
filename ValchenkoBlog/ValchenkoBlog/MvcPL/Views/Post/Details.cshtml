@@ -29,14 +29,11 @@
 
             <ul class="post-footer">
                 <li><small>Posted by: @Html.RouteLink(Model.Author.Nickname, "UserProfile", new { nickname = Model.Author.Nickname })</small></li>             
-                <li><span id="comments"><i class="fa fa-comment"></i> <span id="number_of_comments">@Html.DisplayFor(model => model.Comments.Count)</span></span></li>
+                <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, Model.Comments.Count)</li>
                 <li>
                     <form>
                         <input type="hidden" value=@Model.Id name="id" />
-                        <button type="submit" class="like-button" id=@Model.Id>
-                            <i class="fa fa-heart"></i>
-                            <span id=@string.Format("like{0}", Model.Id)>@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
-                        </button>
+                        @MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, Model.Id, Model.NumberOfLikes)
                     </form>
                 </li>
                 <li><small>@Html.DisplayFor(model => model.PublishDate)</small></li>
@@ -71,7 +68,7 @@
                             string imageBase64 = Convert.ToBase64String(item.User.Avatar);
                             string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
                             // Add custom style in css file
-                            <img src="@imageSrc" width="100" height="100" alt="@item.User.Nickname avatar">
+                            <img src="@imageSrc" alt="@item.User.Nickname avatar">
                         }  
                     </div>
 

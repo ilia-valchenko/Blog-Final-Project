@@ -33,24 +33,19 @@
 
          <ul class="post-footer">
             <li><small>Posted by: @Html.RouteLink(item.Author.Nickname, "UserProfile", new { nickname = item.Author.Nickname })</small></li>
-            <li><span id="comments"><i class="fa fa-comment"></i> @Html.DisplayFor(modelItem => item.NumberOfComments)</span></li>
-            <li>
-                <button type="submit" class="like-button" id=@item.Id>
-                    <i class="fa fa-heart"></i>
-                    <span id=@string.Format("like{0}", item.Id)>@Html.DisplayFor(modelItem => item.NumberOfLikes)</span>
-                </button>
-             </li>
-             <li><small>@Html.DisplayFor(modelItem => item.PublishDate)</small></li>
-          </ul>
+            <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, item.NumberOfComments)</li>
+            <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, item.Id, item.NumberOfLikes)</li>
+            <li><small>@Html.DisplayFor(modelItem => item.PublishDate)</small></li>
+         </ul>
 
-        <ul class="post-control-panel">
+         <ul class="post-control-panel">
             <li>@Html.ActionLink("Read more", "Details", new { id = item.Id })</li>
             @if (Request.IsAuthenticated && User.IsInRole("admin"))
             {
                 <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
                 <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
             }
-        </ul>
+         </ul>
     </article>
 }
 

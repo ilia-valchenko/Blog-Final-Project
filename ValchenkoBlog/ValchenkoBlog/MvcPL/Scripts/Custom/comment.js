@@ -19,9 +19,9 @@
                     $("#commentwrapper").append('<div class="comment" id="comment' + result.Id + '">' +
                         '<div class="avatar-wrapper">' +
                             '<img src="data:image/png;base64,' + file + '" alt="' + result.User.Nickname + '_avatar_image' + '">' +
-                        '</div>' + 
-                            '<div class="comment-area">' + 
-                                '<p><strong>' + result.User.Nickname + '</strong><span>' + result.PublishDate + '</span></p>' +
+                        '</div>' +
+                            '<div class="comment-area">' +
+                                '<p><strong><a href="/User/' + result.User.Nickname + '">' + result.User.Nickname + '</a></strong><span>' + result.PublishDate + '</span></p>' +
                                 '<p>' + result.Text + '</p>' + 
                                 '<form method="post" id="comment-delete-form" action="/Post/DeleteComment">' + 
                                     '<input type="hidden" id="commentid" name="id" ' + 'value=' + result.Id + '>' +
@@ -30,13 +30,14 @@
                             '</div>' +
                         '</div>');
 
-                    $("#number_of_comments").html(parseInt($("#number_of_comments").text()) + 1);
+                    $("#number_of_comments_container").html(parseInt($("#number_of_comments_container").text()) + 1);
                     $("#text").val('');
 
-                    $("#comment-delete-form").submit(function (event) {
+                    // Delete
+
+                   $("#comment-delete-form").submit(function (event) {
 
                         event.preventDefault();
-                        alert("Click by submit button");
 
                         var id = $(this).find("#commentid").val();
 
@@ -48,11 +49,8 @@
                             },
                             dataType: 'json',
                             success: function (result) {
-                                alert("Successfully deleted!");
-                                alert($("#comment" + id));
                                 $("#comment" + id).remove();
-                                alert("After deleting");
-                                $("#number_of_comments").html(parseInt($("#number_of_comments").text()) - 1);
+                                $("#number_of_comments_container").html(parseInt($("#number_of_comments_container").text()) - 1);
                             },
                             async: true,
                         });
@@ -83,7 +81,7 @@
             dataType: 'json',
             success: function (result) {
                 $("#comment" + id).remove();
-                $("#number_of_comments").html(parseInt($("#number_of_comments").text()) - 1);
+                $("#number_of_comments_container").html(parseInt($("#number_of_comments_container").text()) - 1);
             },
             async: true,
         });

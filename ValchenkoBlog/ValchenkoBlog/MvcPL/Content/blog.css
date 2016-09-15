@@ -157,6 +157,12 @@ input[type="submit"]:hover {
 	margin-bottom: -1em;
 }
 
+/* Расстояние от значка лайка и комментариев */
+
+i.fa-heart, i.fa-comment {
+    margin-right: 5px;
+}
+
 /*Кнопка удаления комментария*/
 
 .comment form input[type="submit"] {

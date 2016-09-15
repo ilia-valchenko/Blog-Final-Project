@@ -22,20 +22,15 @@
 
             <ul class="tags">
                 @foreach (var tag in Model.Tags)
-            {
+                {
                     <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
                 }
             </ul>
 
             <ul class="post-footer">   
-                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>        
-                <li><span id="comments"><i class="fa fa-comment"></i> @Html.DisplayFor(modelItem => Model.NumberOfComments)</span></li>
-                <li>
-                    <button type="submit" class="like-button" id=@Model.Id>
-                        <i class="fa fa-heart"></i>
-                        <span id=@string.Format("like{0}", Model.Id)>@Html.DisplayFor(modelItem => Model.NumberOfLikes)</span>
-                    </button>
-                </li>
+                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>  
+                <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, Model.NumberOfComments)</li>      
+                <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, Model.Id, Model.NumberOfComments)</li>
                 <li><small>@Html.DisplayFor(modelItem => Model.PublishDate)</small></li>
             </ul>
         </article>
