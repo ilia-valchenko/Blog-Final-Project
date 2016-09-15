@@ -1,42 +1,25 @@
 ﻿@model IEnumerable<MvcPL.Models.Tag.TagViewModel>
 
 @{
-    ViewBag.Title = "Tag index";
+    ViewBag.Title = "Tags";
 }
 
-<h2>All Tags</h2>
+@Styles.Render("~/Content/tag_home.css")
 
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
-                @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-</table>
-
-<p>
+<p class="tag-create-button">
     @Html.ActionLink("Add new tag", "Create")
 </p>
+
+
+<ol class="list-of-tags">
+    @foreach(var item in Model)
+    {
+        <li>
+            <span>#@Html.DisplayFor(modelItem => item.Name)</span>
+            <ul>
+                <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+                <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+            </ul>
+        </li>
+    }
+</ol>

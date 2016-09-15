@@ -20,12 +20,7 @@
             <h4>@Html.DisplayFor(model => model.Title)</h4>
             <p>@Html.DisplayFor(model => model.Description)</p>
 
-            <ul class="tags">
-                @foreach (var tag in Model.Tags)
-                {
-                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
-                }
-            </ul>
+            @MvcPL.Helpers.TagListHelper.TagList(Html, Model.Tags)
 
             <ul class="post-footer">   
                 <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>  

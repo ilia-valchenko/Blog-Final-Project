@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Helpers\CommentsIndicatorHelper.cs" />
     <Compile Include="Helpers\LikeButtonHelper.cs" />
+    <Compile Include="Helpers\TagListHelper.cs" />
     <Compile Include="Infrastructure\CaptchaImage.cs" />
     <Compile Include="Infrastructure\Mappers\MvcCommentMapper.cs" />
     <Compile Include="Infrastructure\Mappers\MvcPostMapper.cs" />
@@ -205,7 +206,9 @@
   <ItemGroup>
     <Content Include="Content\blog.css" />
     <Content Include="Content\create_post.css" />
+    <Content Include="Content\create_tag.css" />
     <Content Include="Content\delete_post.css" />
+    <Content Include="Content\delete_tag.css" />
     <Content Include="Content\error.css" />
     <Content Include="Content\Fontawesome\css\font-awesome.css" />
     <Content Include="Content\Fontawesome\css\font-awesome.min.css" />
@@ -222,6 +225,7 @@
     <Content Include="Content\search_by_tag.css" />
     <Content Include="Content\select.css" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\tag_home.css" />
     <Content Include="Content\user_profile.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -307,6 +311,8 @@
     <Content Include="Views\Error\BadRequest.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Tag\Edit.cshtml" />
+    <Content Include="Views\Tag\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

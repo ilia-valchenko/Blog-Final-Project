@@ -50,6 +50,9 @@ namespace MvcPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CreatePostViewModel createPostViewModel, string[] namesOfTags)
         {
+            //if (createPostViewModel == null || namesOfTags == null)
+            //    return RedirectToAction("BadRequest", "Error");
+
             // Авторизация через HttpModule AutorixzationCkooki ложить еще и id, чтобы не доставать из базы
             // или логине в куки 
             createPostViewModel.UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id;

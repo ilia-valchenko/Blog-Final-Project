@@ -14,8 +14,8 @@ namespace MvcPL.Models.Post
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
-        [Display(Name = "Tags")]
-        public string SelectedTag { get; set; }
+        //[Display(Name = "Tags")]
+        //public string SelectedTag { get; set; }
         public SelectList TagList { get; set; }
         public int UserId { get; set; }
     }

@@ -20,12 +20,7 @@
             <h3>@Html.DisplayFor(model => model.Title)</h3>
             <p>@Html.DisplayFor(model => model.Description)</p>
 
-            <ul class="tags">
-                @foreach (var tag in Model.Tags)
-                {
-                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
-                }
-            </ul>
+            @MvcPL.Helpers.TagListHelper.TagList(Html, Model.Tags)
 
             <ul class="post-footer">
                 <li><small>Posted by: @Html.RouteLink(Model.Author.Nickname, "UserProfile", new { nickname = Model.Author.Nickname })</small></li>             
@@ -41,18 +36,24 @@
 
             <ul class="post-control-panel">
                 <li>@Html.ActionLink("Back", "Index")</li>
-                <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</li>
-                <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</li>
+                @if (Request.IsAuthenticated && User.IsInRole("admin"))
+                {
+                    <li>@Html.ActionLink("Edit", "Edit", new { id = Model.Id })</li>
+                    <li class="delete-post-button">@Html.ActionLink("Delete", "Delete", new { id = Model.Id })</li>
+                }
             </ul>
 
             <h5>Comments</h5>
 
-            <form class="comment-create-form" id="comment-form-id" method="post" action="@Url.Action("AddComment", "Post")">
-                <input type="hidden" id="postid" name="postId" value=@Model.Id>
-                <textarea rows="5" cols="60" id="text" name="text" required></textarea> <br>
-                <input type="submit" value="Submit">
-            </form>
-
+            @if (User.Identity.IsAuthenticated)
+            {
+                <form class="comment-create-form" id="comment-form-id" method="post" action="@Url.Action("AddComment", "Post")">
+                    <input type="hidden" id="postid" name="postId" value=@Model.Id>
+                    <textarea rows="5" cols="60" id="text" name="text" required></textarea> <br>
+                    <input type="submit" value="Submit">
+                </form>
+            }
+            
             <div id="commentwrapper">
             @foreach (var item in Model.Comments)
             {

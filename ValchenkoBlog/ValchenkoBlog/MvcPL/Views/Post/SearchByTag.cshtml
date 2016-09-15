@@ -33,12 +33,7 @@ else
             <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
             <p>@Html.DisplayFor(modelItem => item.Description)</p>
 
-            <ul class="tags">
-                @foreach (var tag in item.Tags)
-                {
-                    <li>@Html.RouteLink("#" + @tag.Name, "Hashtag", new { tagname = tag.Name })</li>
-                }
-            </ul>
+            @MvcPL.Helpers.TagListHelper.TagList(Html, item.Tags)
 
             <ul class="post-footer">
                 <li><small>Posted by: @Html.DisplayFor(modelItem => item.Author.Nickname)</small></li>

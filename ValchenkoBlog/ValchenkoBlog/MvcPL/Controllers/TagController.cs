@@ -7,6 +7,7 @@ using MvcPL.Models.Tag;
 
 namespace MvcPL.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class TagController : Controller
     {
         public TagController(ITagService tagService)
@@ -27,16 +28,43 @@ namespace MvcPL.Controllers
             return RedirectToAction("Index");
         }
 
+        #region Edit
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("BadRequest", "Error");
+
+            TagViewModel model = tagService.GetById((int)id)?.ToMvcTag();
+
+            if (model == null)
+                return RedirectToAction("NotFound", "Error");
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(TagViewModel model)
+        {
+            tagService.Update(model.ToBllTag());
+            return RedirectToAction("Index");
+        } 
+        #endregion
+
         //GET-запрос к методу Delete несет потенциальную уязвимость!
         [HttpGet]
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(int? id)
         {
-            TagEntity tag = tagService.GetById(id);
+            if (id == null)
+                return RedirectToAction("BadRequest", "Error");
+
+            var tag = tagService.GetById((int)id)?.ToMvcTag();
 
             if (tag == null)
-                return HttpNotFound();
+                return RedirectToAction("NotFound", "Error");
 
-            return View(tag.ToMvcTag());
+            return View(tag);
         }
 
         //Post/Redirect/Get (PRG) — модель поведения веб-приложений, используемая
@@ -44,9 +72,9 @@ namespace MvcPL.Controllers
         //(Double Submit Problem)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(TagEntity tag)
+        public ActionResult DeleteConfirmed(int id)
         {
-            tagService.Delete(tag);
+            tagService.Delete(tagService.GetById(id));
             return RedirectToAction("Index");
         }
 

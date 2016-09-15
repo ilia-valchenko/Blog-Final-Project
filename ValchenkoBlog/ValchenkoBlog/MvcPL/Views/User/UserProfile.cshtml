@@ -30,11 +30,14 @@
            </div>
         </div>
 
-        <form method="post" action=@Url.Action("ChangeAvatar", "User") enctype="multipart/form-data">
-            <input type="hidden" name="nickname" value=@Model.Nickname>
-            <input type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
-            <input type="submit" value="Submit">
-        </form>
+        @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Nickname)
+        {
+            <form method="post" action=@Url.Action("ChangeAvatar", "User") enctype="multipart/form-data">
+                <input type="hidden" name="nickname" value=@Model.Nickname>
+                <input type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
+                <input type="submit" value="Submit">
+            </form>
+        }
     </div>
 
 @Scripts.Render("~/bundles/jquery")

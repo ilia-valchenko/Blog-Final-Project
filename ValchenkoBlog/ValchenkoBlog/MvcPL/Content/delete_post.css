@@ -1,5 +1,21 @@
 /* Добавили стили для тегов и лайков из blog.css */
 
+/* Кнопка Back и No в Details, Edit, Delete */
+
+.back-button {
+    text-decoration: none;
+    font-size: 0.9em;
+    border: none;
+    background: #0084b4;
+    color: #fff;
+    padding: 3.3px 21px;
+    margin-top: 1.5%;
+}
+
+.back-button a:hover {
+
+}
+
 /* Расстояние от значка лайка и комментариев */
 
 i.fa-heart, i.fa-comment {

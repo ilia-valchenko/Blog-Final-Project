@@ -29,5 +29,17 @@ namespace MvcPL.Infrastructure.Mappers
                 Name = bllTag.Name
             };
         }
+
+        public static TagEntity ToBllTag(this TagViewModel mvcTag)
+        {
+            if (mvcTag == null)
+                throw new ArgumentNullException(nameof(mvcTag));
+
+            return new TagEntity
+            {
+                Id = mvcTag.Id,
+                Name = mvcTag.Name
+            };
+        }
     }
 }

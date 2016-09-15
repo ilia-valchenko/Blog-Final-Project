@@ -32,7 +32,7 @@
         </div>
 
         @Html.DropDownList("namesOfTags", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
-        @Html.ValidationMessageFor(m => m.SelectedTag)
+        
 
         <div class="post-create-button">
             <input type="submit" value="Submit">
