@@ -43,7 +43,6 @@ C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\bin\Release\System.Web.WebPages.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\bin\Release\System.Web.WebPages.Deployment.xml
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\bin\Release\System.Web.WebPages.Razor.xml
-C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Release\ORM.csprojResolveAssemblyReference.cache
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Release\ORM.Migrations.Rebuilddatabase.resources
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Release\ORM.Migrations.Date02092016time1615.resources
 C:\Users\Ilia\Documents\Visual Studio 2015\Projects\ValchenkoBlog\ValchenkoBlog\ORM\obj\Release\ORM.Migrations.Date04092016time1842.resources

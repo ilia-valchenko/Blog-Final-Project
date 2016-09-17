@@ -130,14 +130,6 @@ namespace BLL.Services
                     }
                 };
 
-                /*if(user.Avatar != null)
-                {
-                    using (var ms = new MemoryStream(user.Avatar))
-                    {
-                        return Image.FromStream(ms);
-                    }
-                }*/
-
                 bllPost.Comments.Add(bllComment);
             }
                 
@@ -218,7 +210,7 @@ namespace BLL.Services
             unitOfWork.Commit();
         }
 
-        public void Like(LikeEntity likeEntity)
+        public bool Like(LikeEntity likeEntity)
         {
             if (likeEntity == null)
                 throw new ArgumentNullException(nameof(likeEntity));
@@ -226,11 +218,17 @@ namespace BLL.Services
             var dalLike = likeRepository.GetDalLikeByPostIdAndUserId(likeEntity.UserId, likeEntity.PostId);
 
             if (dalLike != null)
+            {
                 likeRepository.Delete(dalLike);
-            else
-                likeRepository.Create(likeEntity.ToDalLike());
-
                 unitOfWork.Commit();
+                return true;
+            }   
+            else
+            {
+                likeRepository.Create(likeEntity.ToDalLike());
+                unitOfWork.Commit();
+                return false;
+            }
         }
 
         public void AddComment(CommentEntity commentEntity)
@@ -261,6 +259,12 @@ namespace BLL.Services
         }
 
         public int Count() => postRepository.Count();
+
+        public bool IsLikedPost(string nickname, IEnumerable<LikeEntity> likes)
+        {
+            var user = userRepository.GetByNickname(nickname);
+            return likes.Any(like => like.UserId == user.Id); 
+        }
 
         #region Private fields
         private readonly IUnitOfWork unitOfWork;

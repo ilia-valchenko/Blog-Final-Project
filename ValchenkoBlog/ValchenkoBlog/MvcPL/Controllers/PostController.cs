@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Collections.Generic;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using MvcPL.Infrastructure.Mappers;
 using MvcPL.Models.Post;
 using System.Configuration;
-using System.Web;
 
 namespace MvcPL.Controllers
 {
@@ -31,7 +31,16 @@ namespace MvcPL.Controllers
             ViewBag.NumberOfPages = (count / pageSize) - (count % pageSize == 0 ? 1 : 0);
             ViewBag.CurrentPage = page;
 
-            return View(postService.GetPostsForPage(pageSize, page).Select(post => post.ToMvcPost()));
+            var posts = new List<PostViewModel>();
+
+            foreach(var bllPost in postService.GetPostsForPage(pageSize, page))
+            {
+                var mvcPost = bllPost.ToMvcPost();
+                mvcPost.IsLiked = User.Identity.IsAuthenticated ? postService.IsLikedPost(User.Identity.Name, bllPost.Likes) : false;
+                posts.Add(mvcPost);
+            }
+
+            return View(posts);
         }
 
         #region Create
@@ -72,10 +81,13 @@ namespace MvcPL.Controllers
             if (id == null)
                 return RedirectToAction("BadRequest", "Error");
 
-            var post = postService.GetById((int)id)?.ToMvcPost();
+            var bllPost = postService.GetById((int)id);
 
-            if (post == null)
+            if (bllPost == null)
                 return RedirectToAction("NotFound", "Error");
+
+            var post = bllPost.ToMvcPost();
+            post.IsLiked = User.Identity.IsAuthenticated ? postService.IsLikedPost(User.Identity.Name, bllPost.Likes) : false;
 
             return View(post);
         }
@@ -124,11 +136,14 @@ namespace MvcPL.Controllers
             if(id == null)
                 return RedirectToAction("BadRequest", "Error");
 
-            var post = postService.GetById((int)id)?.ToMvcDetailsPost();
+            var bllPost = postService.GetById((int)id);
 
-            if (post == null)
+            if (bllPost == null)
                 return RedirectToAction("NotFound", "Error");
-  
+
+            var post = bllPost.ToMvcDetailsPost();
+            post.IsLiked = User.Identity.IsAuthenticated ? postService.IsLikedPost(User.Identity.Name, bllPost.Likes) : false;
+
             return View(post);
         }
 
@@ -136,10 +151,8 @@ namespace MvcPL.Controllers
         [HttpPost]
         public ActionResult Like(int id)
         {
-            postService.Like(new LikeEntity { PostId = id,
-                                              UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id});
-
-            return Json(postService.GetById(id).Likes.Count);
+            return Json(postService.Like(new LikeEntity { PostId = id,
+                                                          UserId = userService.GetUserEntityByNickname(User.Identity.Name).Id}));
         }
 
         [Authorize]

@@ -19,3 +19,23 @@
 	color: #fff;
 	background: #55acee;
 }
+
+/* Отображение как в create post */
+
+h4 {
+	font-size: 1.2em;
+	border-bottom: 0.15em solid #000000;
+	width: 97%;
+	margin: 0 auto;
+	padding-bottom: 0.4em;
+	margin-bottom: 0.5em;
+}
+
+.form-group {
+	padding-left: 1.5%;
+}
+
+.active {
+	color: #de3636;
+}
+

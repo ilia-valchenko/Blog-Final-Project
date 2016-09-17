@@ -1,18 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <link rel="shortcut icon" href="../../Content/Images/Icon/BatkaBatmen.png" type="image/png">
+    <link rel="shortcut icon" href="~/Content/Images/Icon/BatkaBatmen.png" type="image/png">
     <meta charset="utf-8">
     <title>@ViewBag.Title | Valchenko Blog</title>
 
-    @Styles.Render("~/Content/new_elements.css")
-    @Styles.Render("~/Content/style.css")
-    @Styles.Render("~/Content/home.css")
-    @Styles.Render("~/Content/popup.css")
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/scripts/jquery-1.10.2.js")
-    @Scripts.Render("~/scripts/Custom/popup_login.js")
+    @Scripts.Render("~/bundles/modernizr") 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/popup")
 </head>
 
 <body>
@@ -20,7 +16,7 @@
         <header>
             <div id="logo_container">
                 <a href="index.html">
-                    <img src="../../../Content/Images/Logo/batman_from_gomel.png" alt="valchenko_blog_logo">
+                    <img src="~/Content/Images/Logo/batman_from_gomel.png" alt="valchenko_blog_logo">
                 </a>
             </div>
             <nav id="responsive_nav">
@@ -48,17 +44,8 @@
     </article>
 
     <div class="header-slogan">
-        @if (User.Identity.IsAuthenticated)
-        {
-            <h1 id="responsive_h1">Hi, @@@User.Identity.Name! Nice to see you. @Html.ActionLink("Log Out", "Logout", "Account")</h1>
-        }
-        else
-        {
-            <h1 id="responsive_h1"><a href=@Url.Action("Login", "Account") id="open">Log In</a> or <a href=@Url.Action("Register", "Account")>Sign Up</a> to create a new post in the blog.</h1>
-        }
+        <h1 id="responsive_h1"><a href=@Url.Action("Login", "Account") id="open">Log In</a> or <a href=@Url.Action("Register", "Account")>Sign Up</a> to create a new post in the blog.</h1>
     </div>
-
-    <!--Login form-->
 
         <div id="popup" class="popup-wrapper hide">
             <div class="popup-content">
@@ -69,18 +56,15 @@
 
                 <div class="popup-body">
                     <form action="/Account/Login" method="post">
-                        <div><p>Login: <span>*</span></p><input type="text" name="Nickname"></div>
-                        <div><p>Password: <span>*</span></p><input type="password" name="Password"></div>
+                        <div><p>Login: <span>*</span></p><input type="text" name="Nickname" required></div>
+                        <div><p>Password: <span>*</span></p><input type="password" name="Password" required></div>
                         <div><p>Remember?</p><input type="checkbox" name="RemeberMe"></div>
                         <input type="submit" />
-                        </form>
+                    </form>
                 </div>
             </div>
         </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @RenderSection("scripts", required: false)
 </body>
 
 </html>

@@ -11,7 +11,16 @@
             dataType: 'json',
             success: function (result) 
             {
-                $('#like' + id).text(result);               
+                if (result)
+                {
+                    $('#like' + id).html(parseInt($('#like' + id).text()) - 1);
+                    $('#like' + id).parent().removeClass("active");
+                }
+                else
+                {
+                    $('#like' + id).html(parseInt($('#like' + id).text()) + 1);
+                    $('#like' + id).parent().addClass("active");
+                }
             },
             async: true,
         });

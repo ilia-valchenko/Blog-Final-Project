@@ -17,8 +17,6 @@ namespace MvcPL.Providers
             if (GetUser(nickname, false) != null)
                 return null;
 
-            // Forgot about avatar
-            // Create and Update must returns entity or id
             UserService.Create(new UserEntity { Email = email,
                                                 Nickname = nickname,
                                                 Password = Crypto.HashPassword(password) });
@@ -70,34 +68,12 @@ namespace MvcPL.Providers
                 DateTime.MinValue); // lastLockoutDate
         }
 
+        #region Not implemented methods
         public override string GetUserNameByEmail(string email)
         {
-            /*var user = UserService.GetUserEntityByEmail(email);
-
-            if (user == null)
-                return null;
-
-            var memberUser = new MembershipUser(
-                "CustomMembershipProvider", 
-                user.Nickname,
-                null, 
-                null, 
-                null, 
-                null,
-                false, 
-                false, 
-                default(DateTime),
-                DateTime.MinValue, 
-                DateTime.MinValue,
-                DateTime.MinValue, 
-                DateTime.MinValue);
-
-            return memberUser.UserName;*/
-
             throw new NotImplementedException();
         }
 
-        #region Not implemented methods
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer,
             bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {

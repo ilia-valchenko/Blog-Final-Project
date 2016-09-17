@@ -4,8 +4,7 @@
     ViewBag.Title = "Create post";
 }
 
-@Styles.Render("~/Content/create_post.css")
-@Styles.Render("~/Content/select.css")
+@Styles.Render("~/Content/createPost")
 
 @using (Html.BeginForm())
 {
@@ -33,7 +32,6 @@
 
         @Html.DropDownList("namesOfTags", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
         
-
         <div class="post-create-button">
             <input type="submit" value="Submit">
             <input type="button" value="Back" onclick="location.href='@Url.Action("Index", "Post")'">
@@ -41,8 +39,4 @@
 
     </div>
 }
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/bundles/jqueryval")
 

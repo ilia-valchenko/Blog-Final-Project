@@ -11,12 +11,15 @@ namespace MvcPL.Helpers
         /// <param name="id">ID of current post.</param>
         /// <param name="numberOfLikes">Number of likes.</param>
         /// <returns>Returns string representation of like button.</returns>
-        public static MvcHtmlString LikeButton(this HtmlHelper html, int id, int numberOfLikes)
+        public static MvcHtmlString LikeButton(this HtmlHelper html, int id, int numberOfLikes, bool isLiked)
         {
             var button = new TagBuilder("button");
             button.Attributes.Add("type", "submit");
-            button.Attributes.Add("class", "like-button");
             button.Attributes.Add("id", id.ToString());
+            button.Attributes.Add("class", "like-button");
+
+            if (isLiked)
+                button.AddCssClass("active"); 
 
             var i = new TagBuilder("i");
             i.Attributes.Add("class", "fa fa-heart");

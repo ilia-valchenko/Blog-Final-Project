@@ -4,12 +4,9 @@
     ViewBag.Title = "Posts";
 }
 
-@Styles.Render("~/Content/blog.css")
+@Styles.Render("~/Content/blog")
 @Styles.Render("~/Content/Fontawesome/css/font-awesome.css")
-@Styles.Render("~/Content/Fontawesome/css/font-awesome.min.css")
-@Scripts.Render("~/scripts/jquery-1.10.2.js")
-@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
-@Scripts.Render("~/scripts/Custom/like.js")
+@Scripts.Render("~/bundles/like")
 
 @if (Request.IsAuthenticated && User.IsInRole("admin"))
 {
@@ -29,7 +26,7 @@
          <ul class="post-footer">
             <li><small>Posted by: @Html.RouteLink(item.Author.Nickname, "UserProfile", new { nickname = item.Author.Nickname })</small></li>
             <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, item.NumberOfComments)</li>
-            <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, item.Id, item.NumberOfLikes)</li>
+            <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, item.Id, item.NumberOfLikes, item.IsLiked)</li>
             <li><small>@Html.DisplayFor(modelItem => item.PublishDate)</small></li>
          </ul>
 

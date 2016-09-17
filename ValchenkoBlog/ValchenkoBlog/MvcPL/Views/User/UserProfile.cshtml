@@ -4,7 +4,7 @@
     ViewBag.Title = Model.Nickname;
 }
 
-@Styles.Render("~/Content/user_profile.css")
+@Styles.Render("~/Content/userProfile")
 
     <div class="user-profile-wrapper">
 
@@ -22,7 +22,7 @@
                    string imageBase64 = Convert.ToBase64String(Model.Avatar);
                    string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
                    // Add custom style in css file
-                <img src="@imageSrc" width="100" height="100" alt="@Model.Nickname avatar">
+                <img src="@imageSrc" alt="@Model.Nickname avatar">
                }
             <p><span>Nickname:</span> @Model.Nickname</p>
             <p><span>Email:</span> @Model.Email</p>
@@ -33,13 +33,8 @@
         @if (User.Identity.IsAuthenticated && User.Identity.Name == Model.Nickname)
         {
             <form method="post" action=@Url.Action("ChangeAvatar", "User") enctype="multipart/form-data">
-                <input type="hidden" name="nickname" value=@Model.Nickname>
-                <input type="file" name="file" accept="image/x-png, image/gif, image/jpeg">
+                <input type="file" name="file" accept="image/x-png, image/gif, image/jpeg" required>
                 <input type="submit" value="Submit">
             </form>
         }
     </div>
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/bundles/jqueryval")

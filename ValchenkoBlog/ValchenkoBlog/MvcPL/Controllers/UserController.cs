@@ -67,7 +67,7 @@ namespace MvcPL.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult ChangeAvatar(string nickname, HttpPostedFileBase file)
+        public ActionResult ChangeAvatar(HttpPostedFileBase file)
         {
             if(file == null)
                 return RedirectToAction("BadRequest", "Error");
@@ -76,12 +76,9 @@ namespace MvcPL.Controllers
             if (file.ContentLength < 0)
                 return RedirectToAction("Error", "Error");
 
-            if (nickname != User.Identity.Name)
-                return RedirectToAction("Login", "Account");
+            userService.ChangeAvatar(User.Identity.Name, file);
 
-            userService.ChangeAvatar(nickname, file);
-
-            return RedirectToAction("UserProfile", "User", new { nickname = nickname });
+            return RedirectToAction("UserProfile", "User", new { nickname = User.Identity.Name });
         }
 
         private readonly IUserService userService;

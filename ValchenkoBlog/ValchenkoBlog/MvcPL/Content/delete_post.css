@@ -64,6 +64,10 @@ i.fa-heart, i.fa-comment {
 	margin-left: -0.35em;
 }
 
+.active {
+	color: #de3636;
+}
+
 .like-button:hover {
 	color: #de3636;
 }
@@ -164,4 +168,6 @@ input[type="button"]:hover {
 .like-button:hover {
 	color: #de3636;
 }
+
+
 

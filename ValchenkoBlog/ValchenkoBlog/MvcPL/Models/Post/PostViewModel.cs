@@ -21,6 +21,7 @@ namespace MvcPL.Models.Post
         public List<TagViewModel> Tags { get; set; }
         public int NumberOfLikes { get; set; }
         public int NumberOfComments { get; set; }
+        public bool IsLiked { get; set; }
     }
 }
 
