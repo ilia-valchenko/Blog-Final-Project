@@ -3,19 +3,13 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
-using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using MvcPL.Infrastructure;
-using MvcPL.Infrastructure.Mappers;
-using MvcPL.Models;
-using MvcPL.Models.User;
 using MvcPL.Models.Account;
 using MvcPL.Providers;
-using System.ComponentModel.DataAnnotations;
 
 namespace MvcPL.Controllers
 {
-    //[Authorize]
     public class AccountController : Controller
     {
         private readonly IUserService userService;
@@ -25,7 +19,6 @@ namespace MvcPL.Controllers
             this.userService = userService;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult Login(string returnUrl)
         {
@@ -34,8 +27,7 @@ namespace MvcPL.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel loginViewModel, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -58,6 +50,7 @@ namespace MvcPL.Controllers
                     ModelState.AddModelError("", "Incorrect login or password.");
                 }
             }
+
             ViewBag.returnUrl = returnUrl;
             return View(loginViewModel);
         }
@@ -69,14 +62,12 @@ namespace MvcPL.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel registerViewModel)
         {
@@ -86,38 +77,23 @@ namespace MvcPL.Controllers
                 return View(registerViewModel);
             }
 
-            if (userService.GetOneByPredicate(u => u.Email == registerViewModel.Email) != null)
+            if (userService.GetUserEntityByEmail(registerViewModel.Email) != null)
             {
-                ModelState.AddModelError("", "User with this address already registered.");
+                ModelState.AddModelError("", "User with this email already registered.");
                 return View(registerViewModel);
             }
 
-            if (userService.GetOneByPredicate(u => u.Nickname == registerViewModel.Nickname) != null)
+            if (userService.GetUserEntityByNickname(registerViewModel.Nickname) != null)
             {
                 ModelState.AddModelError("", "User with this nickname already registered.");
                 return View(registerViewModel);
             }
 
-            /*UserViewModel anyUser;
-            try
-            {
-                anyUser = userService.GetUserEntityByEmail(registerViewModel.Email).ToMvcUser();
-                ModelState.AddModelError("", "User with this email already registered.");
-                return View(registerViewModel);
-            }
-            catch (ValidationException ex)
-            { }*/
-
-            //if (anyUser!=null)
-            //{
-            //    ModelState.AddModelError("", "User with this address already registered.");
-            //    return View(viewModel);
-            //}
-
             if (ModelState.IsValid)
             {
-                var membershipUser = ((CustomMembershipProvider)Membership.Provider)
-                    .CreateUser(registerViewModel.Email, registerViewModel.Nickname, registerViewModel.Password);
+                var membershipUser = ((CustomMembershipProvider)Membership.Provider).CreateUser(registerViewModel.Email, 
+                                                                                                registerViewModel.Nickname, 
+                                                                                                registerViewModel.Password);
 
                 if (membershipUser != null)
                 {
@@ -132,7 +108,6 @@ namespace MvcPL.Controllers
             return View(registerViewModel);
         }
 
-        [AllowAnonymous]
         public ActionResult Captcha()
         {
             Session[CaptchaImage.CaptchaValueKey] =
@@ -150,12 +125,5 @@ namespace MvcPL.Controllers
             ci.Dispose();
             return null;
         }
-
-        [ChildActionOnly]
-        public ActionResult LoginPartial()
-        {
-            return PartialView("_LoginPartial");
-        }
-
     }
 }

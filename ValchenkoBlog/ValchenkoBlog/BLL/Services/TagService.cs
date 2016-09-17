@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using DAL.Interfacies.Repository;
-using DAL.Interfacies.Helper;
-using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
@@ -54,34 +51,9 @@ namespace BLL.Services
 
         #region Get operations
         public IEnumerable<TagEntity> GetAll() => tagRepository.GetAll().Select(t => t.ToBllTag());
-        public TagEntity GetById(int id)
-        {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
-
-            return tagRepository.GetById(id)?.ToBllTag();
-        }
-        public TagEntity GetOneByPredicate(Expression<Func<TagEntity, bool>> predicates)
-        {
-            throw new NotImplementedException();
-        }
-        public IEnumerable<TagEntity> GetAllByPredicate(Expression<Func<TagEntity, bool>> predicates)
-        {
-            throw new NotImplementedException();
-        }
-        public TagEntity GetTagByName(string name)
-        {
-            throw new NotImplementedException();
-        } 
+        public TagEntity GetById(int id) => tagRepository.GetById(id)?.ToBllTag();
+        public TagEntity GetTagEntityByName(string name) => tagRepository.GetTagByName(name)?.ToBllTag();
         #endregion
-
-        /*public IEnumerable<TagEntity> GetTagsOfPost(int postId)
-        {
-            if (postId < 0)
-                throw new ArgumentOutOfRangeException(nameof(postId));
-
-            return tagRepository.GetTagsOfPost(postId).Select(tag => tag.ToBllTag());
-        }*/
 
         private readonly IUnitOfWork unitOfWork;
         private readonly ITagRepository tagRepository;

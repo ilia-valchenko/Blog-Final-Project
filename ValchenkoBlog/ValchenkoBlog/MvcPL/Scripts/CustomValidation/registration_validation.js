@@ -32,12 +32,15 @@ function isMatchPasswords(password, confirmPassword) {
 }
 
 function validateRegistrationForm() {
+    isValid = true;
     checkRequiredInput("Nickname");
     checkInputByRegex("Nickname");
+    checkRequiredInput("Email");
+    checkInputByRegex("Email");
     checkRequiredInput("Password");
     checkRequiredInput("ConfirmPassword");
     checkRequiredInput("Captcha");
-    isMatchPasswords(document.getElementById("Password").value, document.getElementById("ConfirmPassword"));
+    isMatchPasswords(document.getElementById("Password").value, document.getElementById("ConfirmPassword").value);
 
     return isValid;
 }

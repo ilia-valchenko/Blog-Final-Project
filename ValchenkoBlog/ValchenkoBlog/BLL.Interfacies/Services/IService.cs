@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 
 namespace BLL.Interfacies.Services
 {
@@ -11,7 +9,5 @@ namespace BLL.Interfacies.Services
         void Delete(TEntity entity);
         TEntity GetById(int id);
         IEnumerable<TEntity> GetAll();
-        TEntity GetOneByPredicate(Expression<Func<TEntity, bool>> predicates);
-        IEnumerable<TEntity> GetAllByPredicate(Expression<Func<TEntity, bool>> predicates);
     }
 }

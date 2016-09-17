@@ -7,6 +7,5 @@ namespace DAL.Interfacies.Repository.ModelRepository
     {
         DalTag GetTagByName(string name);
         IEnumerable<DalTag> GetTagsByPostId(int postId);
-        //void DeleteTagsFromPost(int postId);
     }
 }

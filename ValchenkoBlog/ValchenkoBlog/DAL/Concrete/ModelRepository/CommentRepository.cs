@@ -6,7 +6,6 @@ using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository.ModelRepository;
 using ORM.Models;
 using DAL.Mappers;
-using DAL.Interfacies.Helper;
 using System.Data.Entity;
 
 namespace DAL.Concrete.ModelRepository
@@ -59,25 +58,8 @@ namespace DAL.Concrete.ModelRepository
 
         #region Get operations
         public DalComment GetById(int key) => context.Set<Comment>().FirstOrDefault(u => u.CommentId == key)?.ToDalComment();
-
         public IEnumerable<DalComment> GetAll() => context.Set<Comment>().ToList().Select(c => c.ToDalComment());
-
-        public DalComment GetOneByPredicate(Expression<Func<DalComment, bool>> predicate) => GetAllByPredicate(predicate).FirstOrDefault();
-
-        public IEnumerable<DalComment> GetAllByPredicate(Expression<Func<DalComment, bool>> predicate)
-        {
-            var visitor = new PredicateExpressionVisitor<DalComment, Comment>(Expression.Parameter(typeof(Comment), predicate.Parameters[0].Name));
-            var express = Expression.Lambda<Func<Comment, bool>>(visitor.Visit(predicate.Body), visitor.NewParameterExp);
-            var final = context.Set<Comment>().Where(express).ToList();
-            return final.Select(comment => comment.ToDalComment());
-        }
-
-        // Fix it
-        //public IEnumerable<DalComment> GetDalCommentsByUserId(int userId) => context.Set<Comment>().Where(c => c.UserId == userId).ToList().Select(c => c.ToDalComment());
         public IEnumerable<DalComment> GetDalCommentsByUserId(int userId) => context.Set<User>().FirstOrDefault(u => u.UserId == userId)?.Comments.ToList().Select(c => c.ToDalComment());
-
-        //Fix it
-        //public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Comment>().Where(c => c.PostId == postId).ToList().Select(c => c.ToDalComment());
         public IEnumerable<DalComment> GetDalCommentsByPostId(int postId) => context.Set<Post>().FirstOrDefault(p => p.PostId == postId)?.Comments.ToList().Select(c => c.ToDalComment()); 
         #endregion
 

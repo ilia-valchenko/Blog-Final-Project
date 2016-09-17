@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using DAL.Interfacies.Repository;
-using DAL.Interfacies.Helper;
-using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
@@ -65,9 +62,6 @@ namespace BLL.Services
         } 
         public CommentEntity GetById(int id)
         {
-            if (id < 0)
-                throw new ArgumentOutOfRangeException(nameof(id));
-
             var dalComment = commentRepository.GetById(id);
 
             if (dalComment == null)
@@ -83,18 +77,6 @@ namespace BLL.Services
             };
            
             return bllComment;
-        }
-        public CommentEntity GetOneByPredicate(Expression<Func<CommentEntity, bool>> predicates)
-        {
-            var visitor = new PredicateExpressionVisitor<CommentEntity, DalUser>(Expression.Parameter(typeof(DalComment), predicates.Parameters[0].Name));
-            var exp2 = Expression.Lambda<Func<DalComment, bool>>(visitor.Visit(predicates.Body), visitor.NewParameterExp);
-            return commentRepository.GetOneByPredicate(exp2).ToBllComment();
-        }
-        public IEnumerable<CommentEntity> GetAllByPredicate(Expression<Func<CommentEntity, bool>> predicates)
-        {
-            var visitor = new PredicateExpressionVisitor<CommentEntity, DalComment>(Expression.Parameter(typeof(DalComment), predicates.Parameters[0].Name));
-            var exp2 = Expression.Lambda<Func<DalComment, bool>>(visitor.Visit(predicates.Body), visitor.NewParameterExp);
-            return commentRepository.GetAllByPredicate(exp2).Select(c => c.ToBllComment()).ToList();
         }
         public IEnumerable<CommentEntity> GetCommentsByPostId(int postId)
         {

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using DAL.Interfacies.DTO;
 using DAL.Interfacies.Repository.ModelRepository;
 using ORM.Models;
 using DAL.Mappers;
-using DAL.Interfacies.Helper;
 using System.Data.Entity;
 
 namespace DAL.Concrete.ModelRepository
@@ -60,22 +58,9 @@ namespace DAL.Concrete.ModelRepository
 
         #region Get operations
         public DalUser GetById(int key) => context.Set<User>().FirstOrDefault(user => user.UserId == key)?.ToDalUser();
-
-        public IEnumerable<DalUser> GetAll() => context.Set<User>().ToList().Select(u => u.ToDalUser());
-
-        public DalUser GetOneByPredicate(Expression<Func<DalUser, bool>> predicate) => GetAllByPredicate(predicate).FirstOrDefault();
-
-        public IEnumerable<DalUser> GetAllByPredicate(Expression<Func<DalUser, bool>> predicate)
-        {
-            var visitor = new PredicateExpressionVisitor<DalUser, User>(Expression.Parameter(typeof(User), predicate.Parameters[0].Name));
-            var express = Expression.Lambda<Func<User, bool>>(visitor.Visit(predicate.Body), visitor.NewParameterExp);
-            var final = context.Set<User>().Where(express).ToList();
-            return final.Select(user => user.ToDalUser());
-        }
-
         public DalUser GetByNickname(string nickname) => context.Set<User>().FirstOrDefault(u => u.Nickname == nickname)?.ToDalUser();
         public DalUser GetByEmail(string email) => context.Set<User>().FirstOrDefault(u => u.Email == email)?.ToDalUser();
-
+        public IEnumerable<DalUser> GetAll() => context.Set<User>().ToList().Select(u => u.ToDalUser());
         #endregion
 
         public void AddRoleToUser(string nickname, string roleName)

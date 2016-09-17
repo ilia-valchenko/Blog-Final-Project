@@ -14,11 +14,19 @@
                 dataType: 'json',
                 success: function (result) {
 
-                    var file = base64js.fromByteArray(jQuery.makeArray(result.User.Avatar));
+                    var src;
+
+                    if (result.User.Avatar == undefined) {
+                        src = "/Content/Images/Avatars/default.png";
+                    }
+                    else {
+                        var file = base64js.fromByteArray(jQuery.makeArray(result.User.Avatar));
+                        src = 'data:image/png;base64,' + file;
+                    }
 
                     $("#commentwrapper").append('<div class="comment" id="comment' + result.Id + '">' +
-                        '<div class="avatar-wrapper">' +
-                            '<img src="data:image/png;base64,' + file + '" alt="' + result.User.Nickname + '_avatar_image' + '">' +
+                        '<div class="avatar-wrapper">' + 
+                            '<img src="' + src + '" alt="' + result.User.Nickname + '_avatar_image' + '">' +
                         '</div>' +
                             '<div class="comment-area">' +
                                 '<p><strong><a href="/User/' + result.User.Nickname + '">' + result.User.Nickname + '</a></strong><span>' + result.PublishDate + '</span></p>' +

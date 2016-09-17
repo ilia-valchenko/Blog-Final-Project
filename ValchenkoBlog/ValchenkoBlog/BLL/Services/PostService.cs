@@ -7,7 +7,6 @@ using DAL.Interfacies.Repository.ModelRepository;
 using BLL.Interfacies.Entities;
 using BLL.Interfacies.Services;
 using BLL.Mappers;
-using System.IO;
 
 namespace BLL.Services
 {
@@ -200,9 +199,6 @@ namespace BLL.Services
 
         public void AddTagsToPost(int postId, string[] tags)
         {
-            if (postId < 0)
-                throw new ArgumentOutOfRangeException(nameof(postId));
-
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 

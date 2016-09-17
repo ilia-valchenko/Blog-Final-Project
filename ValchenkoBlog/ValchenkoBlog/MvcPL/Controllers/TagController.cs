@@ -10,7 +10,7 @@ namespace MvcPL.Controllers
     [Authorize(Roles = "admin")]
     public class TagController : Controller
     {
-        public TagController(ITagService tagService)
+        public TagController(IService<TagEntity> tagService)
         {
             this.tagService = tagService;
         }
@@ -78,6 +78,6 @@ namespace MvcPL.Controllers
             return RedirectToAction("Index");
         }
 
-        private readonly ITagService tagService;
+        private readonly IService<TagEntity> tagService;
     }
 }

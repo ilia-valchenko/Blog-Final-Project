@@ -7,7 +7,6 @@ namespace BLL.Interfacies.Services
     {
         UserEntity GetUserEntityByNickname(string nickname);
         UserEntity GetUserEntityByEmail(string email);
-        void AddRoleToUser(string nickname, string roleName);
         void ChangeAvatar(string nickname, HttpPostedFileBase file);
     }
 }
