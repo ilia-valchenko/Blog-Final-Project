@@ -18,7 +18,7 @@ namespace MvcPL.Models.Account
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Invalid email address!")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Enter your password")]
+        [Required(ErrorMessage = "Password field can't be empty!")]
         [StringLength(30, ErrorMessage = "The password must contain at least 6 characters", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Enter your password")]
@@ -30,7 +30,7 @@ namespace MvcPL.Models.Account
         [Compare("Password", ErrorMessage = "Passwords must match!")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Field for captcha field can't be empty!")]
+        [Required(ErrorMessage = "Field for captcha code can't be empty!")]
         [Display(Name = "Enter the code from the image")]
         public string Captcha { get; set; }
     }

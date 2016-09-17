@@ -269,7 +269,7 @@ ul.pagination li a {
 }
 
 ul.pagination li a.active {
-    background-color: #4CAF50;
+    background-color: #0084b4;
     color: white;
     border-radius: 5px;
 }

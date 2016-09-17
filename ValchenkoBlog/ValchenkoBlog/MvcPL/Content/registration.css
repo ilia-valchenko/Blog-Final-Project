@@ -11,6 +11,11 @@
 	padding-left: 1.5%;
 }
 
+/* Сообщения об ошибках красным цветом */
+.text-danger {
+    color: red;
+}
+
 /* Красные звездочки - required поля */
 
 .form-group strong span {

@@ -5,8 +5,9 @@
 }
 
 @Styles.Render("~/Content/registration")
+@Scripts.Render("~/bundles/registrationValidation")
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @onsubmit = "return validateRegistrationForm();" }))
 {
     @Html.AntiForgeryToken()
 
@@ -17,16 +18,24 @@
         <div class="form-group">
             <strong>@Html.LabelFor(m => m.Nickname): <span>*</span></strong>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { placeholder = "crazyhorse183", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { placeholder = "crazyhorse183" } })
+                @Html.ValidationMessageFor(model => model.Nickname, "", new Dictionary<string, object> {
+               { "id", "nickname-error-message-container" },
+               { "class", "text-danger"},
+               { "data-error-message", "Nickname must contains only only letter and digits! Must starts from letter!"}
+           })
             </div>
         </div>
 
         <div class="form-group">
             <strong>@Html.LabelFor(m => m.Email): <span>*</span></strong>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "example@site.com", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "example@site.com" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new Dictionary<string, object> {
+               { "id", "email-error-message-container" },
+               { "class", "text-danger"},
+               { "data-error-message", "Invalid email address!"}
+           })
             </div>
         </div>
 
@@ -34,7 +43,10 @@
             <strong>@Html.LabelFor(m => m.Password): <span>*</span></strong>
             <div class="col-md-10">
                 @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { required = "required" } })
-                @Html.ValidationMessageFor(model => model.Password, "")
+                @Html.ValidationMessageFor(model => model.Password, "", new Dictionary<string, object> {
+               { "id", "password-error-message-container" },
+               { "class", "text-danger"}
+           })
             </div>
         </div>
 
@@ -42,7 +54,10 @@
             <strong>@Html.LabelFor(m => m.ConfirmPassword): <span>*</span></strong>
             <div class="col-md-10">
                 @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { required = "required" } })
-                @Html.ValidationMessageFor(model => model.ConfirmPassword, "")
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new Dictionary<string, object> {
+               { "id", "confirmpassword-error-message-container" },
+               { "class", "text-danger"}
+           })
             </div>
         </div>
 
@@ -50,7 +65,10 @@
             <strong>@Html.LabelFor(m => m.Captcha): <span>*</span></strong>
             <div class="col-md-10">
                 @Html.TextBoxFor(model => model.Captcha, new { htmlAttributes = new { placeholder = "Enter captcha code", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Captcha, "")
+                @Html.ValidationMessageFor(model => model.Captcha, "", new Dictionary<string, object> {
+               { "id", "captcha-error-message-container" },
+               { "class", "text-danger"}
+           })
             </div>
         </div>
 
