@@ -1,0 +1,11 @@
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\BLL.Interfacies.dll.config
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\BLL.Interfacies.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\BLL.Interfacies.pdb
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\EntityFramework.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\EntityFramework.xml
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\obj\Debug\BLL.Interfacies.csprojResolveAssemblyReference.cache
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\obj\Debug\BLL.Interfacies.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\obj\Debug\BLL.Interfacies.pdb
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Debug\BLL.Interfacies.XML

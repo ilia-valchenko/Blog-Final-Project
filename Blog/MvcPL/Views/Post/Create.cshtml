@@ -1,0 +1,34 @@
+﻿@model MvcPL.Models.Post.CreatePostViewModel
+@{
+    ViewBag.Title = "Create post";
+}
+@Styles.Render("~/Content/createPost")
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="create-post-form">
+        <h4>Fill all fields to create a new post.</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <strong>Title: <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter title...", required = "required" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <strong>Description: <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter text here...", required = "required" } })
+            </div>
+        </div>
+        @Html.DropDownList("namesOfTags", (MultiSelectList)Model.TagList, new { multiple = "multiple" })
+
+        <div class="post-create-button">
+            <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="location.href='@Url.Action("Index", "Post")'">
+        </div>
+    </div>
+}

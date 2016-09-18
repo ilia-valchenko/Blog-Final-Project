@@ -1,0 +1,74 @@
+﻿@model MvcPL.Models.Account.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+@Styles.Render("~/Content/registration")
+@Scripts.Render("~/bundles/registrationValidation")
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @onsubmit = "return validateRegistrationForm();" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="create-post-form">
+        <h4>Create a new account.</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Nickname): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { placeholder = "crazyhorse183" } })
+                @Html.ValidationMessageFor(model => model.Nickname, "", new Dictionary<string, object> {
+               { "id", "nickname-error-message-container" },
+               { "class", "text-danger"},
+               { "data-error-message", "Nickname must contains only only letter and digits! Must starts from letter!"}
+           })
+            </div>
+        </div>
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Email): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "example@site.com" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new Dictionary<string, object> {
+               { "id", "email-error-message-container" },
+               { "class", "text-danger"},
+               { "data-error-message", "Invalid email address!"}
+           })
+            </div>
+        </div>
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Password): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new Dictionary<string, object> {
+               { "id", "password-error-message-container" },
+               { "class", "text-danger"}
+           })
+            </div>
+        </div>
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.ConfirmPassword): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new Dictionary<string, object> {
+               { "id", "confirmpassword-error-message-container" },
+               { "class", "text-danger"}
+           })
+            </div>
+        </div>
+        <div class="form-group">
+            <strong>@Html.LabelFor(m => m.Captcha): <span>*</span></strong>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Captcha, new { htmlAttributes = new { placeholder = "Enter captcha code", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Captcha, "", new Dictionary<string, object> {
+               { "id", "captcha-error-message-container" },
+               { "class", "text-danger"}
+           })
+            </div>
+        </div>
+        <div class="img-responsive">
+            <img src="@Url.Action("Captcha", "Account")" alt="captcha" />
+        </div>
+        <div class="post-create-button">
+            <input type="submit" value="Submit">
+            <input type="button" value="Back" onclick="location.href='@Url.Action("Index", "Post")'">
+        </div>
+    </div>
+}

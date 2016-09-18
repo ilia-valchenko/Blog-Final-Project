@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DAL.Interfacies</name>
+    </assembly>
+    <members>
+        <member name="T:DAL.Interfacies.DTO.DalComment">
+            <summary>
+            This class represents a like on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.DalLike">
+            <summary>
+            This class represents a like on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.DalPost">
+            <summary>
+            This class represents a post on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.DalRole">
+            <summary>
+            This class represents a role on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.DalTag">
+            <summary>
+            This class represents a tag on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.DalUser">
+            <summary>
+            This class represents a user on Data Access Layer.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.DTO.IEntity">
+            <summary>
+            This is a common interface which defines a Id of entities.
+            </summary>
+        </member>
+        <member name="T:DAL.Interfacies.Repository.IRepository`1">
+            <summary>
+            This interface provides basic CRUD and GET operations for repositories.
+            </summary>
+            <typeparam name="TEntity">DAL entity.</typeparam>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ICommentRepository.GetDalCommentsByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL comments which was posted by the user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ICommentRepository.GetDalCommentsByPostId(System.Int32)">
+            <summary>
+            This method returns DAL comments of the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL comments.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ICommentRepository.DeleteCommentsFromPost(System.Int32)">
+            <summary>
+            This method delete comments from the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ILikeRepository.GetDalLikesByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL likes which user made.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>Returns collection of DAL likes.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ILikeRepository.GetDalLikesByPostId(System.Int32)">
+            <summary>
+            This method returns DAL likes of the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL likes.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ILikeRepository.GetDalLikeByPostIdAndUserId(System.Int32,System.Int32)">
+            <summary>
+            This method finds like if user liked this post.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns DAL like.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ILikeRepository.DeleteLikesFromPost(System.Int32)">
+            <summary>
+            This method removes all likes from a post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.Create(DAL.Interfacies.DTO.DalPost,System.Collections.Generic.IEnumerable{DAL.Interfacies.DTO.DalTag})">
+            <summary>
+            This method creates a post by using DAL post and collection of DAL tags.
+            </summary>
+            <param name="entity">A simple DAL post.</param>
+            <param name="tags">Collection of DAL tags which belong to the post.</param>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.Update(DAL.Interfacies.DTO.DalPost,System.Collections.Generic.IEnumerable{DAL.Interfacies.DTO.DalTag})">
+            <summary>
+            This method updates a post by using DAL post and collection od DAL tags.
+            </summary>
+            <param name="entity">A simple DAL post.</param>
+            <param name="tags">Collecion of DAL tags.</param>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.GetDalPostsByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL posts which were posted by this user.
+            </summary>
+            <param name="userId">User's id.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.GetDalPostsByTagName(System.String)">
+            <summary>
+            This method returns all DAL posts which contain the give hashtag.
+            </summary>
+            <param name="tagName">Name of hashtag.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.GetPostsForPage(System.Int32,System.Int32)">
+            <summary>
+            This method gets DAL posts for one page by using give parameters such as size of page and number of page.
+            </summary>
+            <param name="pageSize">The number of items on one page.</param>
+            <param name="pageNumber">Number of page.</param>
+            <returns>Returns collection of DAL posts for one page.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.AddTagsToPost(System.Int32,System.String[])">
+            <summary>
+            This method adds tags to a post.
+            </summary>
+            <param name="postId">Id of post.</param>
+            <param name="tags">Array of names of tags.</param>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IPostRepository.Count">
+            <summary>
+            This method returns number of posts in the database.
+            </summary>
+            <returns>Returns number of posts in the database.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IRoleRepository.GetRoleByName(System.String)">
+            <summary>
+            This method finds DAL role by given name.
+            </summary>
+            <param name="name">Name of searching role.</param>
+            <returns>Returns DAL role with given name.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IRoleRepository.GetRolesOfUser(System.Int32)">
+            <summary>
+            This method returns DAL roles of user by using user's id.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>Returns collections of DAL roles.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ITagRepository.GetTagByName(System.String)">
+            <summary>
+            This method finds DAL tag by given name.
+            </summary>
+            <param name="name">Tag's name.</param>
+            <returns>Returns DAL tag.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.ITagRepository.GetTagsByPostId(System.Int32)">
+            <summary>
+            This method finds all tags of post by given post's id.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL tags.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IUserRepository.GetByNickname(System.String)">
+            <summary>
+            This method finds DAL user by given nickname.
+            </summary>
+            <param name="nickname">Nickname of searching user.</param>
+            <returns>Returns DAL user with give nickname</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IUserRepository.GetByEmail(System.String)">
+            <summary>
+            This method finds DAL user by given email.
+            </summary>
+            <param name="email">Email of searching user.</param>
+            <returns>Returns DAL user with given email.</returns>
+        </member>
+        <member name="M:DAL.Interfacies.Repository.ModelRepository.IUserRepository.AddRoleToUser(System.String,System.String)">
+            <summary>
+            This method add role to user.
+            </summary>
+            <param name="nickname">User's nickname.</param>
+            <param name="roleName">Role's name.</param>
+        </member>
+    </members>
+</doc>

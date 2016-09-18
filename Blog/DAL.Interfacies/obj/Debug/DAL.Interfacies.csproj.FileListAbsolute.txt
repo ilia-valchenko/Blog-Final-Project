@@ -1,0 +1,11 @@
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\DAL.Interfacies.dll.config
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\DAL.Interfacies.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\DAL.Interfacies.pdb
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\EntityFramework.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\EntityFramework.xml
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\obj\Debug\DAL.Interfacies.csprojResolveAssemblyReference.cache
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\obj\Debug\DAL.Interfacies.dll
+c:\users\ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\obj\Debug\DAL.Interfacies.pdb
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\DAL.Interfacies\bin\Debug\DAL.Interfacies.XML

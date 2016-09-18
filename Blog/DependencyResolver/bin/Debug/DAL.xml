@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DAL</name>
+    </assembly>
+    <members>
+        <member name="T:DAL.Concrete.ModelRepository.CommentRepository">
+            <summary>
+            Realization of ICommentRepository interface.
+            </summary>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.CommentRepository.GetDalCommentsByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL comments which was posted by the user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.CommentRepository.GetDalCommentsByPostId(System.Int32)">
+            <summary>
+            This method returns DAL comments of the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL comments.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.CommentRepository.DeleteCommentsFromPost(System.Int32)">
+            <summary>
+            This method delete comments from the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+        </member>
+        <member name="T:DAL.Concrete.ModelRepository.LikeRepository">
+            <summary>
+            Realization of ILikeRepository interface.
+            </summary>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.LikeRepository.GetDalLikesByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL likes which user made.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>Returns collection of DAL likes.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.LikeRepository.GetDalLikesByPostId(System.Int32)">
+            <summary>
+            This method returns DAL likes of the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL likes.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.LikeRepository.GetDalLikeByPostIdAndUserId(System.Int32,System.Int32)">
+            <summary>
+            This method finds like if user liked this post.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns DAL like.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.LikeRepository.DeleteLikesFromPost(System.Int32)">
+            <summary>
+            This method removes all likes from a post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+        </member>
+        <member name="T:DAL.Concrete.ModelRepository.PostRepository">
+            <summary>
+            Realization of IPostRepository interface.
+            </summary>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.PostRepository.GetPostsForPage(System.Int32,System.Int32)">
+            <summary>
+            This method gets DAL posts for one page by using give parameters such as size of page and number of page.
+            </summary>
+            <param name="pageSize">The number of items on one page.</param>
+            <param name="pageNumber">Number of page.</param>
+            <returns>Returns collection of DAL posts for one page.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.PostRepository.GetDalPostsByUserId(System.Int32)">
+            <summary>
+            This method returns all DAL posts which were posted by this user.
+            </summary>
+            <param name="userId">User's id.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.PostRepository.GetDalPostsByTagName(System.String)">
+            <summary>
+            This method returns all DAL posts which contain the give hashtag.
+            </summary>
+            <param name="tagName">Name of hashtag.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.PostRepository.AddTagsToPost(System.Int32,System.String[])">
+            <summary>
+            This method adds tags to a post.
+            </summary>
+            <param name="postId">Id of post.</param>
+            <param name="tags">Array of names of tags.</param>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.PostRepository.Count">
+            <summary>
+            This method returns number of posts in the database.
+            </summary>
+            <returns>Returns number of posts in the database.</returns>
+        </member>
+        <member name="T:DAL.Concrete.ModelRepository.RoleRepository">
+            <summary>
+            Realization of IRoleRepository interface.
+            </summary>
+        </member>
+        <member name="T:DAL.Concrete.ModelRepository.TagRepository">
+            <summary>
+            Realization of ITagRepository interface.
+            </summary>
+        </member>
+        <member name="T:DAL.Concrete.ModelRepository.UserRepository">
+            <summary>
+            Realization of IUserRepository interface.
+            </summary>
+        </member>
+        <member name="M:DAL.Concrete.ModelRepository.UserRepository.AddRoleToUser(System.String,System.String)">
+            <summary>
+            This method add role to user.
+            </summary>
+            <param name="nickname">User's nickname.</param>
+            <param name="roleName">Role's name.</param>
+        </member>
+        <member name="T:DAL.Concrete.UnitOfWork">
+            <summary>
+            This class realize Unit of work pattern. Which allow to make save changes 
+            after a whole transaction by using Commit method.
+            </summary>
+        </member>
+        <member name="P:DAL.Concrete.UnitOfWork.Context">
+            <summary>
+            Context of the database.
+            </summary>
+        </member>
+        <member name="M:DAL.Concrete.UnitOfWork.Commit">
+            <summary>
+            This method save changes which constitute a single transaction.
+            </summary>
+        </member>
+        <member name="T:DAL.Mappers.DalCommentMapper">
+            <summary>
+            This static class provides extension methods for DAL comment entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalCommentMapper.ToDalComment(ORM.Models.Comment)">
+            <summary>
+            This method maps ORM comment to DAL comment.
+            </summary>
+            <param name="ormComment">ORM comment.</param>
+            <returns>DAL comment.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalCommentMapper.ToOrmComment(DAL.Interfacies.DTO.DalComment)">
+            <summary>
+            This method maps DAL comment to ORM comment.
+            </summary>
+            <param name="dalComment">DAL comment.</param>
+            <returns>ORM comment.</returns>
+        </member>
+        <member name="T:DAL.Mappers.DalLikeMapper">
+            <summary>
+            This static class provides extension methods for DAL like entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalLikeMapper.ToDalLike(ORM.Models.Like)">
+            <summary>
+            This method maps ORM like to DAL like.
+            </summary>
+            <param name="ormLike">ORM like.</param>
+            <returns>DAL like.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalLikeMapper.ToOrmLike(DAL.Interfacies.DTO.DalLike)">
+            <summary>
+            This method maps DAL like to ORM like.
+            </summary>
+            <param name="dalLike">DAL like.</param>
+            <returns>ORM like.</returns>
+        </member>
+        <member name="T:DAL.Mappers.DalPostMapper">
+            <summary>
+            This static class provides extension methods for DAL post entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalPostMapper.ToDalPost(ORM.Models.Post)">
+            <summary>
+            This method maps ORM post to DAL post.
+            </summary>
+            <param name="ormPost">ORM post.</param>
+            <returns>DAL post.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalPostMapper.ToOrmPost(DAL.Interfacies.DTO.DalPost)">
+            <summary>
+            This method maps DAL post to ORM post.
+            </summary>
+            <param name="dalPost">DAL post.</param>
+            <returns>ORM post.</returns>
+        </member>
+        <member name="T:DAL.Mappers.DalRoleMapper">
+            <summary>
+            This static class provides extension methods for DAL role entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalRoleMapper.ToDalRole(ORM.Models.Role)">
+            <summary>
+            This method maps ORM role to DAL role.
+            </summary>
+            <param name="ormRole">ORM role.</param>
+            <returns>DAL role.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalRoleMapper.ToOrmRole(DAL.Interfacies.DTO.DalRole)">
+            <summary>
+            This method maps DAL role to ORM role.
+            </summary>
+            <param name="dalRole">DAL role.</param>
+            <returns>ORM role.</returns>
+        </member>
+        <member name="T:DAL.Mappers.DalTagMapper">
+            <summary>
+            This static class provides extension methods for DAL tag entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalTagMapper.ToDalTag(ORM.Models.Tag)">
+            <summary>
+            This method maps ORM tag to DAL tag.
+            </summary>
+            <param name="ormTag">ORM tag.</param>
+            <returns>DAL tag.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalTagMapper.ToOrmTag(DAL.Interfacies.DTO.DalTag)">
+            <summary>
+            This method maps DAL tag to ORM tag.
+            </summary>
+            <param name="dalTag">DAL tag.</param>
+            <returns>ORM tag.</returns>
+        </member>
+        <member name="T:DAL.Mappers.DalUserMapper">
+            <summary>
+            This static class provides extension methods for DAL user entity.
+            </summary>
+        </member>
+        <member name="M:DAL.Mappers.DalUserMapper.ToDalUser(ORM.Models.User)">
+            <summary>
+            This method maps ORM user to DAL user.
+            </summary>
+            <param name="ormUser">ORM user.</param>
+            <returns>DAL user.</returns>
+        </member>
+        <member name="M:DAL.Mappers.DalUserMapper.ToOrmUser(DAL.Interfacies.DTO.DalUser)">
+            <summary>
+            This method maps DAL user to ORM user.
+            </summary>
+            <param name="dalUser">DAL user.</param>
+            <returns>ORM user.</returns>
+        </member>
+    </members>
+</doc>

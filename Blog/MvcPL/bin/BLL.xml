@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BLL</name>
+    </assembly>
+    <members>
+        <member name="T:BLL.Services.CommentService">
+            <summary>
+            Realization of ICommentService interface.
+            </summary>
+        </member>
+        <member name="M:BLL.Services.CommentService.GetCommentsByPostId(System.Int32)">
+            <summary>
+            This method returns collection of comment by post id.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of BLL comments.</returns>
+        </member>
+        <member name="T:BLL.Services.PostService">
+            <summary>
+            Realization of IPostService interface.
+            </summary>
+        </member>
+        <member name="M:BLL.Services.PostService.GetPostsForPage(System.Int32,System.Int32)">
+            <summary>
+            This method gets BLL posts for one page by using give parameters such as size of page and number of page.
+            </summary>
+            <param name="pageSize">The number of items on one page.</param>
+            <param name="pageNumber">Number of page.</param>
+            <returns>Returns collection of BLL posts for one page.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.GetPostsByTagName(System.String)">
+            <summary>
+            This method finds DAL posts by tag name. 
+            </summary>
+            <param name="tagName">Name of tag.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.GetLikesByPostId(System.Int32)">
+            <summary>
+            This method returns collection of DAL likes which belong to the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL posts.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.GetCommentsByPostId(System.Int32)">
+            <summary>
+            This method returns collection of DAL comments which belong to the post.
+            </summary>
+            <param name="postId">Id of the post.</param>
+            <returns>Returns collection of DAL comments.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.AddTagsToPost(System.Int32,System.String[])">
+            <summary>
+            This method adds tags to the post.
+            </summary>
+            <param name="postId"></param>
+            <param name="tags"></param>
+        </member>
+        <member name="M:BLL.Services.PostService.Like(BLL.Interfacies.Entities.LikeEntity)">
+            <summary>
+            This method add like to the post or delete like if it already exist.
+            </summary>
+            <param name="likeEntity">BLL like.</param>
+            <returns>Returns true if it was like and false if it was dislike.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.IsLikedPost(System.String,System.Collections.Generic.IEnumerable{BLL.Interfacies.Entities.LikeEntity})">
+            <summary>
+            This method determines is post was liked.
+            </summary>
+            <param name="nickname">Nickname of the user.</param>
+            <param name="likes">Collection of likes.</param>
+            <returns>Returns true is post was liked.</returns>
+        </member>
+        <member name="M:BLL.Services.PostService.Count">
+            <summary>
+            This method returns number of posts in the database.
+            </summary>
+            <returns>Returns number of posts in the database.</returns>
+        </member>
+        <member name="T:BLL.Services.RoleService">
+            <summary>
+            Realization of IRoleService interface.
+            </summary>
+        </member>
+        <member name="M:BLL.Services.RoleService.GetRolesOfUser(System.Int32)">
+            <summary>
+            This method finds BLL role by given id of user.
+            </summary>
+            <param name="userId">Id of the user.</param>
+            <returns>Returns collection of DAL roles.</returns>
+        </member>
+        <member name="T:BLL.Services.TagService">
+            <summary>
+            Realization of ITagService interface.
+            </summary>
+        </member>
+        <member name="M:BLL.Services.TagService.GetTagEntityByName(System.String)">
+            <summary>
+            This method finds BLL tag by given name.
+            </summary>
+            <param name="name">Name of searching tag.</param>
+            <returns>Returns BLL tag with given name.</returns>
+        </member>
+        <member name="T:BLL.Services.UserService">
+            <summary>
+            Realization of IUserService interface.
+            </summary>
+        </member>
+        <member name="M:BLL.Services.UserService.GetUserEntityByNickname(System.String)">
+            <summary>
+            This method finds BLL user by given nickname.
+            </summary>
+            <param name="nickname">Nickname of searching user.</param>
+            <returns>Returns BLL user with given nickname.</returns>
+        </member>
+        <member name="M:BLL.Services.UserService.GetUserEntityByEmail(System.String)">
+            <summary>
+            This method finds BLL user by given email.
+            </summary>
+            <param name="email">Email of searching user.</param>
+            <returns>Returns BLL user with given email.</returns>
+        </member>
+        <member name="M:BLL.Services.UserService.ChangeAvatar(System.String,System.Web.HttpPostedFileBase)">
+            <summary>
+            This method change user's avatar.
+            </summary>
+            <param name="nickname">Nickname of user whose avatar you want to change.</param>
+            <param name="file">New avatar.</param>
+        </member>
+    </members>
+</doc>

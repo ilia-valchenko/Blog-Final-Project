@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DependencyResolver</name>
+    </assembly>
+    <members>
+        <member name="T:DependencyResolver.ResolverConfig">
+            <summary>
+            This is the config class which know how to add Bindings for concrete Types.
+            </summary>
+        </member>
+    </members>
+</doc>

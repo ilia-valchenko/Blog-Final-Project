@@ -1,0 +1,29 @@
+﻿@model MvcPL.Models.Post.PostViewModel
+@{
+    ViewBag.Title = "Delete";
+}
+@Styles.Render("~/Content/deletePost")
+@Styles.Render("~/Content/Fontawesome/css/font-awesome.css")
+@Scripts.Render("~/bundles/like")
+<div class="create-post-form">
+    <h3>Do you really want to delete this post?</h3>
+    <div class="form-group">
+        <article class="post">
+            <h4>@Html.DisplayFor(model => model.Title)</h4>
+            <p>@Html.DisplayFor(model => model.Description)</p>
+            @MvcPL.Helpers.TagListHelper.TagList(Html, Model.Tags)
+            <ul class="post-footer">
+                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>
+                <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, Model.NumberOfComments)</li>
+                <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, Model.Id, Model.NumberOfLikes, Model.IsLiked)</li>
+                <li><small>@Html.DisplayFor(modelItem => Model.PublishDate)</small></li>
+            </ul>
+        </article>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="submit" value="Yes">
+            <input type="button" value="No" onclick="location.href='@Url.Action("Index", "Post")'">
+        }
+    </div>
+</div>
