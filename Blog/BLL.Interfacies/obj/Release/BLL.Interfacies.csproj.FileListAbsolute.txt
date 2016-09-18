@@ -1,0 +1,9 @@
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\BLL.Interfacies.dll.config
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\BLL.Interfacies.dll
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\BLL.Interfacies.pdb
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\EntityFramework.dll
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\EntityFramework.xml
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\obj\Release\BLL.Interfacies.dll
+C:\Users\Ilia\documents\visual studio 2015\Projects\Blog\BLL.Interfacies\obj\Release\BLL.Interfacies.pdb

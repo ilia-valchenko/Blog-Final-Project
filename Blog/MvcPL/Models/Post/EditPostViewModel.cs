@@ -5,6 +5,7 @@ namespace MvcPL.Models.Post
 {
     public class EditPostViewModel
     {
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Title is a required field!")]

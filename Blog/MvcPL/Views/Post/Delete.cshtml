@@ -13,7 +13,7 @@
             <p>@Html.DisplayFor(model => model.Description)</p>
             @MvcPL.Helpers.TagListHelper.TagList(Html, Model.Tags)
             <ul class="post-footer">
-                <li><small>Posted by: @Html.DisplayFor(modelItem => Model.Author.Nickname)</small></li>
+                <li><small>Posted by: @Html.RouteLink(Model.Author.Nickname, "UserProfile", new { nickname = Model.Author.Nickname })</small></li>
                 <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, Model.NumberOfComments)</li>
                 <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, Model.Id, Model.NumberOfLikes, Model.IsLiked)</li>
                 <li><small>@Html.DisplayFor(modelItem => Model.PublishDate)</small></li>

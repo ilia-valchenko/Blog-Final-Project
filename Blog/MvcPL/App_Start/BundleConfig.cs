@@ -69,6 +69,9 @@ namespace MvcPL
 
             bundles.Add(new ScriptBundle("~/bundles/registrationValidation").Include(
                         "~/scripts/CustomValidation/registration_validation.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/loginValidation").Include(
+                        "~/scripts/CustomValidation/login_validation.js"));
         }
     }
 }

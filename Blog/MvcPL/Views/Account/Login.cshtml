@@ -2,8 +2,11 @@
 @{
     ViewBag.Title = "Login";
 }
+
 @Styles.Render("~/Content/login")
-@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+@Scripts.Render("~/bundles/loginValidation")
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @onsubmit = "return validateLoginForm();" }))
 {
     @Html.AntiForgeryToken()
 
@@ -13,15 +16,22 @@
         <div class="form-group">
             <strong>@Html.LabelFor(m => m.Nickname): <span>*</span></strong>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Nickname)
-                @Html.ValidationMessageFor(model => model.Nickname, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Nickname, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.Nickname, "", new Dictionary<string, object> {
+                { "id", "nickname-error-message-container" },
+                { "class", "text-danger"},
+                { "data-error-message", "Nickname must contains only only letter and digits! Must starts from letter!"}
+           })
             </div>
         </div>
         <div class="form-group">
             <strong>@Html.LabelFor(m => m.Password): <span>*</span></strong>
             <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password)
-                @Html.ValidationMessageFor(model => model.Password, "")
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new Dictionary<string, object> {
+                { "id", "password-error-message-container" },
+                { "class", "text-danger"}
+           })
             </div>
         </div>
         <div class="login-remember-checkbox">

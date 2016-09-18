@@ -35,7 +35,7 @@ namespace MvcPL.Controllers
             if (id == null)
                 return RedirectToAction("BadRequest", "Error");
 
-            TagViewModel model = tagService.GetById((int)id)?.ToMvcTag();
+            EditTagViewModel model = tagService.GetById((int)id)?.ToMvcEditTag();
 
             if (model == null)
                 return RedirectToAction("NotFound", "Error");
@@ -45,7 +45,7 @@ namespace MvcPL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TagViewModel model)
+        public ActionResult Edit(EditTagViewModel model)
         {
             tagService.Update(model.ToBllTag());
             return RedirectToAction("Index");

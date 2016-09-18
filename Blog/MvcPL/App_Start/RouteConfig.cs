@@ -33,11 +33,11 @@ namespace MvcPL
                 defaults: new { controller = "Post", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
+            /*routes.MapRoute(
                 name: "404-PageNotFound",
                 url: "{*url}",
                 defaults: new { controller = "Error", action = "NotFound" }
-            );
+            );*/
         }
     }
 }

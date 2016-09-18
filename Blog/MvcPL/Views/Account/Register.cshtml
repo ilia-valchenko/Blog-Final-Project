@@ -4,6 +4,7 @@
 }
 @Styles.Render("~/Content/registration")
 @Scripts.Render("~/bundles/registrationValidation")
+
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @onsubmit = "return validateRegistrationForm();" }))
 {
     @Html.AntiForgeryToken()

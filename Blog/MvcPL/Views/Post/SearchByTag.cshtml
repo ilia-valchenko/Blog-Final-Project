@@ -24,7 +24,7 @@ else
             <p>@Html.DisplayFor(modelItem => item.Description)</p>
             @MvcPL.Helpers.TagListHelper.TagList(Html, item.Tags)
             <ul class="post-footer">
-                <li><small>Posted by: @Html.DisplayFor(modelItem => item.Author.Nickname)</small></li>
+                <li><small>Posted by: @Html.RouteLink(item.Author.Nickname, "UserProfile", new { nickname = item.Author.Nickname })</small></li>
                 <li>@MvcPL.Helpers.CommentsIndicatorHelper.CommentsIndicator(Html, item.NumberOfComments)</li>
                 <li>@MvcPL.Helpers.LikeButtonHelper.LikeButton(Html, item.Id, item.NumberOfLikes, item.IsLiked)</li>
                 <li><small>@Html.DisplayFor(modelItem => item.PublishDate)</small></li>
