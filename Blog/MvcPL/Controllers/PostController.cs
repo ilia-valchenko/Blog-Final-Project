@@ -142,7 +142,7 @@ namespace MvcPL.Controllers
                 return RedirectToAction("NotFound", "Error");
 
             var post = bllPost.ToMvcDetailsPost();
-            post.IsLiked = User.Identity.IsAuthenticated ? postService.IsLikedPost(User.Identity.Name, bllPost.Likes) : false;
+            post.IsLiked = User.Identity.IsAuthenticated ? postService.IsLikedPost(User.Identity.Name, bllPost.Likes) : false;          
 
             return View(post);
         }
@@ -162,14 +162,6 @@ namespace MvcPL.Controllers
         [HttpPost]
         public ActionResult AddCommentViaAjax(int postId, string text)
         {
-            /*postService.AddComment(new CommentEntity
-            {
-                PublishDate = DateTime.Now,
-                Text = text,
-                Post = new PostEntity { Id = postId },
-                User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
-            });*/
-
             commentService.Create(new CommentEntity
             {
                 PublishDate = DateTime.Now,
@@ -186,14 +178,6 @@ namespace MvcPL.Controllers
         [HttpPost]
         public ActionResult AddComment(int postId, string text)
         {
-            /*postService.AddComment(new CommentEntity
-            {
-                PublishDate = DateTime.Now,
-                Text = text,
-                Post = new PostEntity { Id = postId },
-                User = new UserEntity { Id = userService.GetUserEntityByNickname(User.Identity.Name).Id }
-            });*/
-
             commentService.Create(new CommentEntity
             {
                 PublishDate = DateTime.Now,

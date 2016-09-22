@@ -52,11 +52,7 @@
                             }
                             else
                             {
-                                // Hardcode
-                                string imageBase64 = Convert.ToBase64String(item.User.Avatar);
-                                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                                // Add custom style in css file
-                                <img src="@imageSrc" alt="@item.User.Nickname avatar">
+                                <img src=@Url.Action("GetUserAvatar", "User", new { id = item.User.Id } ) alt="@item.User.Nickname avatar">
                             }
                         </div>
                         <div class="comment-area">

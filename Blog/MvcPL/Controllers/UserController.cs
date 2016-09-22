@@ -65,6 +65,19 @@ namespace MvcPL.Controllers
             return View(model);
         }
 
+        public ActionResult GetUserAvatar(int? id)
+        {
+            if (id == null)
+                return RedirectToAction("BadRequest", "Error");
+
+            var user = userService.GetById((int)id);
+
+            if (user == null)
+                return RedirectToAction("NotFound", "Error");
+
+            return File(user.Avatar, "image/jpeg");
+        }
+
         [HttpPost]
         [Authorize]
         public ActionResult ChangeAvatar(HttpPostedFileBase file)

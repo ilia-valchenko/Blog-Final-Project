@@ -13,11 +13,7 @@
             }
             else
             {
-                // Hardcode
-                string imageBase64 = Convert.ToBase64String(Model.Avatar);
-                string imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-                // Add custom style in css file
-                <img src="@imageSrc" alt="@Model.Nickname avatar">
+                <img src=@Url.Action("GetUserAvatar", "User", new { id = Model.Id } ) alt="@Model.Nickname avatar">
             }
             <p><span>Nickname:</span> @Model.Nickname</p>
             <p><span>Email:</span> @Model.Email</p>
